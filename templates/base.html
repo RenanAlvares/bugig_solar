@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ titulo }}</title>
+</head>
+<body>
+
+    <h1>{{ titulo }}</h1>
+
+    <form method="post" action="/cadastro">
+        {{ form.csrf_token() }}
+
+        <div class="mb-2">
+            {{ form.nome.label(class='form-label') }}
+            {{ form.nome(class='form-control') }}
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">Tipo de usuário</label><br>
+            {% for subfield in form.tipo_usuario %}
+                <label>{{ subfield() }} {{ subfield.label.text }}</label><br>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2">
+            {{ form.email.label(class='form-label') }}
+            {{ form.email(class='form-control') }}
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">CPF ou CNPJ?</label><br>
+            {% for subfield in form.tipo_documento %}
+                <label>{{ subfield() }} {{ subfield.label.text }}</label><br>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2" id="cpf_group" style="display: none;">
+            {{ form.cpf.label(class='form-label') }}
+            {{ form.cpf(class='form-control') }}
+        </div>
+
+        <div class="mb-2" id="cnpj_group" style="display: none;">
+            {{ form.cnpj.label(class='form-label') }}
+            {{ form.cnpj(class='form-control') }}
+        </div>
+
+        <div class="mb-2" id="nome_fantasia_group" style="display: none;">
+            {{ form.nome_fantasia.label(class='form-label') }}
+            {{ form.nome_fantasia(class='form-control') }}
+        </div>
+
+        <div class="mb-2">
+            {{ form.cep.label(class='form-label') }}
+            {{ form.cep(class='form-control') }}
+        </div>
+
+        <div class="mb-2">
+            {{ form.numero.label(class='form-label') }}
+            {{ form.numero(class='form-control') }}
+        </div>
+
+        <div class="mb-2">
+            {{ form.senha.label(class='form-label') }}
+            {{ form.senha(class='form-control') }}
+        </div>
+
+        <div class="mb-2">
+            {{ form.cadastrar(class='btn btn-success') }}
+        </div>
+
+    </form>
+
+    <script>
+        function toggleDocumentoFields() {
+            const tipo = document.querySelector('input[name="tipo_documento"]:checked');
+            const cpfDiv = document.getElementById("cpf_group");
+            const cnpjDiv = document.getElementById("cnpj_group");
+            const nomeFantasiaDiv = document.getElementById("nome_fantasia_group");
+
+            if (tipo) {
+                if (tipo.value === "cpf") {
+                    cpfDiv.style.display = "block";
+                    cnpjDiv.style.display = "none";
+                    nomeFantasiaDiv.style.display = "none";
+                } else if (tipo.value === "cnpj") {
+                    cpfDiv.style.display = "none";
+                    cnpjDiv.style.display = "block";
+                    nomeFantasiaDiv.style.display = "block";
+                }
+            }
+        }
+
+        window.onload = toggleDocumentoFields;
+        const radios = document.getElementsByName("tipo_documento");
+        for (let radio of radios) {
+            radio.addEventListener("change", toggleDocumentoFields);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+# serao incluidas todas as validações, como cpf, cnpj, e-mail, etc.
