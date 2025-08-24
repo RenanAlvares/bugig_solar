@@ -22,3 +22,27 @@ class FormUser(FlaskForm):
     senha = PasswordField('Digite a senha do novo usuário', [validators.DataRequired(), validators.Length(min=2, max=15)])
 
     cadastrar = SubmitField('Cadastrar novo usuário')
+
+    #valida o tipo de documento
+    def validate(self):
+        resultado_validacao = FlaskForm.validate(self)
+        if not resultado_validacao:
+            return False
+
+        # Validação para CNPJ
+        if self.tipo_documento.data == 'cnpj':
+            if not self.nome_fantasia.data or self.nome_fantasia.data.strip() == '':
+                self.nome_fantasia.errors.append(
+                    'Por favor, preencha o Nome Fantasia, pois ele é obrigatório para CNPJs.'
+                )
+                return False
+
+        # Validação para CPF
+        if self.tipo_documento.data == 'cpf':
+            if not self.cpf.data or self.cpf.data.strip() == '':
+                self.cpf.errors.append(
+                    'Por favor, informe o CPF, pois ele é obrigatório para este tipo de documento.'
+                )
+                return False
+
+        return True

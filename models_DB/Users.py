@@ -15,18 +15,5 @@ class UsersDb(db.Model):
     numero = db.Column(db.Integer(5), nullable = False)
     senha = db.Column(db.String(10), nullable = False)
 
-    def validate(self):
-        rv = FlaskForm.validate(self)
-        if not rv:
-            return False
-
-        if self.tipo_documento.data == 'cnpj':
-            if not self.nome_fantasia.data or self.nome_fantasia.data.strip() == '':
-                self.nome_fantasia.errors.append('Nome Fantasia é obrigatório para CNPJ.')
-                return False
-
-        return True
-
-
     def __repr__(self):
         return f'<Usuario {self.nm_user}>'
