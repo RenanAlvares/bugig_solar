@@ -2,7 +2,7 @@ from Main import app
 from flask import render_template, request, redirect, session, flash, url_for, send_from_directory
 from forms.FormUser import FormUser
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/signin', methods=['POST', 'GET'])
 def cadastro():
     form = FormUser()
     titulo = 'cadastro'
@@ -10,7 +10,7 @@ def cadastro():
         nome = form.nome.data
         tipo_usuario = int(form.tipo_usuario.data) # transforma string para int para salvar no banco como fk
         return redirect(url_for('cadastro'))
-    return render_template('base.html', titulo=titulo, form=form)
+    return render_template('Cadastro.html', titulo=titulo, form=form)
 
 
 @app.route('/authenticate')
@@ -19,5 +19,5 @@ def authenticate():
 
 @app.route('/')
 def login():
-    pass
+    return render_template('Login.html', titulo='teste')
 
