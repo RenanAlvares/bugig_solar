@@ -21,10 +21,6 @@ def cadastro():
 def authenticate():
     pass
 
-@app.route('/')
-def login():
-    return render_template('Login.html', titulo='teste')
-
 # rota de login 
 @app.route('/', methods=['POST', 'GET'])
 def login():
