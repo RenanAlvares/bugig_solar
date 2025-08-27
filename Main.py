@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 
 csrf = CSRFProtect(app)
 
-from controllers.Views_client import *
+from controllers.Login import *
 #from views_users import *
 
 
