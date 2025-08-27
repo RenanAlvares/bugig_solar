@@ -1,7 +1,7 @@
 from Main import app
 from flask import render_template, request, redirect, session, flash, url_for, send_from_directory
 from forms.FormUser import FormUser
-from forms.FormUser import FormLogin
+from forms.FromLogin import FormLogin
 
 
 # rota de cadastro 
