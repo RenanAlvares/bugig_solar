@@ -1,7 +1,7 @@
 from Main import app
 from flask import render_template, request, redirect, session, flash, url_for, send_from_directory
 from forms.FormUser import FormUser
-from forms.FromLogin import FormLogin
+from forms.FormLogin import FormLogin
 
 
 # rota de cadastro 
@@ -16,7 +16,13 @@ def cadastro():
         return redirect(url_for('cadastro'))
     return render_template('Cadastro.html', titulo=titulo, form=form)
 
+#aqui será a tela principal do sistema, onde o cliente é redirecionado após logar.
+@app.route('/bugig')
+def bugig():
+    pass
 
+
+# autenticação do usuario no processo do sistema
 @app.route('/authenticate')
 def authenticate():
     pass
