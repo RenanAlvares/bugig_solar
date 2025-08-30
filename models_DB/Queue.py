@@ -8,3 +8,5 @@ class Queue(db.Model):
     id_user_fila = db.Column(db.Integer, db.ForeignKey('Usuarios.id'), nullable=False)
     quantidade_solicitada = db.Column(db.Integer, nullable=False)
     distribuidora = db.Column(db.String(100), nullable=False)
+
+    id_user = db.relationship('User', backref='filas', lazy=True)
