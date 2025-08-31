@@ -16,10 +16,20 @@ def cadastro():
         return redirect(url_for('cadastro'))
     return render_template('Cadastro.html', titulo=titulo, form=form)
 
+# o sisteam carrega e já altera a url para /bugig
+@app.route('/')
+def index():
+    return redirect(url_for('bugig'))
+
+
 #aqui será a tela principal do sistema, onde o cliente é redirecionado após logar.
 @app.route('/bugig')
 def bugig():
-    pass
+
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    return render_template('bugig.html')
 
 
 # autenticação do usuario no processo do sistema
@@ -28,7 +38,7 @@ def authenticate():
     pass
 
 # rota de login 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
     form = FormLogin()
     titulo = 'Login'
