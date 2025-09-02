@@ -2,6 +2,7 @@ from Main import app
 from flask import render_template, request, redirect, session, flash, url_for, send_from_directory
 from forms.FormUser import FormUser
 from forms.FormLogin import FormLogin
+from models_DB.Users import UsersDb
 
 
 # rota de cadastro 
@@ -40,10 +41,25 @@ def authenticate():
 # rota de login 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+
     form = FormLogin()
     titulo = 'Login'
+
     if form.validate_on_submit():
+
         email = form.email.data
         senha = form.senha.data
-        return redirect(url_for('login'))
+        usuario = UsersDb.query.filter_by(email=email).first()
+
+        if usuario and usuario.senha == senha:
+            session['user_id'] = usuario.id
+            session['user_id'] = usuario.nome
+
+            flash(f'Login efetuado com sucesso. Seja bem vindo {usuario.nome}!')
+            return redirect(url_for('bugig'))
+        else:
+
+            flash('Email ou senha inválidos. Por favor, tente novamente!')
+            return redirect(url_for('login'))
+        
     return render_template('login.html', titulo=titulo, form=form)
