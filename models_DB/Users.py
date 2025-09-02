@@ -12,7 +12,7 @@ class UsersDb(db.Model):
     email = db.Column(db.String(60), nullable = False)
     documento = db.Column(db.String(15), nullable = False)
     cep = db.Column(db.String(15), nullable = False)
-    numero = db.Column(db.Integer(5), nullable = False)
+    numero = db.Column(db.Integer, nullable = False)
     senha = db.Column(db.String(200), nullable = False)
     telefone = db.Column(db.String(15), nullable = False)
     razao_social = db.Column(db.String(100), nullable = True)
