@@ -13,7 +13,7 @@ class UsersDb(db.Model):
     documento = db.Column(db.String(15), nullable = False)
     cep = db.Column(db.String(15), nullable = False)
     numero = db.Column(db.Integer(5), nullable = False)
-    senha = db.Column(db.String(10), nullable = False)
+    senha = db.Column(db.String(200), nullable = False)
     telefone = db.Column(db.String(15), nullable = False)
     razao_social = db.Column(db.String(100), nullable = True)
     id_distribuidora = db.Column(db.Integer, db.ForeignKey('Distribuidoras.id_distribuidora'), nullable = False)
