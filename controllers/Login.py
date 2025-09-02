@@ -49,17 +49,28 @@ def login():
 
         email = form.email.data
         senha = form.senha.data
-        usuario = UsersDb.query.filter_by(email=email).first()
+        #usuario = UsersDb.query.filter_by(email=email).first()
 
-        if usuario and usuario.senha == senha:
-            session['user_id'] = usuario.id
-            session['user_id'] = usuario.nome
+        usuario_teste = {
+            'id': 1,
+            "email": "teste@teste.com",
+            "senha": "123456"
+        }
 
-            flash(f'Login efetuado com sucesso. Seja bem vindo {usuario.nome}!')
+        if email == usuario_teste["email"] and senha == usuario_teste["senha"]:
+
+            session['user_id'] = usuario_teste["id"]
+            session['user_nome'] = usuario_teste["nome"]
+            session['user_tipo'] = usuario_teste["id_tipo"]
+            '''if usuario and usuario.senha == senha:
+                session['user_id'] = usuario.id
+                session['user_id'] = usuario.nome'''
+
+            flash(f'Login efetuado com sucesso. Seja bem vindo!', 'success')
             return redirect(url_for('bugig'))
         else:
 
-            flash('Email ou senha inválidos. Por favor, tente novamente!')
-            return redirect(url_for('login'))
+            flash('Email ou senha inválidos. Por favor, tente novamente!', 'danger')
+            return redirect(url_for('bugig'))
         
     return render_template('login.html', titulo=titulo, form=form)
