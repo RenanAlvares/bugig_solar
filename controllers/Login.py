@@ -46,6 +46,7 @@ def login():
     titulo = 'Login'
 
     if form.validate_on_submit():
+        print('form funcionou')
 
         email = form.email.data
         senha = form.senha.data
