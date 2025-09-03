@@ -53,4 +53,5 @@ main{
 
     background-color: #09738a; /* fundo do main */
     color: #092b5a; /* muda cor das letras*/
+    scrollbar-width: none;
 }
