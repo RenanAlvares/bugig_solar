@@ -102,5 +102,6 @@ a.btn-default {
 }
 
 body {
-    overflow-x: hidden;      /* remove barra de rolagem horizontal */
+    overflow-x: hidden; 
+    scrollbar-width: none;     /* remove barra de rolagem horizontal */
 }
