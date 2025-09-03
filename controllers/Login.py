@@ -53,6 +53,8 @@ def login():
 
         usuario_teste = {
             'id': 1,
+            'nome': 'Teste',
+            'id_tipo': 2,
             "email": "teste@teste.com",
             "senha": "123456"
         }
@@ -71,6 +73,6 @@ def login():
         else:
 
             flash('Email ou senha inválidos. Por favor, tente novamente!', 'danger')
-            return redirect(url_for('bugig'))
+            return redirect(url_for('login'))
         
     return render_template('login.html', titulo=titulo, form=form)
