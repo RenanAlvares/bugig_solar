@@ -1,0 +1,106 @@
+
+* {
+    box-sizing: border-box; /* previne overflow por padding e bordas */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    width: 100%;
+    padding: 28px 8%;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #092b5a; 
+    color: #ffffff;
+}
+
+#navbar {
+    display: flex;
+    flex-wrap: wrap;       /* permite quebrar linha se necessário */
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#nav_logo {
+    font-size: 24px;
+    color: #8ba6f6;
+    font-weight: 700;
+}
+
+#nav_list {
+    display: flex;
+    list-style: none;
+    gap: 32px;
+}
+
+.nav_item a {
+    text-decoration: none;
+    color: #1d1d1d;
+    font-weight: 600;
+}
+
+a.btn-default {
+    text-decoration: none;
+    color: #1d1d1d;
+    font-size: 14px;
+}
+
+#mobile_btn {
+    display: none;
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#mobile_menu {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+}
+
+#mobile_menu.active {
+    display: flex;
+}
+
+#mobile_nav_list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 12px 0;
+}
+
+#mobile_nav_list .nav_item {
+    list-style: none;
+    text-align: center;
+}
+
+
+@media screen and (max-width: 1170px) {
+    #nav_list,
+    #navbar .btn-default {
+        display: none;      /* esconde menu desktop */
+    }
+
+    #mobile_btn {
+        display: block;     /* mostra botão mobile */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        padding: 20px 4%;   /* reduz padding lateral */
+    }
+
+    #nav_list {
+        gap: 16px;          /* reduz espaçamento */
+    }
+}
+
+body {
+    overflow-x: hidden;      /* remove barra de rolagem horizontal */
+}

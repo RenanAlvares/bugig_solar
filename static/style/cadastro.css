@@ -1,0 +1,106 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* REMOVE SCROLL HORIZONTAL */
+body {
+    overflow-x: hidden; /* remove barra de rolagem horizontal */
+    background-color: #09738a;
+    color: #092b5a;
+}
+
+/* CENTRALIZAÇÃO DO MAIN */
+main {
+    min-height: 100vh;          /* ocupa altura total da tela */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;              /* evita overflow */
+}
+
+/* FORMULÁRIO */
+#cadastro {
+    margin: 0;
+    width: 100%;
+    max-width: 300px;           /* largura compacta */
+    padding: 15px 20px;         /* padding interno reduzido */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* TÍTULO */
+#cadastro h1 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+/* LABELS E INPUTS */
+.label_cadastro {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+}
+
+/* BOTÕES */
+.btn_container, .btn_conteiner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.btn_cadastro {
+    flex: 1;
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #092b5a;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn_cadastro:hover {
+    background-color: #09738a;
+}
+
+/* CAMPOS OPCIONAIS */
+#cpf_group, #cnpj_group, #nome_fantasia_group {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* RESPONSIVO */
+@media screen and (max-width: 350px) {
+    #cadastro {
+        max-width: 95%; /* se a tela for muito pequena */
+        padding: 10px;
+    }
+
+    .btn_cadastro {
+        max-width: 90px;
+        padding: 6px 10px;
+    }
+}
