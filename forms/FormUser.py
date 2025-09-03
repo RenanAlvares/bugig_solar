@@ -4,12 +4,12 @@ from wtforms import StringField, validators, SubmitField, PasswordField, Integer
 
 class FormUser(FlaskForm):
 
-    nome = StringField('Digite o nome do novo usuário', [validators.DataRequired(), validators.Length(min=2, max=150)])
+    nome = StringField('Digite o nome:', [validators.DataRequired(), validators.Length(min=2, max=150)])
 
     #fazer alguma validação se é cliente ou fornecedor (botão)
-    tipo_usuario = RadioField('Tipo de usuário', choices=[('1', 'Cliente'), ('2', 'Fornecedor')], validators=[validators.DataRequired()])
+    tipo_usuario = RadioField('Tipo de usuário:', choices=[('1', 'Cliente'), ('2', 'Fornecedor')], validators=[validators.DataRequired()])
 
-    email = StringField('Digite o e-mail do novo usuário', [validators.DataRequired(), validators.Length(min=2, max=150)])
+    email = StringField('Digite o e-mail: ', [validators.DataRequired(), validators.Length(min=2, max=150)])
 
     #fazer a validação do cpf ou cnpj
     tipo_documento = RadioField('CPF ou CNPJ?', choices=[('cpf', 'CPF'), ('cnpj', 'CNPJ')], validators=[validators.DataRequired()])
@@ -17,9 +17,9 @@ class FormUser(FlaskForm):
     cnpj = StringField('Digite o CNPJ', [validators.Optional(), validators.Length(min=14, max=18)])
     nome_fantasia = StringField('Digite o nome fantasia', [validators.Optional(), validators.Length(min=2, max=150)])
 
-    cep = StringField('Digite o cep do novo usuário', [validators.DataRequired(), validators.Length(min=2, max=150)])
-    numero = IntegerField('Digite o número do endereço do novo usuário', [validators.DataRequired()])
-    senha = PasswordField('Digite a senha do novo usuário', [validators.DataRequired(), validators.Length(min=2, max=15)])
+    cep = StringField('Digite o CEP:', [validators.DataRequired(), validators.Length(min=2, max=150)])
+    numero = IntegerField('Digite o número do endereço:', [validators.DataRequired()])
+    senha = PasswordField('Digite a senha:', [validators.DataRequired(), validators.Length(min=2, max=15)])
 
     cadastrar = SubmitField('Cadastrar novo usuário')
 

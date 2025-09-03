@@ -14,6 +14,8 @@
 }
 
 #login{
+    justify-content: center;
+    align-items: center;
     width: 100%;
     max-width: 400px;
     padding: 20px;
@@ -22,13 +24,33 @@
     box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
 }
 
+.btn_container {
+    display: flex;
+    justify-content: center;   /* centraliza na horizontal */
+    gap: 10px;                 /* espaço entre os botões */
+    margin-top: 15px;
+}
+
 .btn_login{
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    align-items: center;
-    margin: 5px 0;
+    flex: 1;                   /* faz os dois terem o mesmo tamanho */
+    max-width: 150px;          /* largura máxima de cada botão */
     padding: 10px 20px;
     border: none;
     border-radius: 6px;
+    cursor: pointer;
+    background-color: #092b5a; 
+    color: #ffffff
+}
+
+main{
+    margin: 0;
+    padding: 0;
+    height: 100vh;              /* ocupa a altura total da tela */
+    display: flex;              /* ativa o Flexbox */
+    justify-content: center;    /* centraliza na horizontal */
+    align-items: center;        /* centraliza na vertical */
+    width: 100%;
+
+    background-color: #e7d9b4; /* fundo do main */
+    color: #092b5a; /* muda cor das letras*/
 }

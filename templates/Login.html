@@ -3,30 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="scr/style/login.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/header.css') }}">
     <title>{{ titulo }}</title>
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-
-    <div id = "login">
-        <h1>{{ titulo }}</h1>
-        <form method="post" action="/login">
-            {{ form.csrf_token() }}
+    <header>
+        <nav id="navbar">
+            <i class="fa-solid fa-solar-panel">BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i></i>
     
-        <div class ="label_login mb-2">
-            {{ form.email.label(class='form-label') }}
-            {{ form.email(class='form-control') }}
         </div>
-        <div class="label_login mb-2">
-            {{ form.senha.label(class='form-label') }}
-            {{ form.senha(class='form-control') }}
-        </div> 
 
-        <div>
-            {{form.entrar(class='btn_login')}}
-            <button type="button" class="btn_login">Criar conta</button>
+    </header>
+
+    <main>
+        <div id="login">
+            <h1>{{ titulo }}</h1>
+            <form method="post" action="/login">
+                {{ form.csrf_token() }}
+        
+            <div class ="label_login mb-2">
+                {{ form.email.label(class='form-label') }}
+                {{ form.email(class='form-control') }}
+            </div>
+
+            <div class="label_login mb-2">
+                {{ form.senha.label(class='form-label') }}
+                {{ form.senha(class='form-control') }}
+            </div> 
+
+            <div class="btn_container">
+                {{form.entrar(class='btn_login')}}
+                <button type="button" class="btn_login">Criar conta</button>
+            </div>
         </div>
-    </div>
+    </main>
 </body>
 </html>
