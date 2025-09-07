@@ -1,6 +1,6 @@
 from Main import app
 from flask_wtf import FlaskForm
-from wtforms import StringField, validators, SubmitField, PasswordField, IntegerField, RadioField
+from wtforms import SelectField, StringField, validators, SubmitField, PasswordField, IntegerField, RadioField
 
 class FormUser(FlaskForm):
 
@@ -17,10 +17,12 @@ class FormUser(FlaskForm):
     cnpj = StringField('Digite o CNPJ', [validators.Optional(), validators.Length(min=14, max=18)])
     nome_fantasia = StringField('Digite o nome fantasia', [validators.Optional(), validators.Length(min=2, max=150)])
 
+    telefone = StringField('Digite o telefone:', [validators.DataRequired(), validators.Length(min=10, max=15)])    
     cep = StringField('Digite o CEP:', [validators.DataRequired(), validators.Length(min=2, max=150)])
     numero = IntegerField('Digite o número do endereço:', [validators.DataRequired()])
     senha = PasswordField('Digite a senha:', [validators.DataRequired(), validators.Length(min=2, max=15)])
 
+    distribuidora = SelectField('Seleciona sua distribuidora:', [validators.DataRequired()])
     cadastrar = SubmitField('Cadastrar novo usuário')
 
     #valida o tipo de documento
