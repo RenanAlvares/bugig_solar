@@ -1,6 +1,6 @@
 from Main import db
 
-class DistribuidoraModel(db.Model):
+class Companies(db.Model):
 
     __tablename__ = 'Distribuidoras'
 

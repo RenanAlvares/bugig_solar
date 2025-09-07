@@ -1,6 +1,6 @@
 from Main import db
 
-class TipoModel(db.Model):
+class TipoUser(db.Model):
 
     __tablename__ = 'Tipos_usuarios'
 
