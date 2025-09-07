@@ -1,12 +1,12 @@
+from functools import wraps
 from Main import app
-from flask import render_template, request, redirect, session, flash, url_for, send_from_directory
+from flask import render_template, request, redirect, session, flash, url_for
 from forms.FormUser import FormUser
 from forms.FormLogin import FormLogin
 from models_DB.Users import UsersDb
 
 
 # rota de cadastro 
-
 @app.route('/signin', methods=['POST', 'GET'])
 def cadastro():
     form = FormUser()
@@ -17,7 +17,8 @@ def cadastro():
         return redirect(url_for('cadastro'))
     return render_template('Cadastro.html', titulo=titulo, form=form)
 
-# o sisteam carrega e já altera a url para /bugig
+
+# o sistema carrega e já altera a url para /bugig que será sempre a principal
 @app.route('/')
 def index():
     return redirect(url_for('bugig'))
@@ -33,10 +34,27 @@ def bugig():
     return render_template('bugig.html')
 
 
-# autenticação do usuario no processo do sistema
-@app.route('/authenticate')
-def authenticate():
-    pass
+# decorador que verifica se o usuario está logado em outras sessoes
+# ao chamar uma função que deve ser protegida, basta usar esse decorador e passar o id_usuario nos parametros da rota
+def user_owns_resource(param_id_name):
+    
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if 'user_id' not in session:
+                flash('Você precisa fazer login para acessar esta página.', 'warning')
+                return redirect(url_for('login'))
+            
+            # Pega o ID da URL dinamicamente
+            url_id = kwargs.get(param_id_name)
+            if url_id != session['user_id']:
+                flash('Acesso negado a essa página.', 'danger')
+                return redirect(url_for('login'))
+            
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator    
+
 
 # rota de login 
 @app.route('/login', methods=['POST', 'GET'])
@@ -50,24 +68,14 @@ def login():
 
         email = form.email.data
         senha = form.senha.data
-        #usuario = UsersDb.query.filter_by(email=email).first()
+        usuario = UsersDb.query.filter_by(email=email).first()
 
-        usuario_teste = {
-            'id': 1,
-            'nome': 'Teste',
-            'id_tipo': 2,
-            "email": "teste@teste.com",
-            "senha": "123456"
-        }
-
-        if email == usuario_teste["email"] and senha == usuario_teste["senha"]:
-
-            session['user_id'] = usuario_teste["id"]
-            session['user_nome'] = usuario_teste["nome"]
-            session['user_tipo'] = usuario_teste["id_tipo"]
-            '''if usuario and usuario.senha == senha:
-                session['user_id'] = usuario.id
-                session['user_id'] = usuario.nome'''
+        if usuario and usuario.senha == senha:
+            
+            # cria a session do ususário que será utilizada para validações de rotas
+            session['user_id'] = usuario.id
+            session['user_nome'] = usuario.nome
+            session['user_tipo'] = usuario.id_tipo
 
             flash(f'Login efetuado com sucesso. Seja bem vindo!', 'success')
             return redirect(url_for('bugig'))
