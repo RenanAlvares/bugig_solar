@@ -1,8 +1,9 @@
 from functools import wraps
-from Main import app
+from Main import app, db
 from flask import render_template, request, redirect, session, flash, url_for
 from forms.FormUser import FormUser
 from forms.FormLogin import FormLogin
+from models_DB.Companies import Companies
 from models_DB.Users import UsersDb
 
 
@@ -11,10 +12,54 @@ from models_DB.Users import UsersDb
 def cadastro():
     form = FormUser()
     titulo = 'Cadastro'
+
+    distribuidoras = Companies.query.all()
+    
+    #mostra todas as distribuidoras para selecionar no cadastro
+    form.distribuidora.choices = [(str(d.id_distribuidora), d.nome) for d in distribuidoras]
+    
     if form.validate_on_submit():
+        
         nome = form.nome.data
         tipo_usuario = int(form.tipo_usuario.data)  # transforma string para int para salvar no banco como fk
-        return redirect(url_for('cadastro'))
+        email = form.email.data
+        senha = form.senha.data
+
+        if form.tipo_documento.data == 'cpf':
+            documento = form.cpf.data
+            razao_social = None
+        else:
+            documento = form.cnpj.data
+            razao_social = form.nome_fantasia.data
+        
+        cep = form.cep.data
+        numero = form.numero.data
+        telefone = form.telefone.data
+        id_distribuidora = int(form.distribuidora.data)
+
+        if UsersDb.query.filter_by(email=email).first():
+            flash('O e-mail informado já está em uso. Por favor, utilize outro e-mail.', 'danger')
+            return redirect(url_for('cadastro'))
+
+        novo_usuario = UsersDb(
+            nome=nome,
+            id_tipo=tipo_usuario,
+            email=email,
+            documento=documento,
+            cep=cep,
+            numero=numero,
+            senha=senha,
+            telefone=telefone,
+            razao_social=razao_social,
+            id_distribuidora=id_distribuidora
+        )
+
+        db.session.add(novo_usuario)
+        db.session.commit()
+        flash('Usuário cadastrado com sucesso!', 'success')
+
+        return redirect(url_for('bugig'))
+    
     return render_template('Cadastro.html', titulo=titulo, form=form)
 
 
@@ -36,6 +81,7 @@ def bugig():
 
 # decorador que verifica se o usuario está logado em outras sessoes
 # ao chamar uma função que deve ser protegida, basta usar esse decorador e passar o id_usuario nos parametros da rota
+# será utilizado se informarmos o id do usuário na url, ex: /user/1 
 def user_owns_resource(param_id_name):
     
     def decorator(f):
@@ -64,7 +110,6 @@ def login():
     titulo = 'Login'
 
     if form.validate_on_submit():
-        print('form funcionou')
 
         email = form.email.data
         senha = form.senha.data
