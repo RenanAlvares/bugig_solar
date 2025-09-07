@@ -18,7 +18,7 @@ class UsersDb(db.Model):
     razao_social = db.Column(db.String(100), nullable = True)
     id_distribuidora = db.Column(db.Integer, db.ForeignKey('Distribuidoras.id_distribuidora'), nullable = False)
 
-    id_tipo = db.relationship('TipoModel', backref='usuarios', lazy=True)
+    id_tipo = db.relationship('TipoUser', backref='usuarios', lazy=True)
     distribuidora = db.relationship('Companies', backref='usuarios', lazy=True)
 
 
