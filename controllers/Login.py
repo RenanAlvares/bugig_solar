@@ -6,6 +6,18 @@ from forms.FormLogin import FormLogin
 from models_DB.Companies import Companies
 from models_DB.Users import UsersDb
 
+# decorador que verifica se o usuario está logado em outras sessoes
+# ao chamar uma função que deve ser protegida, basta usar esse decorador e passar o id_usuario nos parametros da rota
+# será utilizado se informarmos o id do usuário na url, ex: /user/1 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Você precisa fazer login para acessar esta página.', 'warning')
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function  
+
 
 # rota de cadastro 
 @app.route('/signin', methods=['POST', 'GET'])
@@ -16,7 +28,7 @@ def cadastro():
     distribuidoras = Companies.query.all()
     
     #mostra todas as distribuidoras para selecionar no cadastro
-    form.distribuidora.choices = [(str(d.id_distribuidora), d.nome) for d in distribuidoras]
+    # form.distribuidora.choices = [(str(d.id_distribuidora), d.nome) for d in distribuidoras]
     
     if form.validate_on_submit():
         
@@ -66,40 +78,21 @@ def cadastro():
 # o sistema carrega e já altera a url para /bugig que será sempre a principal
 @app.route('/')
 def index():
-    return redirect(url_for('bugig'))
+    return redirect(url_for('landingPage'))
 
+@app.route('/landingPage')
+def landingPage():
+    return render_template('landingPage.html')
 
 #aqui será a tela principal do sistema, onde o cliente é redirecionado após logar.
 @app.route('/bugig')
+@login_required
 def bugig():
 
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
     return render_template('bugig.html')
-
-
-# decorador que verifica se o usuario está logado em outras sessoes
-# ao chamar uma função que deve ser protegida, basta usar esse decorador e passar o id_usuario nos parametros da rota
-# será utilizado se informarmos o id do usuário na url, ex: /user/1 
-def user_owns_resource(param_id_name):
-    
-    def decorator(f):
-        @wraps(f)
-        def decorated_function(*args, **kwargs):
-            if 'user_id' not in session:
-                flash('Você precisa fazer login para acessar esta página.', 'warning')
-                return redirect(url_for('login'))
-            
-            # Pega o ID da URL dinamicamente
-            url_id = kwargs.get(param_id_name)
-            if url_id != session['user_id']:
-                flash('Acesso negado a essa página.', 'danger')
-                return redirect(url_for('login'))
-            
-            return f(*args, **kwargs)
-        return decorated_function
-    return decorator    
 
 
 # rota de login 
