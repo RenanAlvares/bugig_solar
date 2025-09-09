@@ -20,20 +20,19 @@ def login_required(f):
 
 
 # rota de cadastro 
-@app.route('/signin', methods=['POST', 'GET'])
+@app.route('/signin', methods=['GET', 'POST'])
 def cadastro():
     form = FormUser()
     titulo = 'Cadastro'
 
     distribuidoras = Companies.query.all()
     
-    #mostra todas as distribuidoras para selecionar no cadastro
-    # form.distribuidora.choices = [(str(d.id_distribuidora), d.nome) for d in distribuidoras]
+    # Mostra todas as distribuidoras para selecionar no cadastro
+    form.distribuidora.choices = [(str(d.id_distribuidora), d.nome_distribuidora) for d in distribuidoras]
     
     if form.validate_on_submit():
-        
         nome = form.nome.data
-        tipo_usuario = int(form.tipo_usuario.data)  # transforma string para int para salvar no banco como fk
+        tipo_usuario = int(form.tipo_usuario.data)
         email = form.email.data
         senha = form.senha.data
 
@@ -73,6 +72,7 @@ def cadastro():
         return redirect(url_for('bugig'))
     
     return render_template('Cadastro.html', titulo=titulo, form=form)
+
 
 
 # o sistema carrega e já altera a url para /bugig que será sempre a principal

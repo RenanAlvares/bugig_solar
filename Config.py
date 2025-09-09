@@ -5,6 +5,6 @@ SQLALCHEMY_DATABASE_URI = '{SGBD}://{usuario}:{senha}@{servidor}/{database}'.for
     usuario = 'root',
     senha = 'Renan123',
     servidor = 'localhost',
-    database = 'nomebanco'
+    database = 'projeto_interdisciplinar'
 )
 SQLALCHEMY_TRACK_MODIFICATIONS = False
