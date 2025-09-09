@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/header.css') }}">
+    <title>Base</title>
+</head>
+<body>
+<header>
+        <nav id="navbar">
+        <i class="fa-solid fa-solar-panel">BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i></i>
+            <ul id="nav_list"> 
+                <li class="nav_item">
+                    <a href="#home">Inicio</a>
+                </li>
+                <li class="nav_item">
+                    <a href="#comprar">Comprar</a>
+                </li>
+                <li class="nav_item">
+                    <a href="#vender">Vender</a>
+                </li>
+            </ul>
+            <a href="Login.html" class="btn-default">Login</a>
+
+            <button id="mobile_btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </nav>
+        
+        <div id="mobile_menu">
+            <ul id="mobile_nav_list">
+                <li class="nav_item">
+                    <a href="#home">Início</a>
+                </li>
+                <li class="nav_item">
+                    <a href="#comprar"> Comprar</a>
+                </li>
+                <li class="nav_item">
+                    <a href="#vender">Vender</a>
+                </li>
+                
+            </ul>
+    
+            <a href="login.html" class="btn-default">Login</a>
+    
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+<footer>      
+        <div>
+            <span>
+                &copy 2025 Harry Felipe Santos Souza 116459
+            </span>
+            <div class="social-media-buttons">
+                    <a href="">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                    <a href="">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+             </div>
+        </div>
+    </footer>  
+</body>
+</html>
