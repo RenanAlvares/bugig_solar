@@ -1,5 +1,7 @@
 from Main import db
 from flask_wtf import FlaskForm 
+from Types import TipoUser
+from Companies import Companies
 
 class UsersDb(db.Model):
 
@@ -18,7 +20,7 @@ class UsersDb(db.Model):
     razao_social = db.Column(db.String(100), nullable = True)
     id_distribuidora = db.Column(db.Integer, db.ForeignKey('Distribuidoras.id_distribuidora'), nullable = False)
 
-    id_tipo = db.relationship('TipoUser', backref='usuarios', lazy=True)
+    tipo_usuario = db.relationship('TipoUser', backref='usuarios', lazy=True)
     distribuidora = db.relationship('Companies', backref='usuarios', lazy=True)
 
 
