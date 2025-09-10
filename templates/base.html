@@ -9,12 +9,15 @@
 <body>
     <header>
         <nav id="navbar">
-            
-        <i class="fa-solid fa-solar-panel">BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i></i>
 
+            <i class="fa-solid fa-solar-panel">BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i></i>
+
+         <div id="itens_nav">
             <a href="{{ url_for('login') }}" class="btn-default">Login</a>
             <a href="/signin" class="btn-default">Cadastrar-se</a>
+        </div>
 
+             
             <button id="mobile_btn">
                 <i class="fa-solid fa-bars"></i>
             </button>
@@ -44,8 +47,8 @@
         {% endblock %}
 
     <footer>      
-        <div>
-            <span>
+        <div id="itens-footer">
+            <span id ="span-footer">
                 &copy 2025 Harry Felipe Santos Souza 116459
             </span>
                 <div class="social-media-buttons">
