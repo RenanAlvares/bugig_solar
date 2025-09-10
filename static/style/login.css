@@ -1,3 +1,10 @@
+*{
+  font-family: "Poppins", sans-serif; /* muda a fonte de todo html*/
+  margin: 0; /* zera a margem para nao haver espacos nas margens*/
+  padding: 0; 
+  box-sizing: border-box; 
+}
+
 .label_login{
     margin: 0;
     padding: 0;
@@ -39,7 +46,9 @@
     border-radius: 6px;
     cursor: pointer;
     background-color: #092b5a; 
-    color: #ffffff
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
 }
 
 main{

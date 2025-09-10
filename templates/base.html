@@ -7,22 +7,17 @@
     <title>Base</title>
 </head>
 <body>
-<header>
+    <header>
         <nav id="navbar">
-        <i class="fa-solid fa-solar-panel">BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i></i>
-            <ul id="nav_list"> 
-                <li class="nav_item">
-                    <a href="#home">Inicio</a>
-                </li>
-                <li class="nav_item">
-                    <a href="#comprar">Comprar</a>
-                </li>
-                <li class="nav_item">
-                    <a href="#vender">Vender</a>
-                </li>
-            </ul>
-            <a href="Login.html" class="btn-default">Login</a>
 
+            <i class="fa-solid fa-solar-panel">BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i></i>
+
+         <div id="itens_nav">
+            <a href="{{ url_for('login') }}" class="btn-default">Login</a>
+            <a href="/signin" class="btn-default">Cadastrar-se</a>
+        </div>
+
+             
             <button id="mobile_btn">
                 <i class="fa-solid fa-bars"></i>
             </button>
@@ -42,19 +37,21 @@
                 
             </ul>
     
-            <a href="login.html" class="btn-default">Login</a>
+            <a href="{{ url_for('login') }}" class="btn-default">Login</a>
     
         </div>
+    </header>
 
         {% block content %}
+
         {% endblock %}
 
-<footer>      
-        <div>
-            <span>
+    <footer>      
+        <div id="itens-footer">
+            <span id ="span-footer">
                 &copy 2025 Harry Felipe Santos Souza 116459
             </span>
-            <div class="social-media-buttons">
+                <div class="social-media-buttons">
                     <a href="">
                         <i class="fa-brands fa-whatsapp"></i>
                     </a>

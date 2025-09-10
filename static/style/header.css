@@ -15,12 +15,20 @@ header {
     color: #ffffff;
 }
 
+#itens_nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
 #navbar {
     display: flex;
     flex-wrap: wrap;       /* permite quebrar linha se necessário */
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
+    gap: 15px;
 }
 
 #nav_logo {
@@ -104,4 +112,28 @@ a.btn-default {
 body {
     overflow-x: hidden; 
     scrollbar-width: none;     /* remove barra de rolagem horizontal */
+}
+
+
+footer{
+    background-color: #092b5a;
+    height: 80px;
+    display: flex; 
+    align-items: center;
+    box-shadow: 5px 1px 5px rgba(0,0,0,0.1);
+    color:#ffffff;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#span-footer{
+    font-size: medium;
+}
+
+#itens-footer{
+    display: flex;    
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    padding: 0 20px;
 }
