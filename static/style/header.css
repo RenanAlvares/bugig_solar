@@ -105,3 +105,13 @@ body {
     overflow-x: hidden; 
     scrollbar-width: none;     /* remove barra de rolagem horizontal */
 }
+
+
+footer{
+    background-color: #092b5a;
+    height: 80px;
+    display: flex; 
+    align-items: center;
+    box-shadow: 5px 1px 5px rgba(0,0,0,0.1);
+    color:#ffffff;
+}

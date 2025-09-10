@@ -21,7 +21,7 @@
         <div id = "cadastro">
             <h1>{{ titulo }}</h1>
 
-            <form method="post" action="/cadastro">
+            <form method="post" action="{{ url_for('signin') }}">
             {{ form.csrf_token() }}
 
             <div class="label_cadastro mb-2">
