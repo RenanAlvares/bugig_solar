@@ -1,7 +1,7 @@
 from Main import db
 from flask_wtf import FlaskForm 
-from Types import TipoUser
-from Companies import Companies
+from models_DB.Types import TipoUser
+from models_DB.Companies import Companies
 
 class UsersDb(db.Model):
 
