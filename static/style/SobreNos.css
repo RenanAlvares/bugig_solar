@@ -1,0 +1,112 @@
+/* 🎨 Paleta: Preto (#111), Branco (#fff) */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #fff;
+    background: linear-gradient(to bottom, #111, #333);
+}
+
+/* --- HEADER --- */
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #111;
+    color: #fff;
+    padding: 28px 8%;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    margin: 5px 0 0;
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.8);
+}
+
+/* --- NAVBAR BUTTONS --- */
+.navbar-button {
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: #fff;
+    color: #111;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-button:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+/* --- CONTAINERS --- */
+.container {
+    width: 80%;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(255,255,255,0.05); /* transparente */
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* --- SECTIONS --- */
+section {
+    padding: 3rem 0;
+}
+
+section h2 {
+    color: #fff;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+section p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.9);
+    text-align: justify;
+}
+
+/* --- FOOTER --- */
+footer {
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer-content {
+    background-color: transparent;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.footer-content a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.footer-content a:hover {
+    color: rgba(255,255,255,0.7);
+}

@@ -14,11 +14,9 @@
 </head>
 <body>
 
-    <header>
-        <nav id="navbar">
-            <i class="fa-solid fa-solar-panel">BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i></i>
-        </nav>
-    </header>
+    {% extends 'base.html' %}
+
+    {% block content %}
 
     <main>
         <div id="login">
@@ -44,5 +42,8 @@
             </form>
         </div>
     </main>
+
+    {% endblock %}
+
 </body>
 </html>

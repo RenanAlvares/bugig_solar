@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/header.css') }}">
     <title>Base</title>
+
+    <link rel="stylesheet" href="">
+
 </head>
 <body>
     <header>
@@ -13,8 +16,10 @@
             <i class="fa-solid fa-solar-panel">BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i></i>
 
          <div id="itens_nav">
+            <a href="SobreNos.html" class="btn-default">Sobre nós</a>
             <a href="{{ url_for('login') }}" class="btn-default">Login</a>
             <a href="/signin" class="btn-default">Cadastrar-se</a>
+
         </div>
 
              
@@ -48,9 +53,10 @@
 
     <footer>      
         <div id="itens-footer">
-            <span id ="span-footer">
-                &copy 2025 Harry Felipe Santos Souza 116459
-            </span>
+            <div class="footer-content">
+                <p>&copy; 2025 BugigSolar. Todos os direitos reservados.</p>
+                <p><a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
+            </div>
                 <div class="social-media-buttons">
                     <a href="">
                         <i class="fa-brands fa-whatsapp"></i>
