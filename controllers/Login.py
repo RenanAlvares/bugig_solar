@@ -3,12 +3,14 @@ from Main import app, db
 from flask import render_template, request, redirect, session, flash, url_for
 from controllers.validations import validar_documento
 from forms.form_user import FormUser
-from forms.FormLogin import FormLogin
+from forms.form_login import FormLogin
 from models_DB.companies import Companies
 from models_DB.users import UsersDb
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 # decorador que verifica se o usuario está logado em outras sessoes
-# ao chamar uma função que deve ser protegida, basta usar esse decorador e passar o id_usuario nos parametros da rota
+# ao chamar uma url que deve ser verificada, colocar o decorador login_required acima da função
 
 def login_required(f):
     @wraps(f)
@@ -49,7 +51,7 @@ def signin():
         nome = form.nome.data
         tipo_usuario = int(form.tipo_usuario.data)
         email = form.email.data
-        senha = form.senha.data
+        senha = generate_password_hash(form.senha.data)
 
         if form.tipo_documento.data == 'cpf':
             documento = form.cpf.data
@@ -96,9 +98,6 @@ def signin():
 @login_required
 def bugig():
 
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-
     return render_template('bugig.html')
 
 
@@ -112,10 +111,9 @@ def login():
     if form.validate_on_submit():
 
         email = form.email.data
-        senha = form.senha.data
         usuario = UsersDb.query.filter_by(email=email).first()
 
-        if usuario and usuario.senha == senha:
+        if usuario and check_password_hash(usuario.senha, form.senha.data):
             
             # cria a session do ususário que será utilizada para validações de rotas
             session['user_id'] = usuario.id
@@ -126,7 +124,7 @@ def login():
             return redirect(url_for('bugig'))
         else:
 
-            flash('Email ou senha inválidos. Por favor, tente novamente!', 'danger')
-            return redirect(url_for('login'))
+            flash('Email ou senha inválidos!', 'danger')
+            return render_template('login.html', titulo=titulo, form=form)
         
     return render_template('login.html', titulo=titulo, form=form)
