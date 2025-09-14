@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
-from controllers import Login
+from controllers import login
 
 app = Flask(__name__)
 
@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 
 csrf = CSRFProtect(app)
 
-from controllers.Login import *
+from controllers.login import *
 #from views_users import *
 
 
