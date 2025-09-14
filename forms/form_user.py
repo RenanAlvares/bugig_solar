@@ -1,6 +1,9 @@
-from Main import app
+from Main import app, db
 from flask_wtf import FlaskForm
 from wtforms import SelectField, StringField, validators, SubmitField, PasswordField, IntegerField, RadioField
+
+from models_DB.companies import Companies
+from models_DB.types import TipoUser
 
 class FormUser(FlaskForm):
 
@@ -24,6 +27,17 @@ class FormUser(FlaskForm):
 
     distribuidora = SelectField('Seleciona sua distribuidora:', [validators.DataRequired()])
     cadastrar = SubmitField('Cadastrar novo usuário')
+
+    '''def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Distribuidoras do banco
+        distribuidoras = db.session.query(Companies).all()
+        self.distribuidora.choices = [(str(d.id), d.nome_distribuidora) for d in distribuidoras]
+
+        # Tipos de usuário do banco
+        tipos = db.session.query(TipoUser).all()
+        self.tipo_usuario.choices = [(str(t.id), t.nome) for t in tipos]'''
+
 
     #valida o tipo de documento
     def validate(self):

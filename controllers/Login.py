@@ -1,14 +1,14 @@
 from functools import wraps
 from Main import app, db
 from flask import render_template, request, redirect, session, flash, url_for
-from forms.FormUser import FormUser
+from forms.form_user import FormUser
 from forms.FormLogin import FormLogin
-from models_DB.Companies import Companies
-from models_DB.Users import UsersDb
+from models_DB.companies import Companies
+from models_DB.users import UsersDb
 
 # decorador que verifica se o usuario está logado em outras sessoes
 # ao chamar uma função que deve ser protegida, basta usar esse decorador e passar o id_usuario nos parametros da rota
-# será utilizado se informarmos o id do usuário na url, ex: /user/1 
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -21,15 +21,15 @@ def login_required(f):
 
 # rota de cadastro 
 @app.route('/signin', methods=['GET', 'POST'])
-def cadastro():
+def signin():
     form = FormUser()
     titulo = 'Cadastro'
 
     distribuidoras = Companies.query.all()
-    
+
     # Mostra todas as distribuidoras para selecionar no cadastro
-    form.distribuidora.choices = [(str(d.id_distribuidora), d.nome_distribuidora) for d in distribuidoras]
-    
+    form.distribuidora.choices = [(str(d.id), d.nome_distribuidora) for d in distribuidoras]
+
     if form.validate_on_submit():
         nome = form.nome.data
         tipo_usuario = int(form.tipo_usuario.data)

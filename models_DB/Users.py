@@ -9,7 +9,7 @@ class UsersDb(db.Model):
     # como está no banco de dados
     
     id_tipo = db.Column(db.Integer, db.ForeignKey('Tipos_usuarios.id_tipo'), nullable=False)
-    id_distribuidora = db.Column(db.Integer, db.ForeignKey('Distribuidoras.id_distribuidora'), nullable = False)
+    id_distribuidora = db.Column(db.Integer, db.ForeignKey('Distribuidoras.id'), nullable = False)
     id_tipo_pessoa = db.Column(db.Integer, db.ForeignKey('Tipo_Pessoa.id'), nullable = False) 
 
     id = db.Column(db.Integer, primary_key = True, autoincrement = True)
