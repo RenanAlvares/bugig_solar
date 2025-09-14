@@ -12,7 +12,7 @@ db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 
 from controllers.login import *
-#from views_users import *
+from controllers.public_routes import *
 
 
 if __name__ == '__main__':
