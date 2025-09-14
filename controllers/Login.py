@@ -1,6 +1,6 @@
 from functools import wraps
 from Main import app, db
-from flask import render_template, request, redirect, session, flash, url_for
+from flask import Blueprint, render_template, request, redirect, session, flash, url_for
 from controllers.validations import validar_documento
 from forms.form_user import FormUser
 from forms.form_login import FormLogin
@@ -8,6 +8,8 @@ from models_DB.companies import Companies
 from models_DB.users import UsersDb
 from werkzeug.security import generate_password_hash, check_password_hash
 
+# isso faz com que toda rota que tiver auth_bp terá o /bugig antes da rota principal
+auth_bp = Blueprint('auth', __name__)
 
 # decorador que verifica se o usuario está logado em outras sessoes
 # ao chamar uma url que deve ser verificada, colocar o decorador login_required acima da função
@@ -23,7 +25,7 @@ def login_required(f):
 
 
 # rota de cadastro 
-@app.route('/signin', methods=['GET', 'POST'])
+@auth_bp.route('/signin', methods=['GET', 'POST'])
 def signin():
     form = FormUser()
     titulo = 'Cadastro'
@@ -34,8 +36,8 @@ def signin():
 
     # o tipo de pessoa fisica ou juridica vai ser selecionado direto do form
 
-    if form.validate_on_submit():  # valida todos os validators nativos
-        # Validação customizada externa
+    if form.validate_on_submit():  # valida todos os validators nativos (diferentes dos que estão nos forms)
+        # valida o tipo de documento
         erros = validar_documento(
             tipo_documento=form.tipo_documento.data,
             cpf=form.cpf.data,
@@ -102,7 +104,7 @@ def bugig():
 
 
 # rota de login 
-@app.route('/login', methods=['POST', 'GET'])
+@auth_bp.route('/login', methods=['POST', 'GET'])
 def login():
 
     form = FormLogin()
