@@ -30,3 +30,11 @@ class TipoGeracao(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     nome_tipo_geracao = db.Column(db.String(100), nullable=False)
+
+
+class TipoPessoa(db.Model):
+
+    __tablename__ = 'Tipo_Pessoa'
+
+    id = db.Column(db.Integer, primary_key=True)
+    tipo_pessoa = db.Column(db.String(100), nullable=False)    
