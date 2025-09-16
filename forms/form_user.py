@@ -1,6 +1,9 @@
-from Main import app
+from Main import app, db
 from flask_wtf import FlaskForm
 from wtforms import SelectField, StringField, validators, SubmitField, PasswordField, IntegerField, RadioField
+
+from models_DB.companies import Companies
+from models_DB.types import TipoUser
 
 class FormUser(FlaskForm):
 
@@ -25,27 +28,10 @@ class FormUser(FlaskForm):
     distribuidora = SelectField('Seleciona sua distribuidora:', [validators.DataRequired()])
     cadastrar = SubmitField('Cadastrar novo usuário')
 
-    #valida o tipo de documento
-    def validate(self):
-        resultado_validacao = FlaskForm.validate(self)
-        if not resultado_validacao:
-            return False
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # distribuidoras do banco
+        distribuidoras = db.session.query(Companies).all()
+        self.distribuidora.choices = [(str(d.id), d.nome_distribuidora) for d in distribuidoras]
 
-        # Validação para CNPJ
-        if self.tipo_documento.data == 'cnpj':
-            if not self.nome_fantasia.data or self.nome_fantasia.data.strip() == '':
-                self.nome_fantasia.errors.append(
-                    'Por favor, preencha o Nome Fantasia, pois ele é obrigatório para CNPJs.'
-                )
-                return False
-
-        # Validação para CPF
-        if self.tipo_documento.data == 'cpf':
-            if not self.cpf.data or self.cpf.data.strip() == '':
-                self.cpf.errors.append(
-                    'Por favor, informe o CPF, pois ele é obrigatório para este tipo de documento.'
-                )
-                return False
-
-        return True
     

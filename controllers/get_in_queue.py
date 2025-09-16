@@ -1,10 +1,13 @@
 from Main import app
-from flask import render_template, request, redirect, session, flash, url_for, send_from_directory
-from forms.FormQueue import FormQueue
-from models_DB.Companies import DistribuidoraModel
+from flask import Blueprint, render_template, request, redirect, session, flash, url_for, send_from_directory
+from controllers.login import login_required
+from forms.form_queue import FormQueue
+from models_DB.companies import DistribuidoraModel
 
+auth_bp = Blueprint('auth', __name__)
 
-@app.route('/get_in_queue', methods=['POST', 'GET']) # função de entrar na fila
+@auth_bp.route('/get_in_queue', methods=['POST', 'GET']) # função de entrar na fila
+@login_required
 def get_in_queue():
 
     form = FormQueue()

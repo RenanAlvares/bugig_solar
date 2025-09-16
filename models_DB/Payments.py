@@ -2,7 +2,7 @@ from Main import db
 
 class Payment(db.Model):
 
-    __tablename__ = 'Pagamentod'
+    __tablename__ = 'Pagamento'
 
     id = db.Column(db.Integer, primary_key=True)
     id_transferencia = db.Column(db.Integer, db.ForeignKey('Transferencia.id'), nullable=False)
@@ -10,6 +10,7 @@ class Payment(db.Model):
     id_tipo_pagamento = db.Column(db.Integer, db.ForeignKey('TipoPagamento.id'), nullable=False)
     data_vencimento = db.Column(db.DateTime, nullable=False)
     data_liquidacao = db.Column(db.DateTime, nullable=False)
+    valor = db.Column(db.Float, nullable=False)
 
     transferencia = db.relationship('Transferencia', backref='pagamentos')
     tipo_pagamento = db.relationship('TipoPagamento', backref='pagamentos')
