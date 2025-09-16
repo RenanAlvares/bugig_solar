@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style/LandingPage.css') }}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
           integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
           crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -19,37 +21,65 @@
 
 
 <main id="content">
-        <section id="home">
-            <div class="shape"></div>
-            <div class="cta">
-                <h1 class="title">
-                    Melhor Gerenciador de Creditos Solares
-                </h1>
+    <section id="home">
+    <section class="hero">
+        <div class="container">
+            <h1>Leve energia solar para quem mais precisa 🌞</h1>
+            <p>No BugigSolar, você doa ou recebe créditos de energia solar com facilidade e segurança.</p>
+        </div>
+    </section>
 
-                <p class="description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore
-                </p>
-                
-                <div class="social-media-buttons">
-                    <a href="">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </a>
-                    <a href="">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a href="">
-                        <i class="fa-brands fa-facebook"></i>
-                    </a>
-                </div>
+    <div class="info-box">
+        <h3>O que você pode fazer no BugigSolar?</h3>
+        <div class="button-group">
+            <button onclick="mostrarFuncionalidade('Entrar na Fila')">Entrar na Fila</button>
+            <button onclick="mostrarFuncionalidade('Fazer Doação')">Doar Créditos</button>
+            <button onclick="mostrarFuncionalidade('Consultar Movimentação')">Consultar Movimentação</button>
+            <button onclick="mostrarFuncionalidade('Simular Economia')">Simular Economia</button>
+        </div>
+    </div>
+
+    <div id="aviso-funcionalidade" class="aviso-funcionalidade">
+        <button onclick="fecharAviso()" aria-label="Fechar aviso">Fechar</button>
+        <p id="texto-aviso"></p>
+    </div>
+
+    <!-- Simulador -->
+    <section class="simulador">
+        <div class="container">
+            <h2>Simule sua Economia 🌱</h2>
+            <form id="simulador-form">
+                <label for="consumo">Consumo médio mensal (kWh):</label>
+                <input type="number" id="consumo" placeholder="Ex: 250" required />
+                <button type="submit">Simular</button>
+                <p id="resultado-simulador"></p>
+            </form>
+        </div>
+    </section>
+
+    <section class="painel-creditos">
+        <div class="container">
+            <h2>Impacto Real</h2>
+            <div class="creditos-dados">
+                <p>🔋 Créditos Doados: <strong>2.340 kWh</strong></p>
+                <p>🌱 Créditos Recebidos: <strong>1.890 kWh</strong></p>
+                <p>👥 Pessoas Impactadas: <strong>64</strong></p>
             </div>
+        </div>
+    </section>
 
-        </section>
-
-
-
-
+    <section class="cta-final">
+        <div class="container">
+            <h2>Pronto para compartilhar energia solar?</h2>
+            <p>Ajude alguém ou economize você também.</p>
+            <div class="hero-buttons">
+                <button onclick="mostrarFuncionalidade('Entrar na Fila')">Entrar na Fila</button>
+                <button onclick="mostrarFuncionalidade('Fazer Doação')">Fazer Doação</button>
+            </div>
+        </div>
+    </section>
 </main>
 
+<script src="{{ url_for('static', filename='style/script.js') }}"></script>
 
 {% endblock %}

@@ -1,66 +1,116 @@
-*{
-  font-family: "Poppins", sans-serif; /* muda a fonte de todo html*/
-  margin: 0; /* zera a margem para nao haver espacos nas margens*/
-  padding: 0; 
-  box-sizing: border-box; 
+/* 🎨 Paleta: Preto (#111), Branco (#fff), Amarelo Solar (#f9c80e), Verde (#44af69) */
+
+/* --- BODY --- */
+body {
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    background: linear-gradient(to bottom, #111, #333);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.label_login{
-    margin: 0;
-    padding: 0;
+/* --- HEADER --- */
+header {
+    width: 100%;
+    padding: 28px 8%;  /* mantido tamanho original */
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #111; /* nova cor combinando com main */
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+header i.fa-solar-panel {
+    font-size: 1.5rem;  /* tamanho original */
+}
+
+/* --- MAIN LOGIN --- */
+main {
+    flex: 1;
     display: flex;
     justify-content: center;
-    width: 100%;
-    display: flex;
     align-items: center;
-    font-weight: 600;
+    padding: 4rem 1rem;
+}
+
+#login {
+    background: rgba(255,255,255,0.05); /* transparente */
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
 }
 
 #login h1 {
-    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #fff;
 }
 
-#login{
-    justify-content: center;
-    align-items: center;
+/* --- INPUTS --- */
+.label_login .form-control {
     width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+    transition: 0.3s;
 }
 
+.label_login .form-control:focus {
+    outline: none;
+    border-color: #f9c80e; /* Amarelo Solar */
+    box-shadow: 0 0 8px rgba(249,200,14,0.5);
+}
+
+/* --- LABELS --- */
+.label_login label {
+    display: block;
+    text-align: left;
+    margin-bottom: 0.2rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* --- BOTOES --- */
 .btn_container {
     display: flex;
-    justify-content: center;   /* centraliza na horizontal */
-    gap: 10px;                 /* espaço entre os botões */
-    margin-top: 15px;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
 }
 
-.btn_login{
-    flex: 1;                   /* faz os dois terem o mesmo tamanho */
-    max-width: 150px;          /* largura máxima de cada botão */
-    padding: 10px 20px;
+.btn_login {
+    background: #f9c80e; /* Amarelo Solar */
+    color: #111;
+    padding: 0.8rem 1rem;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
+    font-weight: bold;
     cursor: pointer;
-    background-color: #092b5a; 
-    color: #ffffff;
     text-decoration: none;
-    text-align: center;
+    transition: all 0.3s;
 }
 
-main{
-    margin: 0;
-    padding: 0;
-    height: 100vh;              /* ocupa a altura total da tela */
-    display: flex;              /* ativa o Flexbox */
-    justify-content: center;    /* centraliza na horizontal */
-    align-items: center;        /* centraliza na vertical */
-    width: 100%;
+.btn_login:hover {
+    background: #44af69; /* Verde */
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
 
-    background-color: #09738a; /* fundo do main */
-    color: #092b5a; /* muda cor das letras*/
-    scrollbar-width: none;
+/* --- RESPONSIVO --- */
+@media screen and (max-width: 500px) {
+    #login {
+        padding: 2rem 1rem;
+    }
 }
