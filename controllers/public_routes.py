@@ -7,10 +7,10 @@ public_bp = Blueprint('public', __name__)
 def index():
     return redirect(url_for('landingPage'))
 
-@public_bp.route('/landingPage')
+@app.route('/landingPage')
 def landingPage():
     return render_template('LandingPage.html')
 
-@public_bp.route('/about')
+@app.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('SobreNos.html')

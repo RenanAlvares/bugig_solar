@@ -25,7 +25,7 @@ def login_required(f):
 
 
 # rota de cadastro 
-@auth_bp.route('/signin', methods=['GET', 'POST'])
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
     form = FormUser()
     titulo = 'Cadastro'
@@ -104,7 +104,7 @@ def bugig():
 
 
 # rota de login 
-@auth_bp.route('/login', methods=['POST', 'GET'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
 
     form = FormLogin()
