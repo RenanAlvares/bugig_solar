@@ -1,4 +1,4 @@
-from Main import db
+from extensions import db
 
 class Companies(db.Model):
 

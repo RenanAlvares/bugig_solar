@@ -1,5 +1,5 @@
 from functools import wraps
-from Main import app, db
+from extensions import db
 from flask import Blueprint, render_template, request, redirect, session, flash, url_for
 from controllers.validations import validar_documento
 from forms.form_user import FormUser
@@ -19,13 +19,13 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
             flash('Você precisa fazer login para acessar esta página.', 'warning')
-            return redirect(url_for('login'))
+            return redirect(url_for('auth.login'))
         return f(*args, **kwargs)
     return decorated_function  
 
 
 # rota de cadastro 
-@app.route('/signin', methods=['GET', 'POST'])
+@auth_bp.route('/signin', methods=['GET', 'POST'])
 def signin():
     form = FormUser()
     titulo = 'Cadastro'
@@ -90,21 +90,17 @@ def signin():
         db.session.commit()
         flash('Usuário cadastrado com sucesso!', 'success')
 
-        return redirect(url_for('bugig'))
+        return redirect(url_for('auth.bugig'))
 
     return render_template('Cadastro.html', titulo=titulo, form=form)
 
-
-#aqui será a tela principal do sistema, onde o cliente é redirecionado após logar.
-@app.route('/bugig')
+@auth_bp.route('/bugig')
 @login_required
 def bugig():
-
     return render_template('bugig.html')
 
-
 # rota de login 
-@app.route('/login', methods=['POST', 'GET'])
+@auth_bp.route('/login', methods=['POST', 'GET'])
 def login():
 
     form = FormLogin()
@@ -123,7 +119,7 @@ def login():
             session['user_tipo'] = usuario.id_tipo
 
             flash(f'Login efetuado com sucesso. Seja bem vindo!', 'success')
-            return redirect(url_for('bugig'))
+            return redirect(url_for('auth.bugig'))
         else:
 
             flash('Email ou senha inválidos!', 'danger')

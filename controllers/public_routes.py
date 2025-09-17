@@ -1,16 +1,19 @@
-from flask import Blueprint, render_template, redirect, url_for, session
-from Main import app
+from flask import Blueprint, render_template, redirect, url_for
 
+# Definindo o blueprint
 public_bp = Blueprint('public', __name__)
 
+# Rota raiz redireciona para a landing page
 @public_bp.route('/')
 def index():
-    return redirect(url_for('landingPage'))
+    return redirect(url_for('public.landing_page'))
 
-@app.route('/landingPage')
-def landingPage():
+# Rota da landing page
+@public_bp.route('/landingPage')
+def landing_page():
     return render_template('LandingPage.html')
 
-@app.route('/about')
+# Rota da página sobre
+@public_bp.route('/about')
 def about():
-    return render_template('SobreNos.html')
+    return render_template('about.html')
