@@ -28,10 +28,5 @@ class FormUser(FlaskForm):
     distribuidora = SelectField('Seleciona sua distribuidora:', [validators.DataRequired()])
     cadastrar = SubmitField('Cadastrar novo usuário')
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # distribuidoras do banco
-        distribuidoras = db.session.query(Companies).all()
-        self.distribuidora.choices = [(str(d.id), d.nome_distribuidora) for d in distribuidoras]
 
     

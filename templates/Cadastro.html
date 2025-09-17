@@ -5,86 +5,134 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style/cadastro.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/header.css') }}">
     <title>{{ titulo }}</title>
-     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <header>
         <nav id="navbar">
-            <i class="fa-solid fa-solar-panel">BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i></i>
-    
-        </div>
-
+            <i class="fa-solid fa-solar-panel"></i> BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i>
+        </nav>
     </header>
 
     <main>
-        <div id = "cadastro">
+        <div id="cadastro">
             <h1>{{ titulo }}</h1>
 
-            <form method="post" action="{{ url_for('signin') }}">
-            {{ form.csrf_token() }}
+            <form method="post" action="{{ url_for('auth.signin') }}">
+                {{ form.csrf_token() }}
 
-            <div class="label_cadastro mb-2">
-                {{ form.nome.label(class='form-label') }}
-                {{ form.nome(class='form-control') }}
-            </div>
+                <div class="label_cadastro mb-2">
+                    {{ form.nome.label(class='form-label') }}
+                    {{ form.nome(class='form-control') }}
+                    {% for error in form.nome.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
 
-            <div class="label_cadastro mb-2">
-                <label class="form-label">Tipo de usuário</label><br>
-                {% for subfield in form.tipo_usuario %}
-                    <label>{{ subfield() }} {{ subfield.label.text }}</label><br>
-                {% endfor %}
-            </div>
+                <div class="label_cadastro mb-2">
+                    <label class="form-label">Tipo de usuário</label><br>
+                    {% for subfield in form.tipo_usuario %}
+                        <label>
+                            {{ subfield(checked='checked' if subfield.data else '') }} {{ subfield.label.text }}
+                        </label><br>
+                    {% endfor %}
+                    {% for error in form.tipo_usuario.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
 
-            <div class="label_cadastro mb-2">
-                {{ form.email.label(class='form-label') }}
-                {{ form.email(class='form-control') }}
-            </div>
+                <div class="label_cadastro mb-2">
+                    {{ form.email.label(class='form-label') }}
+                    {{ form.email(class='form-control') }}
+                    {% for error in form.email.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
 
-            <div class="label_cadastro mb-2">
-                <label class="form-label">CPF ou CNPJ?</label><br>
-                {% for subfield in form.tipo_documento %}
-                    <label>{{ subfield() }} {{ subfield.label.text }}</label><br>
-                {% endfor %}
-            </div>
+                <div class="label_cadastro mb-2">
+                    <label class="form-label">CPF ou CNPJ?</label><br>
+                    {% for subfield in form.tipo_documento %}
+                        <label>
+                            {{ subfield(checked='checked' if subfield.data else '') }} {{ subfield.label.text }}
+                        </label><br>
+                    {% endfor %}
+                    {% for error in form.tipo_documento.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
 
-            <div class="mb-2" id="cpf_group" style="display: none;">
-                {{ form.cpf.label(class='form-label') }}
-                {{ form.cpf(class='form-control') }}
-            </div>
+                <div class="mb-2" id="cpf_group" style="display: none;">
+                    {{ form.cpf.label(class='form-label') }}
+                    {{ form.cpf(class='form-control') }}
+                    {% for error in form.cpf.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
 
-            <div class="mb-2" id="cnpj_group" style="display: none;">
-                {{ form.cnpj.label(class='form-label') }}
-                {{ form.cnpj(class='form-control') }}
-            </div>
+                <div class="mb-2" id="cnpj_group" style="display: none;">
+                    {{ form.cnpj.label(class='form-label') }}
+                    {{ form.cnpj(class='form-control') }}
+                    {% for error in form.cnpj.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
 
-            <div class="label_cadastro mb-2" id="nome_fantasia_group" style="display: none;">
-                {{ form.nome_fantasia.label(class='form-label') }}
-                {{ form.nome_fantasia(class='form-control') }}
-            </div>
+                <div class="label_cadastro mb-2" id="nome_fantasia_group" style="display: none;">
+                    {{ form.nome_fantasia.label(class='form-label') }}
+                    {{ form.nome_fantasia(class='form-control') }}
+                    {% for error in form.nome_fantasia.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
 
-            <div class="label_cadastro mb-2">
-                {{ form.cep.label(class='form-label') }}
-                {{ form.cep(class='form-control') }}
-            </div>
+                <div class="label_cadastro mb-2">
+                    {{ form.cep.label(class='form-label') }}
+                    {{ form.cep(class='form-control') }}
+                    {% for error in form.cep.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
 
-            <div class="label_cadastro mb-2">
-                {{ form.numero.label(class='form-label') }}
-                {{ form.numero(class='form-control') }}
-            </div>
+                <div class="label_cadastro mb-2">
+                    {{ form.numero.label(class='form-label') }}
+                    {{ form.numero(class='form-control') }}
+                    {% for error in form.numero.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
 
-            <div class="label_cadastro mb-2">
-                {{ form.senha.label(class='form-label') }}
-                {{ form.senha(class='form-control') }}
-            </div>
+                <div class="label_cadastro mb-2">
+                    {{ form.telefone.label(class='form-label') }}
+                    {{ form.telefone(class='form-control') }}
+                    {% for error in form.telefone.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
 
-            <div class="btn_conteiner">
-                {{ form.cadastrar(class='btn_cadastro') }}
-            </div>
+                <div class="label_cadastro mb-2">
+                    {{ form.senha.label(class='form-label') }}
+                    {{ form.senha(class='form-control') }}
+                    {% for error in form.senha.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="label_cadastro mb-2">
+                    {{ form.distribuidora.label(class='form-label') }}
+                    {{ form.distribuidora(class='form-select') }}
+                    {% for error in form.distribuidora.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="btn_conteiner">
+                    {{ form.cadastrar(class='btn_cadastro') }}
+                </div>
+            </form>
         </div>
     </main>
-
-    </form>
 
     <script>
         function toggleDocumentoFields() {
@@ -112,6 +160,5 @@
             radio.addEventListener("change", toggleDocumentoFields);
         }
     </script>
-
 </body>
 </html>
