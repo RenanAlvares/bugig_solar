@@ -1,40 +1,50 @@
 from extensions import db
 
 class TipoUser(db.Model):
+    __tablename__ = 'tipo_usuario'
 
-    __tablename__ = 'Tipos_usuarios'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome_tipo_user = db.Column(db.String(45), nullable=False)
 
-    id_tipo = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nome_tipo_user = db.Column(db.String(20), nullable=False)
+    def __repr__(self):
+        return f'<TipoUser {self.nome_tipo_user}>'
 
 
 class TipoPagamento(db.Model):
+    __tablename__ = 'tipo_pagamento'
 
-    __tablename__ = 'Tipo_pagamento'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome_tipo = db.Column(db.String(45), nullable=False)
 
-    id = db.Column(db.Integer, primary_key=True)
-    nome_tipo_pag = db.Column(db.String(100), nullable=False)
+    def __repr__(self):
+        return f'<TipoPagamento {self.nome_tipo}>'
 
 
 class TipoClasses(db.Model):
-
     __tablename__ = 'Tipo_Classes'
 
-    id = db.Column(db.Integer, primary_key=True)
-    nome_tipo_classe = db.Column(db.String(100), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome_tipo_classe = db.Column(db.String(45), nullable=False)
+
+    def __repr__(self):
+        return f'<TipoClasses {self.nome_tipo_classe}>'
 
 
 class TipoGeracao(db.Model):
+    __tablename__ = 'Tipo_geracao'
 
-    __tablename__ = 'Tipo_Geracao'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome_tipo_geracao = db.Column(db.String(50), nullable=False)
 
-    id = db.Column(db.Integer, primary_key=True)
-    nome_tipo_geracao = db.Column(db.String(100), nullable=False)
+    def __repr__(self):
+        return f'<TipoGeracao {self.nome_tipo_geracao}>'
 
 
 class TipoPessoa(db.Model):
+    __tablename__ = 'tipo_pessoa'
 
-    __tablename__ = 'Tipo_Pessoa'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    tipo_pessoa = db.Column(db.String(45), nullable=False)
 
-    id = db.Column(db.Integer, primary_key=True)
-    tipo_pessoa = db.Column(db.String(100), nullable=False)    
+    def __repr__(self):
+        return f'<TipoPessoa {self.tipo_pessoa}>'

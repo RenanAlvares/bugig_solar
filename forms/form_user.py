@@ -2,15 +2,12 @@ from extensions import db
 from flask_wtf import FlaskForm
 from wtforms import SelectField, StringField, validators, SubmitField, PasswordField, IntegerField, RadioField
 
-from models_DB.companies import Companies
-from models_DB.types import TipoUser
-
 class FormUser(FlaskForm):
 
     nome = StringField('Digite o nome:', [validators.DataRequired(), validators.Length(min=2, max=150)])
 
     #fazer alguma validação se é cliente ou fornecedor (botão)
-    tipo_usuario = RadioField('Tipo de usuário:', choices=[('1', 'Cliente'), ('2', 'Fornecedor')], validators=[validators.DataRequired()])
+    tipo_usuario = RadioField('Tipo de usuário:', choices=[('1', 'Beneficiário'), ('2', 'Gerador')], validators=[validators.DataRequired()])
 
     email = StringField('Digite o e-mail: ', [validators.DataRequired(), validators.Length(min=2, max=150)])
 
@@ -25,7 +22,7 @@ class FormUser(FlaskForm):
     numero = IntegerField('Digite o número do endereço:', [validators.DataRequired()])
     senha = PasswordField('Digite a senha:', [validators.DataRequired(), validators.Length(min=2, max=15)])
 
-    distribuidora = SelectField('Seleciona sua distribuidora:', [validators.DataRequired()])
+    distribuidora = SelectField('Seleciona sua distribuidora:', [validators.DataRequired()], choices=[])
     cadastrar = SubmitField('Cadastrar novo usuário')
 
 
