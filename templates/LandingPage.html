@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,15 +13,13 @@
     <title>LandingPage</title>
 </head>
 
-
 {% extends 'base.html' %}
 
 {% block content %}
 
-
-
 <main id="content">
-    <section id="home">
+
+    <!-- HERO -->
     <section class="hero">
         <div class="container">
             <h1>Leve energia solar para quem mais precisa 🌞</h1>
@@ -29,34 +27,55 @@
         </div>
     </section>
 
+    <!-- INFO BOX EM CARDS -->
     <div class="info-box">
         <h3>O que você pode fazer no BugigSolar?</h3>
-        <div class="button-group">
-            <button onclick="mostrarFuncionalidade('Entrar na Fila')">Entrar na Fila</button>
-            <button onclick="mostrarFuncionalidade('Fazer Doação')">Doar Créditos</button>
-            <button onclick="mostrarFuncionalidade('Consultar Movimentação')">Consultar Movimentação</button>
-            <button onclick="mostrarFuncionalidade('Simular Economia')">Simular Economia</button>
+        <div class="cards-container">
+
+            <div class="card" onclick="mostrarFuncionalidade('Entrar na Fila')">
+                <i class="fa-solid fa-user-plus"></i>
+                <h4>Entrar na Fila</h4>
+                <p>Solicite créditos solares e aguarde sua vez na fila de recebimento.</p>
+            </div>
+
+            <div class="card" onclick="mostrarFuncionalidade('Fazer Doação')">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+                <h4>Doar Créditos</h4>
+                <p>Compartilhe sua energia excedente e ajude outras famílias.</p>
+            </div>
+
+            <div class="card" onclick="mostrarFuncionalidade('Consultar Movimentação')">
+                <i class="fa-solid fa-chart-line"></i>
+                <h4>Consultar Movimentação</h4>
+                <p>Acompanhe em tempo real seus créditos doados e recebidos.</p>
+            </div>
+
+            <div class="card" onclick="mostrarFuncionalidade('Simular Economia')">
+                <i class="fa-solid fa-solar-panel"></i>
+                <h4>Simular Economia</h4>
+                <p>Descubra quanto você pode economizar com energia solar.</p>
+            </div>
+
         </div>
     </div>
 
+    <!-- AVISO -->
     <div id="aviso-funcionalidade" class="aviso-funcionalidade">
         <button onclick="fecharAviso()" aria-label="Fechar aviso">Fechar</button>
         <p id="texto-aviso"></p>
     </div>
 
-    <!-- Simulador -->
-    <section class="simulador">
-        <div class="container">
-            <h2>Simule sua Economia 🌱</h2>
-            <form id="simulador-form">
-                <label for="consumo">Consumo médio mensal (kWh):</label>
-                <input type="number" id="consumo" placeholder="Ex: 250" required />
-                <button type="submit">Simular</button>
-                <p id="resultado-simulador"></p>
-            </form>
+    <!-- SEÇÃO LATERAL COM IMAGEM -->
+    <section class="section-imagem">
+        <div class="texto">
+            <h2>Energia limpa, impacto real ⚡</h2>
+            <p>Desde 2024 ajudando famílias a economizar e compartilhar energia solar no Brasil.</p>
+            <button>Saiba mais</button>
         </div>
+        <img src="/static/Imagens/energia-eletrica.png" alt="Painéis solares">
     </section>
 
+    <!-- IMPACTO REAL -->
     <section class="painel-creditos">
         <div class="container">
             <h2>Impacto Real</h2>
@@ -68,6 +87,7 @@
         </div>
     </section>
 
+    <!-- CTA FINAL -->
     <section class="cta-final">
         <div class="container">
             <h2>Pronto para compartilhar energia solar?</h2>
@@ -78,8 +98,10 @@
             </div>
         </div>
     </section>
+
 </main>
 
 <script src="{{ url_for('static', filename='style/script.js') }}"></script>
 
 {% endblock %}
+</html>

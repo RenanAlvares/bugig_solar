@@ -16,8 +16,8 @@
             <i class="fa-solid fa-solar-panel">BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i></i>
 
          <div id="itens_nav">
-            <a href="SobreNos.html" class="btn-default">Sobre nós</a>
-            <a href="{{ url_for('login') }}" class="btn-default">Login</a>
+            <a href="/about" class="btn-default">Sobre nós</a>
+            <a href="{{ url_for('auth.login') }}" class="btn-default">Login</a>
             <a href="/signin" class="btn-default">Cadastrar-se</a>
 
         </div>
@@ -42,7 +42,7 @@
                 
             </ul>
     
-            <a href="{{ url_for('login') }}" class="btn-default">Login</a>
+            <a href="{{ url_for('auth.login') }}" class="btn-default">Login</a>
     
         </div>
     </header>
