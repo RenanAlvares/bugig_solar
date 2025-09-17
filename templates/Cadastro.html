@@ -4,161 +4,254 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/cadastro.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/header.css') }}">
-    <title>{{ titulo }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
           integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
           crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>{{ titulo }}</title>
 </head>
 <body>
-    <header>
-        <nav id="navbar">
-            <i class="fa-solid fa-solar-panel"></i> BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i>
-        </nav>
-    </header>
+<header>
+    <nav id="navbar">
+        <i class="fa-solid fa-solar-panel"></i> BUGIG<br>SOLAR <i class="fa-solid fa-bolt-lightning"></i>
+    </nav>
+</header>
 
-    <main>
-        <div id="cadastro">
-            <h1>{{ titulo }}</h1>
+<main>
+<div id="cadastro" class="container mt-4">
+    <h1>{{ titulo }}</h1>
 
-            <form method="post" action="{{ url_for('auth.signin') }}">
-                {{ form.csrf_token() }}
-
-                <div class="label_cadastro mb-2">
-                    {{ form.nome.label(class='form-label') }}
-                    {{ form.nome(class='form-control') }}
-                    {% for error in form.nome.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="label_cadastro mb-2">
-                    <label class="form-label">Tipo de usuário</label><br>
-                    {% for subfield in form.tipo_usuario %}
-                        <label>
-                            {{ subfield(checked='checked' if subfield.data else '') }} {{ subfield.label.text }}
-                        </label><br>
-                    {% endfor %}
-                    {% for error in form.tipo_usuario.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="label_cadastro mb-2">
-                    {{ form.email.label(class='form-label') }}
-                    {{ form.email(class='form-control') }}
-                    {% for error in form.email.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="label_cadastro mb-2">
-                    <label class="form-label">CPF ou CNPJ?</label><br>
-                    {% for subfield in form.tipo_documento %}
-                        <label>
-                            {{ subfield(checked='checked' if subfield.data else '') }} {{ subfield.label.text }}
-                        </label><br>
-                    {% endfor %}
-                    {% for error in form.tipo_documento.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="mb-2" id="cpf_group" style="display: none;">
-                    {{ form.cpf.label(class='form-label') }}
-                    {{ form.cpf(class='form-control') }}
-                    {% for error in form.cpf.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="mb-2" id="cnpj_group" style="display: none;">
-                    {{ form.cnpj.label(class='form-label') }}
-                    {{ form.cnpj(class='form-control') }}
-                    {% for error in form.cnpj.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="label_cadastro mb-2" id="nome_fantasia_group" style="display: none;">
-                    {{ form.nome_fantasia.label(class='form-label') }}
-                    {{ form.nome_fantasia(class='form-control') }}
-                    {% for error in form.nome_fantasia.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="label_cadastro mb-2">
-                    {{ form.cep.label(class='form-label') }}
-                    {{ form.cep(class='form-control') }}
-                    {% for error in form.cep.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="label_cadastro mb-2">
-                    {{ form.numero.label(class='form-label') }}
-                    {{ form.numero(class='form-control') }}
-                    {% for error in form.numero.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="label_cadastro mb-2">
-                    {{ form.telefone.label(class='form-label') }}
-                    {{ form.telefone(class='form-control') }}
-                    {% for error in form.telefone.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="label_cadastro mb-2">
-                    {{ form.senha.label(class='form-label') }}
-                    {{ form.senha(class='form-control') }}
-                    {% for error in form.senha.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="label_cadastro mb-2">
-                    {{ form.distribuidora.label(class='form-label') }}
-                    {{ form.distribuidora(class='form-select') }}
-                    {% for error in form.distribuidora.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-
-                <div class="btn_conteiner">
-                    {{ form.cadastrar(class='btn_cadastro') }}
-                </div>
-            </form>
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="alert-container">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
         </div>
-    </main>
+      {% endif %}
+    {% endwith %}
 
-    <script>
-        function toggleDocumentoFields() {
-            const tipo = document.querySelector('input[name="tipo_documento"]:checked');
-            const cpfDiv = document.getElementById("cpf_group");
-            const cnpjDiv = document.getElementById("cnpj_group");
-            const nomeFantasiaDiv = document.getElementById("nome_fantasia_group");
+    <form method="post" action="{{ url_for('auth.signin') }}">
+        {{ form.csrf_token() }}
 
-            if (tipo) {
-                if (tipo.value === "cpf") {
-                    cpfDiv.style.display = "block";
-                    cnpjDiv.style.display = "none";
-                    nomeFantasiaDiv.style.display = "none";
-                } else if (tipo.value === "cnpj") {
-                    cpfDiv.style.display = "none";
-                    cnpjDiv.style.display = "block";
-                    nomeFantasiaDiv.style.display = "block";
-                }
+        <div class="mb-2">
+            {{ form.nome.label(class='form-label') }}
+            {{ form.nome(class='form-control') }}
+            {% for error in form.nome.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2">
+            {{ form.email.label(class='form-label') }}
+            {{ form.email(class='form-control') }}
+            {% for error in form.email.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">Tipo de usuário:</label><br>
+            {% for subfield in form.tipo_usuario %}
+                <label>
+                    {{ subfield }} {{ subfield.label.text }}
+                </label><br>
+            {% endfor %}
+            {% for error in form.tipo_usuario.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">CPF ou CNPJ?</label><br>
+            {% for subfield in form.tipo_documento %}
+                <label>
+                    {{ subfield }} {{ subfield.label.text }}
+                </label><br>
+            {% endfor %}
+            {% for error in form.tipo_documento.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2" id="cpf_group" style="display: none;">
+            {{ form.cpf.label(class='form-label') }}
+            {{ form.cpf(class='form-control') }}
+            {% for error in form.cpf.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2" id="cnpj_group" style="display: none;">
+            {{ form.cnpj.label(class='form-label') }}
+            {{ form.cnpj(class='form-control') }}
+            {% for error in form.cnpj.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2" id="nome_fantasia_group" style="display: none;">
+            {{ form.nome_fantasia.label(class='form-label') }}
+            {{ form.nome_fantasia(class='form-control') }}
+            {% for error in form.nome_fantasia.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2">
+            {{ form.cep.label(class='form-label') }}
+            {{ form.cep(class='form-control') }}
+            {% for error in form.cep.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2">
+            {{ form.numero.label(class='form-label') }}
+            {{ form.numero(class='form-control') }}
+            {% for error in form.numero.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2">
+            {{ form.telefone.label(class='form-label') }}
+            {{ form.telefone(class='form-control') }}
+            {% for error in form.telefone.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2">
+            {{ form.senha.label(class='form-label') }}
+            {{ form.senha(class='form-control') }}
+            {% for error in form.senha.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2">
+            {{ form.distribuidora.label(class='form-label') }}
+            {{ form.distribuidora(class='form-select') }}
+            {% for error in form.distribuidora.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="btn_conteiner">
+            {{ form.cadastrar(class='btn btn-primary') }}
+        </div>
+    </form>
+</div>
+</main>
+
+<!-- Modal Cliente -->
+<div class="modal fade" id="modalCliente" tabindex="-1" aria-labelledby="modalClienteLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalClienteLabel">Dados do Beneficiário</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-2">
+          <label for="consumo_mensal" class="form-label">Consumo Mensal:</label>
+          <input type="number" class="form-control" id="consumo_mensal" name="consumo_mensal">
+        </div>
+        <div class="mb-2">
+          <label for="classe_consumo" class="form-label">Classe de Consumo:</label>
+          <select class="form-select" id="classe_consumo" name="classe_consumo">
+            {% for c in classes_consumo %}
+              <option value="{{ c.id }}">{{ c.nome_tipo_classe }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Salvar Beneficiário</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Fornecedor -->
+<div class="modal fade" id="modalFornecedor" tabindex="-1" aria-labelledby="modalFornecedorLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalFornecedorLabel">Dados do Gerador</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-2">
+          <label for="producao_mensal" class="form-label">Produção Mensal Média:</label>
+          <input type="number" class="form-control" id="producao_mensal" name="producao_mensal">
+        </div>
+        <div class="mb-2">
+          <label for="inicio_operacao" class="form-label">Início de Operação:</label>
+          <input type="date" class="form-control" id="inicio_operacao" name="inicio_operacao">
+        </div>
+        <div class="mb-2">
+          <label for="tipo_geracao" class="form-label">Tipo de Geração:</label>
+          <select class="form-select" id="tipo_geracao" name="tipo_geracao">
+            {% for g in tipos_geracao %}
+              <option value="{{ g.id }}">{{ g.nome_tipo_geracao }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Salvar Gerador</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function toggleDocumentoFields() {
+        const tipo = document.querySelector('input[name="tipo_documento"]:checked');
+        const cpfDiv = document.getElementById("cpf_group");
+        const cnpjDiv = document.getElementById("cnpj_group");
+        const nomeFantasiaDiv = document.getElementById("nome_fantasia_group");
+
+        if (tipo) {
+            if (tipo.value === "cpf") {
+                cpfDiv.style.display = "block";
+                cnpjDiv.style.display = "none";
+                nomeFantasiaDiv.style.display = "none";
+            } else {
+                cpfDiv.style.display = "none";
+                cnpjDiv.style.display = "block";
+                nomeFantasiaDiv.style.display = "block";
             }
         }
+    }
 
-        window.onload = toggleDocumentoFields;
-        const radios = document.getElementsByName("tipo_documento");
-        for (let radio of radios) {
-            radio.addEventListener("change", toggleDocumentoFields);
-        }
-    </script>
+    window.onload = toggleDocumentoFields;
+    const radios = document.getElementsByName("tipo_documento");
+    for (let radio of radios) {
+        radio.addEventListener("change", toggleDocumentoFields);
+    }
+
+    // Abrir modal dependendo do tipo de usuário
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+            const tipoSelecionado = document.querySelector('input[name="tipo_usuario"]:checked').value;
+
+            if (tipoSelecionado === '1') { // Cliente
+                event.preventDefault();
+                const modal = new bootstrap.Modal(document.getElementById('modalCliente'));
+                modal.show();
+            } else if (tipoSelecionado === '2') { // Fornecedor
+                event.preventDefault();
+                const modal = new bootstrap.Modal(document.getElementById('modalFornecedor'));
+                modal.show();
+            }
+        });
+    });
+</script>
 </body>
 </html>

@@ -77,7 +77,7 @@ def signin():
         # cria o novo usuário
         novo_usuario = UsersDb(
             nome=nome,
-            id_tipo=tipo_usuario,
+            id_tipo_user=tipo_usuario,
             email=email,
             senha=senha,
             documento=documento,
@@ -93,7 +93,7 @@ def signin():
         db.session.commit()
         flash('Usuário cadastrado com sucesso!', 'success')
 
-        return redirect(url_for('auth.bugig'))
+        return redirect(url_for('public.landing_page')) # mudar para auth.bugig quando houver o template
 
     return render_template('Cadastro.html', titulo=titulo, form=form)
 
