@@ -1,4 +1,4 @@
-from Main import db
+from extensions import db
 from flask_wtf import FlaskForm 
 from models_DB.types import TipoUser
 from models_DB.companies import Companies

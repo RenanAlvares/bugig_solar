@@ -1,4 +1,4 @@
-from Main import app, db
+from extensions import db
 from flask_wtf import FlaskForm
 from wtforms import SelectField, StringField, validators, SubmitField, PasswordField, IntegerField, RadioField
 

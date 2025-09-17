@@ -1,4 +1,4 @@
-from Main import db
+from extensions import db
 
 class Transfer(db.Model):
     __tablename__ = 'Transferencia'
