@@ -58,9 +58,11 @@ def signin():
         if form.tipo_documento.data == 'cpf':
             documento = form.cpf.data
             razao_social = None
+            id_tipo_pessoa = 1  # Fisica
         else:
             documento = form.cnpj.data
             razao_social = form.nome_fantasia.data
+            id_tipo_pessoa = 2  # Juridica
 
         cep = form.cep.data
         numero = form.numero.data
@@ -83,6 +85,7 @@ def signin():
             cep=cep,
             numero=numero,
             telefone=telefone,
+            id_tipo_pessoa=id_tipo_pessoa,
             id_distribuidora=id_distribuidora
         )
 

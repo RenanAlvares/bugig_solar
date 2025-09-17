@@ -10,6 +10,9 @@ from controllers.login import auth_bp, login_required
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
+db.init_app(app)
+csrf.init_app(app)
+
 # registrando os blueprints
 app.register_blueprint(public_bp)
 app.register_blueprint(auth_bp, url_prefix='/bugig')
