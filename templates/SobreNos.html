@@ -1,81 +1,90 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nós - Plataforma de Créditos de Energia</title>
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <link rel="stylesheet" href="style/SobreNos.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/SobreNos.css') }}">
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <h1>Sobre Nós</h1>
-            <p>Plataforma de Gestão e Distribuição de Créditos de Energia</p>
-        </div>
-        <a href="landing.html" class="btn-default">Home</a>
-    </header>
+<header>
+  <div id="navbar">
+      <div id="nav_logo">
+          <h1>Sobre Nós</h1>
+          <p>Plataforma de Gestão e Distribuição de Créditos de Energia</p>
+      </div>
+      <a href="/landingPage" class="btn-default">Home</a>
+  </div>
+</header>
 
+<main>
     <section class="about">
-        <div class="container">
-            <h2>Quem Somos</h2>
-            <p>
-                Com o crescimento da geração distribuída de energia elétrica, especialmente por meio de fontes
-                renováveis,
-                surge a necessidade de facilitar o acesso dos beneficiários aos créditos de energia excedentes gerados
-                por
-                pessoas físicas e jurídicas.
-            </p>
-            <p>
-                Nosso projeto propõe o desenvolvimento de um sistema digital que atua como intermediário na gestão e
-                distribuição
-                de créditos de energia elétrica provenientes de geração distribuída. A plataforma permitirá que
-                geradores
-                cadastrem suas unidades geradoras e disponibilizem créditos excedentes, enquanto consumidores se
-                registram
-                para adquirir esses créditos.
-            </p>
-            <img src="src/Imagens/placa.png" alt="Painéis solares"
-                style="width: 75%; float: center; height: auto ; max-width: 100%; display: block; margin: 20px auto;">
+        <div class="section-wrapper">
+            <div class="image">
+                <img src="/static/Imagens/como-escrever-o-texto-quem-somos-sobre-nos-do-seu-site.webp" alt="Energia Solar">
+            </div>
+            <div class="container">
+                <h2><i class="fa-solid fa-users"></i> Quem Somos</h2>
+                <p>
+                    Com o crescimento da geração distribuída de energia elétrica, especialmente por meio de fontes
+                    renováveis, surge a necessidade de facilitar o acesso dos beneficiários aos créditos de energia excedentes
+                    gerados por pessoas físicas e jurídicas.
+                </p>
+                <p>
+                    Nosso projeto propõe o desenvolvimento de um sistema digital que atua como intermediário na gestão e
+                    distribuição de créditos de energia elétrica provenientes de geração distribuída. A plataforma permitirá
+                    que geradores cadastrem suas unidades geradoras e disponibilizem créditos excedentes, enquanto consumidores
+                    se registram para adquirir esses créditos.
+                </p>
+            </div>
         </div>
-
     </section>
 
     <section class="mission">
-        <div class="container">
-            <h2>Nossa Missão</h2>
-            <p>
-                Garantir transparência, segurança e automação no processo de intermediação, promovendo maior eficiência
-                no uso da
-                energia solar e democratizando o acesso a energias renováveis.
-            </p>
+        <div class="section-wrapper">
+            <div class="image">
+                <img src="/static/Imagens/images.jpg" alt="Nossa Missão">
+            </div>
+            <div class="container">
+                <h2><i class="fa-solid fa-bullseye"></i> Nossa Missão</h2>
+                <p>
+                    Garantir transparência, segurança e automação no processo de intermediação, promovendo maior eficiência no uso
+                    da energia solar e democratizando o acesso a energias renováveis.
+                </p>
+            </div>
         </div>
     </section>
 
     <section class="vision">
-        <div class="container">
-            <h2>Visão</h2>
-            <p>
-                Ser referência na intermediação de créditos de energia, contribuindo para o cumprimento do ODS 7 e
-                promovendo inclusão
-                social, sustentabilidade e uso responsável de energias limpas.
-            </p>
+        <div class="section-wrapper">
+            <div class="image">
+                <img src="/static/Imagens/visao_sobre_nos.jpg" alt="Nossa Visão">
+            </div>
+            <div class="container">
+                <h2><i class="fa-solid fa-lightbulb"></i> Visão</h2>
+                <p>
+                   Ser referência na intermediação de créditos de energia, promovendo soluções inovadoras e tecnológicas que facilitem o 
+                   acesso à energia renovável de forma segura e transparente. Buscamos contribuir ativamente para o cumprimento do ODS 7 – 
+                   energia acessível e limpa – incentivando a geração distribuída sustentável e o consumo consciente. Nosso objetivo é impactar 
+                   positivamente a sociedade, promovendo inclusão social, equidade e educação energética, enquanto fortalecemos práticas ambientais 
+                   responsáveis e incentivamos o uso eficiente de recursos energéticos, construindo um futuro mais sustentável para todos.
+                </p>
+            </div>
         </div>
     </section>
+</main>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 BugigSolar. Todos os direitos reservados.</p>
-            <p><a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
-        </div>
-    </footer>
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2025 BugigSolar. Todos os direitos reservados.</p>
+        <p><a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
+    </div>
+</footer>
+
 </body>
-
 </html>

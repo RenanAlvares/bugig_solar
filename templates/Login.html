@@ -22,7 +22,7 @@
         <div id="login">
             <h1>{{ titulo }}</h1>
             
-            <form method="post" action="{{ url_for('login') }}">
+            <form method="post" action="{{ url_for('auth.login') }}">
                 {{ form.hidden_tag() }}
 
                 <div class="label_login mb-2">
