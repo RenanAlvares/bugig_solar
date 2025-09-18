@@ -8,7 +8,7 @@ body {
   line-height: 1.6;
 }
 
-/* --- HERO COM IMAGEM DE FUNDO --- */
+/* --- HERO COM IMAGEM DE FUNDO COM CHANFRADO --- */
 .hero {
   position: relative;
   text-align: center;
@@ -16,6 +16,9 @@ body {
   background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
               url("/static/Imagens/hero-solar.jpg") center/cover no-repeat;
   color: #fff;
+
+  /* Chanfrado inferior */
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
 }
 
 .hero h1 {
@@ -82,7 +85,6 @@ body {
   color: #fff;
 }
 
-
 /* --- BOTÕES --- */
 button {
   background: #f9c80e;
@@ -121,15 +123,19 @@ button:hover {
   background: #101010;
   color: #fff;
   gap: 2rem;
+  flex-wrap: wrap; /* responsivo */
 }
 
 .section-imagem img {
-  width: 45%;
+  width: 100%;
+  max-width: 500px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
 .section-imagem .texto {
+  flex: 1;
+  min-width: 280px;
   max-width: 500px;
 }
 
@@ -143,13 +149,11 @@ button:hover {
   color: #fff;
 }
 
-
 /* --- IMPACTO REAL COM IMAGEM DE FUNDO --- */
 .painel-creditos {
   text-align: center;
   padding: 3rem 2rem;
   width: 100%;
-  
   border-radius: 12px;
   color: #fff;
   background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
@@ -181,4 +185,45 @@ button:hover {
   display: flex;
   gap: 1rem;
   justify-content: center;
+  flex-wrap: wrap; /* responsivo */
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+  .hero {
+    padding: 6rem 1.5rem;
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 50% 100%, 0 75%);
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .section-imagem {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .section-imagem img {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 5rem 1rem;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+  }
+
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
 }
