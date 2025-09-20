@@ -23,21 +23,23 @@ class TipoPagamento(db.Model):
 class TipoClasses(db.Model):
     __tablename__ = 'Tipo_Classes'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id_tipo_classe = db.Column(db.Integer, primary_key=True, autoincrement=True)  # corresponde ao banco
     nome_tipo_classe = db.Column(db.String(45), nullable=False)
 
     def __repr__(self):
         return f'<TipoClasses {self.nome_tipo_classe}>'
 
 
+
 class TipoGeracao(db.Model):
     __tablename__ = 'Tipo_geracao'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    nome_tipo_geracao = db.Column(db.String(50), nullable=False)
+    id_tipo_geracao = db.Column(db.Integer, primary_key=True, autoincrement=True)  # corrigido para bater com o banco
+    nome_tipo_geracao = db.Column(db.String(45), nullable=False)
 
     def __repr__(self):
         return f'<TipoGeracao {self.nome_tipo_geracao}>'
+
 
 
 class TipoPessoa(db.Model):

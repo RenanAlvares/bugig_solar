@@ -241,11 +241,11 @@
         form.addEventListener('submit', function(event) {
             const tipoSelecionado = document.querySelector('input[name="tipo_usuario"]:checked').value;
 
-            if (tipoSelecionado === '1') { // Cliente
+            if (tipoSelecionado === '1') { // Beneficiário
                 event.preventDefault();
                 const modal = new bootstrap.Modal(document.getElementById('modalCliente'));
                 modal.show();
-            } else if (tipoSelecionado === '2') { // Fornecedor
+            } else if (tipoSelecionado === '2') { // Gerador
                 event.preventDefault();
                 const modal = new bootstrap.Modal(document.getElementById('modalFornecedor'));
                 modal.show();
