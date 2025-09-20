@@ -1,4 +1,3 @@
-from extensions import db
 from flask_wtf import FlaskForm
 from wtforms import RadioField, SubmitField, IntegerField, validators
 from flask_wtf import FlaskForm
