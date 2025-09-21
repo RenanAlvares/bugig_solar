@@ -5,7 +5,7 @@ from extensions import db, csrf
 
 # importando os blueprints
 from controllers.public_routes import public_bp
-from controllers.login import auth_bp, login_required
+from controllers.cad_benef_gen import auth_bp
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')

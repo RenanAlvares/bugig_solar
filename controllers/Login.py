@@ -7,7 +7,6 @@ from forms.form_gen import FormGen
 from forms.form_user import FormUser
 from forms.form_login import FormLogin
 from models_DB.companies import Companies
-from models_DB.types import TipoClasses, TipoGeracao
 from models_DB.users import UsersDb
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -98,12 +97,17 @@ def signin():
         db.session.commit()
         flash('Usuário cadastrado com sucesso!', 'success')
 
+        # cria a session do ususário que será utilizada para validações de rotas
+        session['user_id'] = novo_usuario.id
+        session['user_nome'] = novo_usuario.nome
+
+        # armazena o id para salvar no cadastro do beneficiario ou do gerador
         session['new_user_id'] = novo_usuario.id
 
         if tipo_usuario == 1:  # Beneficiário
-            return redirect(url_for('auth.new-benef'))
+            return redirect(url_for('auth.signin_benef'))
         else:  # Gerador
-            return redirect(url_for('auth.new-gen'))
+            return redirect(url_for('auth.signin_gen'))
 
 
     return render_template('Cadastro.html', titulo=titulo, form=form)
@@ -130,7 +134,6 @@ def login():
             # cria a session do ususário que será utilizada para validações de rotas
             session['user_id'] = usuario.id
             session['user_nome'] = usuario.nome
-            session['user_tipo'] = usuario.id_tipo
 
             flash(f'Login efetuado com sucesso. Seja bem vindo!', 'success')
             return redirect(url_for('auth.bugig'))
