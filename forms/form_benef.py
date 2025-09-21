@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import RadioField, SubmitField, IntegerField, validators
+from wtforms import SelectField, SubmitField, IntegerField, validators
 from flask_wtf import FlaskForm
-from wtforms import RadioField, SubmitField, validators
 
 class FormBenef(FlaskForm):
     
@@ -9,7 +8,7 @@ class FormBenef(FlaskForm):
     consumo_mensal = IntegerField('Consumo mensal (kWh):', validators=[validators.DataRequired()])
 
     # vai puxar os valores do banco da tabela de tipo_classes
-    classe_consumo = RadioField(
+    classe_consumo = SelectField(
         'Classe de consumo:',
         validators=[validators.DataRequired()],
         choices=[]  # definido depois na rota

@@ -160,16 +160,15 @@
           <input type="number" class="form-control" id="consumo_mensal" name="consumo_mensal">
         </div>
         <div class="mb-2">
-          <label for="classe_consumo" class="form-label">Classe de Consumo:</label>
-          <select class="form-select" id="classe_consumo" name="classe_consumo">
-            {% for c in classes_consumo %}
-              <option value="{{ c.id }}">{{ c.nome_tipo_classe }}</option>
-            {% endfor %}
-          </select>
+            {{ form_benef.classe_consumo.label(class='form-label') }}
+            {{ form_benef.classe_consumo(class='form-select') }}
+            {% for error in form_benef.classe_consumo.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}            
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Salvar Beneficiário</button>
+        {{ form_benef.cadastrar(class='btn btn-primary', id='saveBenef') }}
       </div>
     </div>
   </div>
@@ -193,16 +192,15 @@
           <input type="date" class="form-control" id="inicio_operacao" name="inicio_operacao">
         </div>
         <div class="mb-2">
-          <label for="tipo_geracao" class="form-label">Tipo de Geração:</label>
-          <select class="form-select" id="tipo_geracao" name="tipo_geracao">
-            {% for g in tipos_geracao %}
-              <option value="{{ g.id }}">{{ g.nome_tipo_geracao }}</option>
-            {% endfor %}
-          </select>
+            {{ form_gen.id_tipo_geracao.label(class='form-label') }}
+            {{ form_gen.id_tipo_geracao(class='form-select') }}
+            {% for error in form_gen.id_tipo_geracao.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}    
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Salvar Gerador</button>
+        {{ form_gen.cadastrar(class='btn btn-primary', id='saveGen') }}
       </div>
     </div>
   </div>

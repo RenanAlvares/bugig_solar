@@ -1,12 +1,11 @@
 from functools import wraps
 from extensions import db
-from flask import Blueprint, render_template, redirect, session, flash, url_for
+from flask import Blueprint, render_template, redirect, request, session, flash, url_for
 from controllers.validations import validar_documento
 from forms.form_benef import FormBenef
 from forms.form_gen import FormGen
 from forms.form_user import FormUser
 from forms.form_login import FormLogin
-from models_DB.benef_gen import Beneficiaries, Generators
 from models_DB.companies import Companies
 from models_DB.types import TipoClasses, TipoGeracao
 from models_DB.users import UsersDb
@@ -39,8 +38,6 @@ def signin():
     # seleciona as distriuidoras cadastradas
     distribuidoras = Companies.query.all()
     form.distribuidora.choices = [(str(d.id), d.nome_distribuidora) for d in distribuidoras]
-    form_benef.classe_consumo.choices = [(str(c.id_tipo_classe), c.nome_tipo_classe) for c in TipoClasses.query.all()]
-    form_gen.id_tipo_geracao.choices = [(str(g.id_tipo_geracao), g.nome_tipo_geracao) for g in TipoGeracao.query.all()]
 
     # o tipo de pessoa fisica ou juridica vai ser selecionado direto do form
 
@@ -101,43 +98,13 @@ def signin():
         db.session.commit()
         flash('Usuário cadastrado com sucesso!', 'success')
 
-       # criar cadastro do beneficiario
+        session['new_user_id'] = novo_usuario.id
+
         if tipo_usuario == 1:  # Beneficiário
-            consumo_mensal = form_benef.consumo_mensal.data
-            classe_consumo = int(form_benef.classe_consumo.data)
+            return redirect(url_for('auth.new-benef'))
+        else:  # Gerador
+            return redirect(url_for('auth.new-gen'))
 
-            # cria o beneficiario   
-            novo_beneficiario = Beneficiaries(
-                consumo_mensal=consumo_mensal,
-                id_tipo_classe=classe_consumo,
-                id_usuario=novo_usuario.id
-            )
-
-            db.session.add(novo_beneficiario)
-            db.session.commit()
-            flash('Beneficiário cadastrado com sucesso!', 'success')
-
-        # criar cadastro do gerador
-        elif tipo_usuario == 2:  # Gerador
-            producao_mensal = form_gen.producao_mensal.data
-            inicio_operacao = form_gen.inicio_operacao.data
-            tipo_geracao = int(form_gen.id_tipo_geracao.data)
-
-            # cria o gerador
-            novo_gerador = Generators(
-                producao_mensal=producao_mensal,
-                inicio_operacao=inicio_operacao,
-                id_tipo_geracao=tipo_geracao,
-                id_usuario=novo_usuario.id
-            )
-
-            db.session.add(novo_gerador)
-            db.session.commit()
-            flash('Gerador cadastrado com sucesso!', 'success')
-
-
-
-        return redirect(url_for('public.landing_page')) # mudar para auth.bugig quando houver o template
 
     return render_template('Cadastro.html', titulo=titulo, form=form)
 
