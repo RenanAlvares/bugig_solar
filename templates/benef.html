@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data" action="{{ url_for('auth.signin_benef') }}">
+    {{ form_benef.hidden_tag() }}
+
+    <div class="mb-3">
+        {{ form_benef.conta1.label }}<br>
+        {{ form_benef.conta1(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_benef.conta2.label }}<br>
+        {{ form_benef.conta2(class="form-control") }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_benef.conta3.label }}<br>
+        {{ form_benef.conta3(class="form-control") }}
+    </div>
+
+    <div class="mb-2">
+        {{ form_benef.classe_consumo.label(class='form-label') }}
+        {{ form_benef.classe_consumo(class='form-select') }}
+        {% for error in form_benef.classe_consumo.errors %}
+            <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="btn_container mt-3">
+        {{ form_benef.cadastrar(class='btn btn-primary', id='saveBenef') }}
+    </div>
+</form>
+{% endblock %}

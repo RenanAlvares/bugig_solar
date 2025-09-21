@@ -1,15 +1,18 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from controllers.login import login_required
-from forms import FormBenef, FormGen
+from forms.form_benef import FormBenef
+from forms.form_gen import FormGen
 from extensions import db
 from models_DB.benef_gen import Beneficiaries, Generators
 from models_DB.types import TipoClasses, TipoGeracao
-from Main import auth_bp
+from controllers.login import auth_bp
+
 
 @auth_bp.route('/new-benef', methods=['GET', 'POST'])
 @login_required
-def cadastrar_beneficiario():
+def signin_benef():
 
+    titulo = 'Cadastro Beneficiário'
     # Recupera o ID do usuário da sessão
     user_id = session.get('new_user_id')
     if not user_id:
@@ -22,31 +25,63 @@ def cadastrar_beneficiario():
     form_benef.classe_consumo.choices = [(str(c.id), c.nome_tipo_classe) for c in classe_consumo]
 
     if form_benef.validate_on_submit():  # Beneficiário
-        consumo_mensal = form_benef.consumo_mensal.data
-        classe_consumo_id = form_benef.classe_consumo.data
+        arquivos = [form_benef.conta1.data, form_benef.conta2.data, form_benef.conta3.data]
+        consumos = []
 
-        # Cria o beneficiário vinculado ao usuário logado
-        novo_beneficiario = Beneficiaries(
-            consumo_mensal=consumo_mensal,
-            classe_consumo=classe_consumo_id,
-            id_usuario=user_id
-        )
+        try:
+            for arquivo in arquivos:
+                if not arquivo:
+                    flash("Todos os arquivos devem ser enviados.", "danger")
+                    return render_template("benef.html", titulo=titulo, form_benef=form_benef)
 
-        db.session.add(novo_beneficiario)
-        db.session.commit()
-        flash('Beneficiário cadastrado com sucesso!', 'success')
+                arquivo.seek(0)  # garante que o ponteiro esteja no início
+                conteudo = arquivo.read().decode("utf-8").strip().splitlines()
 
-        # Remove o ID da sessão após criar o beneficiário
-        session.pop('new_user_id', None)
+                if len(conteudo) < 2:
+                    flash("Arquivo inválido. Deve conter nome na 1ª linha e data/valor na 2ª.", "danger")
+                    return render_template("benef.html", titulo=titulo, form_benef=form_benef)
 
-        return redirect(url_for('public.landing_page'))  # mudar para auth.menu_benef quando houver o template
+                linha2 = conteudo[1].strip()
+                partes = linha2.split()
 
-    return render_template('Beneficiario.html', form=form_benef)
+                if len(partes) != 2:
+                    flash("Formato da 2ª linha inválido. Esperado: 'DATA VALOR'.", "danger")
+                    return render_template("benef.html", titulo=titulo, form_benef=form_benef)
+
+                consumo = float(partes[1])
+                consumos.append(consumo)
+
+            # média em inteiro
+            consumo_mensal = int(sum(consumos) / len(consumos))
+            classe_consumo_id = form_benef.classe_consumo.data
+
+            # Cria o beneficiário vinculado ao usuário logado
+            novo_beneficiario = Beneficiaries(
+                consumo_mensal=consumo_mensal,
+                classe_consumo=classe_consumo_id,
+                id_usuario=user_id
+            )
+
+            db.session.add(novo_beneficiario)
+            db.session.commit()
+            flash(f'Beneficiário cadastrado com sucesso!', 'success')
+
+            # Remove o ID da sessão após criar o beneficiário
+            session.pop('new_user_id', None)
+
+            return redirect(url_for('public.landing_page'))
+
+        except Exception as e:
+            flash(f"Erro ao processar arquivos: {str(e)}", "danger")
+
+    # Renderiza o template caso GET ou falha na validação
+    return render_template('benef.html', titulo=titulo, form_benef=form_benef)
+
 
 
 @auth_bp.route('/new-gen', methods=['GET', 'POST'])
 @login_required
-def cadastrar_gerador():
+def signin_gen():
 
     # Recupera o ID do usuário da sessão
     user_id = session.get('new_user_id')

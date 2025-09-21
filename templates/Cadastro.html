@@ -54,9 +54,7 @@
         <div class="mb-2">
             <label class="form-label">Tipo de usuário:</label><br>
             {% for subfield in form.tipo_usuario %}
-                <label>
-                    {{ subfield }} {{ subfield.label.text }}
-                </label><br>
+                <label>{{ subfield }} {{ subfield.label.text }}</label><br>
             {% endfor %}
             {% for error in form.tipo_usuario.errors %}
                 <span class="text-danger">{{ error }}</span>
@@ -66,9 +64,7 @@
         <div class="mb-2">
             <label class="form-label">CPF ou CNPJ?</label><br>
             {% for subfield in form.tipo_documento %}
-                <label>
-                    {{ subfield }} {{ subfield.label.text }}
-                </label><br>
+                <label>{{ subfield }} {{ subfield.label.text }}</label><br>
             {% endfor %}
             {% for error in form.tipo_documento.errors %}
                 <span class="text-danger">{{ error }}</span>
@@ -139,75 +135,16 @@
             {% endfor %}
         </div>
 
-        <div class="btn_conteiner">
+        <div class="btn_container mt-3">
             {{ form.cadastrar(class='btn btn-primary') }}
         </div>
     </form>
 </div>
 </main>
 
-<!-- Modal Cliente -->
-<div class="modal fade" id="modalCliente" tabindex="-1" aria-labelledby="modalClienteLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalClienteLabel">Dados do Beneficiário</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-2">
-          <label for="consumo_mensal" class="form-label">Consumo Mensal:</label>
-          <input type="number" class="form-control" id="consumo_mensal" name="consumo_mensal">
-        </div>
-        <div class="mb-2">
-            {{ form_benef.classe_consumo.label(class='form-label') }}
-            {{ form_benef.classe_consumo(class='form-select') }}
-            {% for error in form_benef.classe_consumo.errors %}
-                <span class="text-danger">{{ error }}</span>
-            {% endfor %}            
-        </div>
-      </div>
-      <div class="modal-footer">
-        {{ form_benef.cadastrar(class='btn btn-primary', id='saveBenef') }}
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Fornecedor -->
-<div class="modal fade" id="modalFornecedor" tabindex="-1" aria-labelledby="modalFornecedorLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalFornecedorLabel">Dados do Gerador</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-2">
-          <label for="producao_mensal" class="form-label">Produção Mensal Média:</label>
-          <input type="number" class="form-control" id="producao_mensal" name="producao_mensal">
-        </div>
-        <div class="mb-2">
-          <label for="inicio_operacao" class="form-label">Início de Operação:</label>
-          <input type="date" class="form-control" id="inicio_operacao" name="inicio_operacao">
-        </div>
-        <div class="mb-2">
-            {{ form_gen.id_tipo_geracao.label(class='form-label') }}
-            {{ form_gen.id_tipo_geracao(class='form-select') }}
-            {% for error in form_gen.id_tipo_geracao.errors %}
-                <span class="text-danger">{{ error }}</span>
-            {% endfor %}    
-        </div>
-      </div>
-      <div class="modal-footer">
-        {{ form_gen.cadastrar(class='btn btn-primary', id='saveGen') }}
-      </div>
-    </div>
-  </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // Exibe campos CPF / CNPJ dinamicamente
     function toggleDocumentoFields() {
         const tipo = document.querySelector('input[name="tipo_documento"]:checked');
         const cpfDiv = document.getElementById("cpf_group");
@@ -232,24 +169,6 @@
     for (let radio of radios) {
         radio.addEventListener("change", toggleDocumentoFields);
     }
-
-    // Abrir modal dependendo do tipo de usuário
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function(event) {
-            const tipoSelecionado = document.querySelector('input[name="tipo_usuario"]:checked').value;
-
-            if (tipoSelecionado === '1') { // Beneficiário
-                event.preventDefault();
-                const modal = new bootstrap.Modal(document.getElementById('modalCliente'));
-                modal.show();
-            } else if (tipoSelecionado === '2') { // Gerador
-                event.preventDefault();
-                const modal = new bootstrap.Modal(document.getElementById('modalFornecedor'));
-                modal.show();
-            }
-        });
-    });
 </script>
 </body>
 </html>
