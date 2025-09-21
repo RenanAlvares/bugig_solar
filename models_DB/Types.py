@@ -23,7 +23,7 @@ class TipoPagamento(db.Model):
 class TipoClasses(db.Model):
     __tablename__ = 'Tipo_Classes'
 
-    id_tipo_classe = db.Column(db.Integer, primary_key=True, autoincrement=True)  # corresponde ao banco
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # corresponde ao banco
     nome_tipo_classe = db.Column(db.String(45), nullable=False)
 
     def __repr__(self):
@@ -34,7 +34,7 @@ class TipoClasses(db.Model):
 class TipoGeracao(db.Model):
     __tablename__ = 'Tipo_geracao'
 
-    id_tipo_geracao = db.Column(db.Integer, primary_key=True, autoincrement=True)  # corrigido para bater com o banco
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # corrigido para bater com o banco
     nome_tipo_geracao = db.Column(db.String(45), nullable=False)
 
     def __repr__(self):
