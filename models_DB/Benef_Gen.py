@@ -4,7 +4,7 @@ class Beneficiaries(db.Model):
     __tablename__ = 'Beneficiarios'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_usuario = db.Column(db.Integer, db.ForeignKey('Usuarios.id'), nullable=False)
+    id_user = db.Column(db.Integer, db.ForeignKey('Usuarios.id'), nullable=False)
     consumo_mensal = db.Column(db.Integer, nullable=False)
     classe_consumo = db.Column(db.Integer, db.ForeignKey('Tipo_Classes.id'), nullable=False)
 
@@ -17,7 +17,7 @@ class Generators(db.Model):
     __tablename__ = 'Geradores'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_usuario = db.Column(db.Integer, db.ForeignKey('Usuarios.id'), nullable=False)
+    id_user = db.Column(db.Integer, db.ForeignKey('Usuarios.id'), nullable=False)
     producao_mensal = db.Column(db.Integer, nullable=False)
     inicio_operacao = db.Column(db.Date, nullable=False)
     id_tipo_geracao = db.Column(db.Integer, db.ForeignKey('Tipo_geracao.id'), nullable=False)

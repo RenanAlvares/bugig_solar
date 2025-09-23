@@ -53,29 +53,53 @@ def signin_benef():
 
             # média em inteiro
             consumo_mensal = int(sum(consumos) / len(consumos))
-            classe_consumo_id = form_benef.classe_consumo.data
+            classe_consumo_id = int(form_benef.classe_consumo.data)
+
+            # Debug: printa os valores antes de salvar
+            print(f"[DEBUG] Novo Beneficiário -> user_id={user_id}, classe={classe_consumo_id}, consumo={consumo_mensal}")
 
             # Cria o beneficiário vinculado ao usuário logado
             novo_beneficiario = Beneficiaries(
                 consumo_mensal=consumo_mensal,
                 classe_consumo=classe_consumo_id,
-                id_usuario=user_id
+                id_user=user_id
             )
 
+            # Log antes de salvar
+            print(">>> Salvando beneficiário no banco...")
+            print(f"id_user={user_id}, consumo_mensal={consumo_mensal}, classe_consumo={classe_consumo_id}")
+
             db.session.add(novo_beneficiario)
-            db.session.commit()
-            flash(f'Beneficiário cadastrado com sucesso!', 'success')
 
-            # Remove o ID da sessão após criar o beneficiário
-            session.pop('new_user_id', None)
+            try:
+                db.session.flush()  # força o INSERT
+                db.session.commit()
+                print(">>> COMMIT concluído com sucesso!")
+                flash(f'Beneficiário cadastrado com sucesso!', 'success')
 
-            return redirect(url_for('public.landing_page'))
+                # Remove o ID da sessão após criar o beneficiário
+                session.pop('new_user_id', None)
+
+                return redirect(url_for('public.landing_page'))
+
+            except Exception as e:
+                db.session.rollback()
+                print("[ERRO AO INSERIR BENEFICIÁRIO]", str(e))
+                flash(f"Erro ao salvar beneficiário: {str(e)}", "danger")
 
         except Exception as e:
+            db.session.rollback()
+            print("[ERRO GERAL]", str(e))
             flash(f"Erro ao processar arquivos: {str(e)}", "danger")
+
+    else:
+        # Caso o form não valide, mostra os erros no console
+        if request.method == 'POST':
+            print("[ERROS DE VALIDAÇÃO]", form_benef.errors)
 
     # Renderiza o template caso GET ou falha na validação
     return render_template('benef.html', titulo=titulo, form_benef=form_benef)
+
 
 
 
@@ -104,7 +128,7 @@ def signin_gen():
             producao_mensal=producao_mensal,
             inicio_operacao=inicio_operacao,
             id_tipo_geracao=tipo_geracao_id,
-            id_usuario=user_id
+            id_user=user_id
         )
 
         db.session.add(novo_gerador)
