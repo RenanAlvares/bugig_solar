@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="error-page" style="text-align:center; margin-top:50px;">
+    <h1>Erro {{ code }}</h1>
+    <p>{{ message }}</p>
+    <a href="{{ url_for('public.landing_page') }}" class="btn-default">Voltar para a página inicial</a>
+</div>
+{% endblock %}
