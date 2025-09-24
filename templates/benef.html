@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form method="POST" enctype="multipart/form-data" action="{{ url_for('auth.signin_benef') }}">
+<form method="POST" enctype="multipart/form-data" action="{{ url_for('auth.signin_benef', user_id=session['new_user_id']) }}">
     {{ form_benef.hidden_tag() }}
 
     <div class="mb-3">
