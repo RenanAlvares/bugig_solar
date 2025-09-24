@@ -112,10 +112,15 @@ def signin():
 
     return render_template('Cadastro.html', titulo=titulo, form=form)
 
-@auth_bp.route('/bugig')
+@auth_bp.route('/menu-benef', methods=['GET', 'POST'])
 @login_required
-def bugig():
-    return render_template('bugig.html')
+def menu_benef():
+    return render_template('menu_benef.html')
+
+@auth_bp.route('/menu-gen', methods=['GET', 'POST'])
+@login_required
+def menu_gen():
+    return render_template('menu_gen.html')
 
 # rota de login 
 @auth_bp.route('/login', methods=['POST', 'GET'])
@@ -128,6 +133,7 @@ def login():
 
         email = form.email.data
         usuario = UsersDb.query.filter_by(email=email).first()
+        tipo_id = UsersDb.query.filter_by(email=email).first().id_tipo_user
 
         if usuario and check_password_hash(usuario.senha, form.senha.data):
             
@@ -135,8 +141,12 @@ def login():
             session['user_id'] = usuario.id
             session['user_nome'] = usuario.nome
 
-            flash(f'Login efetuado com sucesso. Seja bem vindo!', 'success')
-            return redirect(url_for('auth.bugig'))
+            if tipo_id == 1:  # Beneficiário            
+                flash(f'Login efetuado com sucesso. Seja bem vindo!', 'success')
+                return redirect(url_for('auth.menu_benef'))  # redireciona para a tela principal do sistema
+            else:  # Gerador
+                flash(f'Login efetuado com sucesso. Seja bem vindo!', 'success')
+                return redirect(url_for('auth.menu_gen'))  # redireciona para a tela principal do sistema
         else:
 
             flash('Email ou senha inválidos!', 'danger')

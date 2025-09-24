@@ -11,10 +11,9 @@ from controllers.login import auth_bp
 @auth_bp.route('/new-benef', methods=['GET', 'POST'])
 @login_required
 def signin_benef():
-
     titulo = 'Cadastro Beneficiário'
-    # Recupera o ID do usuário da sessão
     user_id = session.get('new_user_id')
+
     if not user_id:
         flash('Usuário não informado na sessão', 'danger')
         return redirect(url_for('auth.signin'))
@@ -24,81 +23,41 @@ def signin_benef():
     classe_consumo = TipoClasses.query.all()
     form_benef.classe_consumo.choices = [(str(c.id), c.nome_tipo_classe) for c in classe_consumo]
 
-    if form_benef.validate_on_submit():  # Beneficiário
+    if form_benef.validate_on_submit():
         arquivos = [form_benef.conta1.data, form_benef.conta2.data, form_benef.conta3.data]
         consumos = []
 
+        for arquivo in arquivos:
+            arquivo.seek(0)
+            conteudo = arquivo.read().decode("utf-8").strip().splitlines()
+            linha2 = conteudo[1].strip()
+            consumo = float(linha2.split()[1])
+            consumos.append(consumo)
+
+        consumo_mensal = int(sum(consumos) / len(consumos))
+        classe_consumo_id = int(form_benef.classe_consumo.data)
+
+        novo_beneficiario = Beneficiaries(
+            consumo_mensal=consumo_mensal,
+            classe_consumo=classe_consumo_id,
+            id_user=user_id
+        )
+
         try:
-            for arquivo in arquivos:
-                if not arquivo:
-                    flash("Todos os arquivos devem ser enviados.", "danger")
-                    return render_template("benef.html", titulo=titulo, form_benef=form_benef)
-
-                arquivo.seek(0)  # garante que o ponteiro esteja no início
-                conteudo = arquivo.read().decode("utf-8").strip().splitlines()
-
-                if len(conteudo) < 2:
-                    flash("Arquivo inválido. Deve conter nome na 1ª linha e data/valor na 2ª.", "danger")
-                    return render_template("benef.html", titulo=titulo, form_benef=form_benef)
-
-                linha2 = conteudo[1].strip()
-                partes = linha2.split()
-
-                if len(partes) != 2:
-                    flash("Formato da 2ª linha inválido. Esperado: 'DATA VALOR'.", "danger")
-                    return render_template("benef.html", titulo=titulo, form_benef=form_benef)
-
-                consumo = float(partes[1])
-                consumos.append(consumo)
-
-            # média em inteiro
-            consumo_mensal = int(sum(consumos) / len(consumos))
-            classe_consumo_id = int(form_benef.classe_consumo.data)
-
-            # Debug: printa os valores antes de salvar
-            print(f"[DEBUG] Novo Beneficiário -> user_id={user_id}, classe={classe_consumo_id}, consumo={consumo_mensal}")
-
-            # Cria o beneficiário vinculado ao usuário logado
-            novo_beneficiario = Beneficiaries(
-                consumo_mensal=consumo_mensal,
-                classe_consumo=classe_consumo_id,
-                id_user=user_id
-            )
-
-            # Log antes de salvar
-            print(">>> Salvando beneficiário no banco...")
-            print(f"id_user={user_id}, consumo_mensal={consumo_mensal}, classe_consumo={classe_consumo_id}")
-
             db.session.add(novo_beneficiario)
+            db.session.commit()
+            flash('Beneficiário cadastrado com sucesso!', 'success')
 
-            try:
-                db.session.flush()  # força o INSERT
-                db.session.commit()
-                print(">>> COMMIT concluído com sucesso!")
-                flash(f'Beneficiário cadastrado com sucesso!', 'success')
-
-                # Remove o ID da sessão após criar o beneficiário
-                session.pop('new_user_id', None)
-
-                return redirect(url_for('public.landing_page'))
-
-            except Exception as e:
-                db.session.rollback()
-                print("[ERRO AO INSERIR BENEFICIÁRIO]", str(e))
-                flash(f"Erro ao salvar beneficiário: {str(e)}", "danger")
+            # Remove o ID da sessão após criar o beneficiário
+            session.pop('new_user_id', None)
+            return redirect(url_for('auth.menu_benef'))
 
         except Exception as e:
             db.session.rollback()
-            print("[ERRO GERAL]", str(e))
-            flash(f"Erro ao processar arquivos: {str(e)}", "danger")
+            flash(f"Erro ao salvar beneficiário: {str(e)}", "danger")
 
-    else:
-        # Caso o form não valide, mostra os erros no console
-        if request.method == 'POST':
-            print("[ERROS DE VALIDAÇÃO]", form_benef.errors)
-
-    # Renderiza o template caso GET ou falha na validação
     return render_template('benef.html', titulo=titulo, form_benef=form_benef)
+
 
 
 
@@ -111,7 +70,7 @@ def signin_gen():
     user_id = session.get('new_user_id')
     if not user_id:
         flash('Usuário não informado na sessão', 'danger')
-        return redirect(url_for('auth.signin'))
+        return redirect(url_for('auth.menu_benef'))
 
     form_gen = FormGen()
     # Pega os tipos de geração do banco
@@ -142,42 +101,3 @@ def signin_gen():
 
     return render_template('Gerador.html', form=form_gen)
 
-
-
-'''form = FormBenef()
-# Puxando classes de consumo do banco
-classes = TipoClasses.query.all()
-form.classe_consumo.choices = [(str(c.id), c.nome_tipo_classe) for c in classes]
-
-if form.validate_on_submit():
-    arquivos = form.arquivos.data  # Lista de FileStorage
-    consumos = []
-
-    for arquivo in arquivos:
-        filename = secure_filename(arquivo.filename)
-        conteudo = arquivo.read().decode('utf-8')  # Lê como string
-        try:
-            valor = int(conteudo.strip())  # Considerando que o txt tem apenas um número
-            consumos.append(valor)
-        except ValueError:
-            flash(f"Arquivo {filename} contém valor inválido.", "danger")
-            return render_template('Beneficiario.html', form=form)
-
-    if len(consumos) != 3:
-        flash("Você deve enviar exatamente 3 arquivos.", "danger")
-        return render_template('Beneficiario.html', form=form)
-
-    media_consumo = int(sum(consumos) / 3)
-
-    novo_benef = Beneficiarios(
-        id_user=user_id,
-        consumo_mensal=media_consumo,
-        classe_consumo=int(form.classe_consumo.data)
-    )
-
-    db.session.add(novo_benef)
-    db.session.commit()
-    flash("Beneficiário cadastrado com sucesso!", "success")
-    return redirect(url_for('public.landing_page'))
-
-return render_template('Beneficiario.html', form=form)'''

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from controllers.errors import *
 from extensions import db, csrf
 
 # importando os blueprints
