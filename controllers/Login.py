@@ -2,8 +2,6 @@ from functools import wraps
 from extensions import db
 from flask import Blueprint, render_template, redirect, request, session, flash, url_for
 from controllers.validations import validar_documento
-from forms.form_benef import FormBenef
-from forms.form_gen import FormGen
 from forms.form_user import FormUser
 from forms.form_login import FormLogin
 from models_DB.companies import Companies
@@ -15,33 +13,61 @@ auth_bp = Blueprint('auth', __name__)
 
 # decorador que verifica se o usuario está logado em outras sessoes
 # ao chamar uma url que deve ser verificada, colocar o decorador login_required acima da função
+'''def user_owns_resource(param_id_name):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if 'user_id' not in session:
+                flash('Você precisa fazer login.', 'warning')
+                return redirect(url_for('auth.login'))
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
-            flash('Você precisa fazer login para acessar esta página.', 'warning')
-            return redirect(url_for('auth.login'))
-        return f(*args, **kwargs)
-    return decorated_function  
+            url_id = kwargs.get(param_id_name)
+            if url_id != session['user_id']:
+                flash('Acesso negado a essa página.', 'danger')
+                return redirect(url_for('auth.login'))
+
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator'''
+
+def user_owns_resource(param_id_name, tipo_usuario_esperado=None):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if 'user_id' not in session:
+                flash('Você precisa fazer login.', 'warning')
+                return redirect(url_for('auth.login'))
+
+            url_id = kwargs.get(param_id_name)
+            if url_id != session['user_id']:
+                flash('Acesso negado a essa página.', 'danger')
+                return redirect(url_for('auth.login'))
+
+            # Verifica tipo de usuário, se informado
+            if tipo_usuario_esperado:
+                from models_DB.users import UsersDb
+                usuario = UsersDb.query.get(session['user_id'])
+                if usuario.id_tipo_user != tipo_usuario_esperado:
+                    flash('Acesso negado para este tipo de usuário.', 'danger')
+                    return redirect(url_for('auth.login'))
+
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
 
 
 # rota de cadastro 
 @auth_bp.route('/signin', methods=['GET', 'POST'])
 def signin():
     form = FormUser()
-    form_benef = FormBenef()
-    form_gen = FormGen()
     titulo = 'Cadastro'
 
     # seleciona as distriuidoras cadastradas
     distribuidoras = Companies.query.all()
     form.distribuidora.choices = [(str(d.id), d.nome_distribuidora) for d in distribuidoras]
 
-    # o tipo de pessoa fisica ou juridica vai ser selecionado direto do form
-
-    if form.validate_on_submit():  # valida todos os validators nativos (diferentes dos que estão nos forms)
-        # valida o tipo de documento
+    # validação do form
+    if form.validate_on_submit():
         erros = validar_documento(
             tipo_documento=form.tipo_documento.data,
             cpf=form.cpf.data,
@@ -62,11 +88,11 @@ def signin():
         if form.tipo_documento.data == 'cpf':
             documento = form.cpf.data
             razao_social = None
-            id_tipo_pessoa = 1  # Fisica
+            id_tipo_pessoa = 1
         else:
             documento = form.cnpj.data
             razao_social = form.nome_fantasia.data
-            id_tipo_pessoa = 2  # Juridica
+            id_tipo_pessoa = 2
 
         cep = form.cep.data
         numero = form.numero.data
@@ -97,59 +123,58 @@ def signin():
         db.session.commit()
         flash('Usuário cadastrado com sucesso!', 'success')
 
-        # cria a session do ususário que será utilizada para validações de rotas
+        # cria a session do ususário
         session['user_id'] = novo_usuario.id
         session['user_nome'] = novo_usuario.nome
 
-        # armazena o id para salvar no cadastro do beneficiario ou do gerador
+        # armazena o id temporário para cadastro do beneficiário ou gerador
         session['new_user_id'] = novo_usuario.id
 
         if tipo_usuario == 1:  # Beneficiário
-            return redirect(url_for('auth.signin_benef'))
+            return redirect(url_for('auth.signin_benef', user_id=novo_usuario.id))
         else:  # Gerador
-            return redirect(url_for('auth.signin_gen'))
-
+            return redirect(url_for('auth.signin_gen', user_id=novo_usuario.id))
 
     return render_template('Cadastro.html', titulo=titulo, form=form)
 
-@auth_bp.route('/menu-benef', methods=['GET', 'POST'])
-@login_required
-def menu_benef():
-    return render_template('menu_benef.html')
 
-@auth_bp.route('/menu-gen', methods=['GET', 'POST'])
-@login_required
-def menu_gen():
-    return render_template('menu_gen.html')
+@auth_bp.route('/<int:user_id>/menu-benef', methods=['GET', 'POST'])
+@user_owns_resource('user_id', tipo_usuario_esperado=1)
+def menu_benef(user_id):
+    return render_template('menu_benef.html', user_id=user_id)
+
+
+@auth_bp.route('/<int:user_id>/menu-gen', methods=['GET', 'POST'])
+@user_owns_resource('user_id', tipo_usuario_esperado=2)
+def menu_gen(user_id):
+    return render_template('menu_gen.html', user_id=user_id)
+
 
 # rota de login 
 @auth_bp.route('/login', methods=['POST', 'GET'])
 def login():
-
     form = FormLogin()
     titulo = 'Login'
 
     if form.validate_on_submit():
-
         email = form.email.data
         usuario = UsersDb.query.filter_by(email=email).first()
-        tipo_id = UsersDb.query.filter_by(email=email).first().id_tipo_user
 
         if usuario and check_password_hash(usuario.senha, form.senha.data):
-            
-            # cria a session do ususário que será utilizada para validações de rotas
+            tipo_id = usuario.id_tipo_user
+
+            # cria a session
             session['user_id'] = usuario.id
             session['user_nome'] = usuario.nome
 
-            if tipo_id == 1:  # Beneficiário            
-                flash(f'Login efetuado com sucesso. Seja bem vindo!', 'success')
-                return redirect(url_for('auth.menu_benef'))  # redireciona para a tela principal do sistema
-            else:  # Gerador
-                flash(f'Login efetuado com sucesso. Seja bem vindo!', 'success')
-                return redirect(url_for('auth.menu_gen'))  # redireciona para a tela principal do sistema
-        else:
+            flash(f'Login efetuado com sucesso. Seja bem vindo!', 'success')
 
+            if tipo_id == 1:  # Beneficiário
+                return redirect(url_for('auth.menu_benef', user_id=usuario.id))
+            else:  # Gerador
+                return redirect(url_for('auth.menu_gen', user_id=usuario.id))
+        else:
             flash('Email ou senha inválidos!', 'danger')
             return render_template('login.html', titulo=titulo, form=form)
-        
+
     return render_template('login.html', titulo=titulo, form=form)

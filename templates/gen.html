@@ -1,30 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
 <div class="modal fade" id="modalFornecedor" tabindex="-1" aria-labelledby="modalFornecedorLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalFornecedorLabel">Dados do Gerador</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-2">
-          <label for="producao_mensal" class="form-label">Produção Mensal Média:</label>
-          <input type="number" class="form-control" id="producao_mensal" name="producao_mensal">
+      <form method="POST" enctype="multipart/form-data">
+        {{ form_gen.hidden_tag() }}
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFornecedorLabel">Dados do Gerador</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="mb-2">
-          <label for="inicio_operacao" class="form-label">Início de Operação:</label>
-          <input type="date" class="form-control" id="inicio_operacao" name="inicio_operacao">
-        </div>
-        <div class="mb-2">
+        <div class="modal-body">
+          <div class="mb-2">
+            {{ form_gen.producao_mensal.label(class='form-label') }}
+            {{ form_gen.producao_mensal(class='form-control') }}
+            {% for error in form_gen.producao_mensal.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+          <div class="mb-2">
+            {{ form_gen.inicio_operacao.label(class='form-label') }}
+            {{ form_gen.inicio_operacao(class='form-control') }}
+            {% for error in form_gen.inicio_operacao.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+          <div class="mb-2">
             {{ form_gen.id_tipo_geracao.label(class='form-label') }}
             {{ form_gen.id_tipo_geracao(class='form-select') }}
             {% for error in form_gen.id_tipo_geracao.errors %}
-                <span class="text-danger">{{ error }}</span>
-            {% endfor %}    
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        {{ form_gen.cadastrar(class='btn btn-primary', id='saveGen') }}
-      </div>
+        <div class="modal-footer">
+          {{ form_gen.cadastrar(class='btn btn-primary', id='saveGen') }}
+        </div>
+      </form>
     </div>
   </div>
 </div>
+
+{% endblock %}

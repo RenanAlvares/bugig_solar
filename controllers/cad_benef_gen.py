@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash, session
-from controllers.login import login_required
+from controllers.login import user_owns_resource
 from forms.form_benef import FormBenef
 from forms.form_gen import FormGen
 from extensions import db
@@ -8,15 +8,10 @@ from models_DB.types import TipoClasses, TipoGeracao
 from controllers.login import auth_bp
 
 
-@auth_bp.route('/new-benef', methods=['GET', 'POST'])
-@login_required
-def signin_benef():
+@auth_bp.route('/<int:user_id>/new-benef', methods=['GET', 'POST'])
+@user_owns_resource('user_id', tipo_usuario_esperado=1)
+def signin_benef(user_id):
     titulo = 'Cadastro Beneficiário'
-    user_id = session.get('new_user_id')
-
-    if not user_id:
-        flash('Usuário não informado na sessão', 'danger')
-        return redirect(url_for('auth.signin'))
 
     form_benef = FormBenef()
     # Pega as classes de consumo do banco
@@ -27,12 +22,16 @@ def signin_benef():
         arquivos = [form_benef.conta1.data, form_benef.conta2.data, form_benef.conta3.data]
         consumos = []
 
-        for arquivo in arquivos:
-            arquivo.seek(0)
-            conteudo = arquivo.read().decode("utf-8").strip().splitlines()
-            linha2 = conteudo[1].strip()
-            consumo = float(linha2.split()[1])
-            consumos.append(consumo)
+        try:
+            for arquivo in arquivos:
+                arquivo.seek(0)
+                conteudo = arquivo.read().decode("utf-8").strip().splitlines()
+                linha2 = conteudo[1].strip()
+                consumo = float(linha2.split()[1])
+                consumos.append(consumo)
+        except Exception as e:
+            flash(f"Erro ao processar os arquivos: {str(e)}", "danger")
+            return render_template('benef.html', titulo=titulo, form_benef=form_benef)
 
         consumo_mensal = int(sum(consumos) / len(consumos))
         classe_consumo_id = int(form_benef.classe_consumo.data)
@@ -47,10 +46,7 @@ def signin_benef():
             db.session.add(novo_beneficiario)
             db.session.commit()
             flash('Beneficiário cadastrado com sucesso!', 'success')
-
-            # Remove o ID da sessão após criar o beneficiário
-            session.pop('new_user_id', None)
-            return redirect(url_for('auth.menu_benef'))
+            return redirect(url_for('auth.menu_benef', user_id=user_id))
 
         except Exception as e:
             db.session.rollback()
@@ -59,19 +55,9 @@ def signin_benef():
     return render_template('benef.html', titulo=titulo, form_benef=form_benef)
 
 
-
-
-
-@auth_bp.route('/new-gen', methods=['GET', 'POST'])
-@login_required
-def signin_gen():
-
-    # Recupera o ID do usuário da sessão
-    user_id = session.get('new_user_id')
-    if not user_id:
-        flash('Usuário não informado na sessão', 'danger')
-        return redirect(url_for('auth.menu_benef'))
-
+@auth_bp.route('/<int:user_id>/new-gen', methods=['GET', 'POST'])
+@user_owns_resource('user_id', tipo_usuario_esperado=2)
+def signin_gen(user_id):
     form_gen = FormGen()
     # Pega os tipos de geração do banco
     tipos_geracao = TipoGeracao.query.all()
@@ -80,9 +66,8 @@ def signin_gen():
     if form_gen.validate_on_submit():  # Gerador
         producao_mensal = form_gen.producao_mensal.data
         inicio_operacao = form_gen.inicio_operacao.data  # DateField do WTForms já retorna date
-        tipo_geracao_id = form_gen.id_tipo_geracao.data
+        tipo_geracao_id = int(form_gen.id_tipo_geracao.data)
 
-        # Cria o gerador vinculado ao usuário logado
         novo_gerador = Generators(
             producao_mensal=producao_mensal,
             inicio_operacao=inicio_operacao,
@@ -90,14 +75,14 @@ def signin_gen():
             id_user=user_id
         )
 
-        db.session.add(novo_gerador)
-        db.session.commit()
-        flash('Gerador cadastrado com sucesso!', 'success')
+        try:
+            db.session.add(novo_gerador)
+            db.session.commit()
+            flash('Gerador cadastrado com sucesso!', 'success')
+            return redirect(url_for('auth.menu_gen', user_id=user_id))
 
-        # Remove o ID da sessão após criar o gerador
-        session.pop('new_user_id', None)
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Erro ao salvar gerador: {str(e)}", "danger")
 
-        return redirect(url_for('public.landing_page'))  # mudar para auth.menu_gen quando houver o template
-
-    return render_template('Gerador.html', form=form_gen)
-
+    return render_template('gen.html', form_gen=form_gen)
