@@ -37,7 +37,7 @@
 
                 <div class="btn_container">
                     {{ form.entrar(class='btn_login') }}
-                    <p class="texto_link">Não tem uma conta? <a href="/signin">Criar conta.</a></p>
+                    <p class="texto_link">Não tem uma conta? <a href="{{ url_for('auth.signin') }}">Criar conta.</a></p>
                 </div>
 
             </form>
