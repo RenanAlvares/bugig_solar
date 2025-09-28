@@ -1,11 +1,11 @@
-from flask import render_template, request, redirect, url_for, flash, session
+from flask import render_template, redirect, url_for, flash
 from controllers.login import user_owns_resource
 from forms.form_benef import FormBenef
 from forms.form_gen import FormGen
 from extensions import db
 from models_DB.benef_gen import Beneficiaries, Generators
 from models_DB.types import TipoClasses, TipoGeracao
-from controllers.login import auth_bp
+from . import auth_bp
 
 
 @auth_bp.route('/<int:user_id>/new-benef', methods=['GET', 'POST'])

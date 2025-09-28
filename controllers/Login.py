@@ -1,6 +1,6 @@
 from functools import wraps
 from extensions import db
-from flask import Blueprint, render_template, redirect, request, session, flash, url_for
+from flask import Blueprint, render_template, redirect, session, flash, url_for
 from controllers.validations import validar_documento
 from forms.form_user import FormUser
 from forms.form_login import FormLogin
@@ -9,26 +9,11 @@ from models_DB.users import UsersDb
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # isso faz com que toda rota que tiver auth_bp terá o /bugig antes da rota principal
-auth_bp = Blueprint('auth', __name__)
+
+from . import auth_bp
 
 # decorador que verifica se o usuario está logado em outras sessoes
 # ao chamar uma url que deve ser verificada, colocar o decorador login_required acima da função
-'''def user_owns_resource(param_id_name):
-    def decorator(f):
-        @wraps(f)
-        def decorated_function(*args, **kwargs):
-            if 'user_id' not in session:
-                flash('Você precisa fazer login.', 'warning')
-                return redirect(url_for('auth.login'))
-
-            url_id = kwargs.get(param_id_name)
-            if url_id != session['user_id']:
-                flash('Acesso negado a essa página.', 'danger')
-                return redirect(url_for('auth.login'))
-
-            return f(*args, **kwargs)
-        return decorated_function
-    return decorator'''
 
 def user_owns_resource(param_id_name, tipo_usuario_esperado=None):
     def decorator(f):
