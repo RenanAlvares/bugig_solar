@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>tela beneficiario</h1>
+<div class="container mt-4">
+    <div class="card p-4 shadow-sm">
+        <h1 class="mb-4">Menu do Beneficiário</h1>
+
+        <p>Bem-vindo, {{ session['user_nome'] }}!</p>
+        
+        <div class="d-flex flex-column gap-3 mt-3">
+            <a href="{{ url_for('auth.edit_user', user_id=user_id) }}" class="btn btn-primary btn-lg">
+                Editar Cadastro
+            </a>
+
+            </div>
+    </div>
+</div>
 {% endblock %}
