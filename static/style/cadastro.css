@@ -3,42 +3,70 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Inter", sans-serif;
 }
 
 body {
-    color: #f1f1f1;
-    background: #1a1a1a !important;
+    color: #fff;
+    background: linear-gradient(135deg, #111, #1d1d1d, #333) !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 html {
     overflow-x: hidden;
-    background: #1a1a1a !important;
+    background: linear-gradient(135deg, #111, #1d1d1d, #333) !important;
 }
 
 main {
-    background: #1a1a1a;
+    background: transparent;
     margin-top: 80px;
     width: 100%;
-    padding: 0 30px 30px 30px;
+    padding: 20px 30px 30px 30px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 /* Área principal de cadastro */
 #cadastro {
-    background: #1a1a1a;
-    border-radius: 16px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(14px);
+    border-radius: 20px;
     padding: 40px;
-    box-shadow: 0 0 30px rgba(244, 203, 22, 0.126);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.5);
     color: #fff;
+    max-width: 1400px;
+    width: 100%;
+    transition: all 0.4s ease;
 }
 
-/* Título */
+#cadastro:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(0,0,0,0.6);
+}
+
+/* Título com subtítulo */
 #cadastro h1 {
-    font-size: 2rem;
-    color: #fff;
-    margin-bottom: 25px;
+    font-size: 2.2rem;
+    color: #f9c80e;
+    margin-bottom: 8px;
     text-align: center;
-    font-weight: 600;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(249,200,14,0.4);
+}
+
+#cadastro h1::after {
+    content: "Cadastre-se para compartilhar e economizar com energia solar ⚡";
+    display: block;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.9);
+    font-weight: 400;
+    margin-top: 8px;
+    text-shadow: none;
 }
 
 /* Alert messages */
@@ -49,52 +77,64 @@ main {
 
 .alert {
     padding: 12px 16px;
-    border-radius: 8px;
+    border-radius: 10px;
     margin-bottom: 10px;
     font-size: 0.9rem;
+    backdrop-filter: blur(8px);
 }
 
 .alert-danger {
-    background-color: rgba(220, 53, 69, 0.2);
-    border: 1px solid #dc3545;
-    color: #f8d7da;
+    background: rgba(220, 53, 69, 0.15);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    color: #ffcdd2;
 }
 
 .alert-success {
-    background-color: rgba(25, 135, 84, 0.2);
-    border: 1px solid #198754;
-    color: #d1e7dd;
+    background: rgba(68, 175, 105, 0.15);
+    border: 1px solid rgba(68, 175, 105, 0.3);
+    color: #c8e6c9;
 }
 
 /* Layout principal do formulário */
 .form-content {
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 40px;
+    grid-template-columns: 300px 1fr 1fr;
+    gap: 30px;
     width: 100%;
     margin-bottom: 30px;
+    margin-top: 40px;
 }
 
 .left-column {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 30px;
+}
+
+.right-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+    grid-column: span 2;
+    grid-template-rows: auto auto auto;
 }
 
 /* Foto de perfil */
 .profile-photo-section {
     text-align: center;
-    padding: 20px;
-    background: #202020;
-    border-radius: 12px;
-    border: 1px solid #333;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    border: none;
 }
 
 .photo-title {
-    font-size: 1.1rem;
-    color: #ffcc00;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.9);
     margin-bottom: 20px;
-    font-weight: 500;
+    font-weight: 600;
+    text-align: center;
 }
 
 .profile-photo-container {
@@ -108,17 +148,20 @@ main {
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    background-color: #333;
+    background: rgba(255,255,255,0.05);
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 3px solid #ffcc00;
+    border: 2px solid #f9c80e;
     overflow: hidden;
-    transition: 0.3s;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 12px rgba(249,200,14,0.3);
 }
 
 .profile-photo-placeholder:hover {
-    border-color: #e6b800;
+    border-color: #ffd700;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(249,200,14,0.5);
 }
 
 .profile-photo-placeholder img {
@@ -130,114 +173,364 @@ main {
 
 .photo-actions {
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 
 .photo-btn {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    background-color: #2a2a2a;
-    border: 2px solid #444;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.3);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(6px);
 }
 
-.photo-btn:hover {
-    background-color: #333;
-    border-color: #ffcc00;
+.upload-btn:hover {
+    background: rgba(249,200,14,0.15);
+    border-color: #f9c80e;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(249,200,14,0.3);
+}
+
+.remove-btn:hover {
+    background: rgba(244, 67, 54, 0.15);
+    border-color: #f44336;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
 }
 
 .photo-btn i {
-    color: #ffcc00;
-    font-size: 1.3rem;
+    color: #f9c80e;
+    font-size: 1.1rem;
+}
+
+.remove-btn i {
+    color: #f44336;
+}
+
+/* Container de Informações de Acesso */
+.left-column .login-fields {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid rgba(249,200,14,0.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: all 0.4s ease;
+}
+
+.left-column .login-fields:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+    border-color: rgba(249,200,14,0.5);
+}
+
+.left-column .login-fields legend,
+.left-column .login-fields > label.form-label:first-child {
+    color: #f9c80e;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    display: block;
+    text-shadow: 0 0 6px rgba(249,200,14,0.3);
+}
+
+/* Mini cards para tipo de usuário e documento */
+.mb-2:has(input[name="tipo_usuario"]),
+.mb-2:has(input[name="tipo_documento"]) {
+    grid-column: span 1;
+    grid-row: 2;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(249,200,14,0.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: all 0.4s ease;
+}
+
+.mb-2:has(input[name="tipo_usuario"]):hover,
+.mb-2:has(input[name="tipo_documento"]):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+    border-color: rgba(249,200,14,0.5);
+}
+
+.mb-2:has(input[name="tipo_usuario"]) label.form-label,
+.mb-2:has(input[name="tipo_documento"]) label.form-label {
+    color: #f9c80e;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 6px rgba(249,200,14,0.3);
+}
+
+/* Campos básicos - linha 1 */
+.mb-2:has(#id_nome),
+.mb-2:has(#id_email) {
+    grid-column: span 1;
+    grid-row: 1;
+}
+
+/* Campos na linha 3 - CPF/CNPJ, nome fantasia, telefone e senha */
+#cpf_group,
+#cnpj_group {
+    grid-column: 1;
+    grid-row: 3;
+    margin-bottom: 0;
+}
+
+#nome_fantasia_group {
+    grid-column: 2;
+    grid-row: 3;
+    margin-bottom: 0;
+}
+
+.mb-2:has(input[name="telefone"]) {
+    grid-column: 1;
+    grid-row: 4;
+}
+
+.mb-2:has(input[name="senha"]) {
+    grid-column: 2;
+    grid-row: 4;
+    background: transparent;
+    padding: 0;
+    border: none;
+    margin: 0;
+}
+
+/* Campo distribuidora */
+.mb-2:has(select[name="distribuidora"]) {
+    grid-column: 1 / -1;
+    grid-row: 5;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Fieldset de endereço */
+.address-block-full {
+    grid-column: 1 / -1;
+    grid-row: 6;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(8px);
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid rgba(249,200,14,0.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+    transition: all 0.4s ease;
+}
+
+.address-block-full:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+    border-color: rgba(249,200,14,0.5);
+}
+
+.address-block-full legend {
+    color: #f9c80e;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    padding: 0;
+    display: block;
+    grid-column: 1 / -1;
+    text-shadow: 0 0 6px rgba(249,200,14,0.3);
+}
+
+.address-block-full .mb-2 {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Inputs e selects */
 #cadastro .form-control,
 #cadastro .form-select {
-    padding: 12px 16px;
-    border: 2px solid #333;
-    border-radius: 8px;
-    background: #2a2a2a;
-    color: #fff;
-    outline: none;
-    transition: 0.3s;
     width: 100%;
-    font-size: 0.95rem;
+    padding: 0.9rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    outline: none;
 }
 
 #cadastro .form-control:focus,
 #cadastro .form-select:focus {
-    background: #333;
-    border-color: #ffcc00;
-    box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.1);
+    border-color: #f9c80e;
+    background: rgba(249,200,14,0.08);
+    box-shadow: 0 0 12px rgba(249,200,14,0.4);
 }
 
-/* Labels e radios */
+#cadastro .form-control::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+/* Estilo específico para select e suas options */
+#cadastro .form-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f9c80e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    padding-right: 3rem;
+}
+
+#cadastro .form-select option {
+    background: rgba(17, 17, 17, 0.95);
+    color: #fff;
+    padding: 0.5rem;
+    border: none;
+}
+
+#cadastro .form-select option:hover,
+#cadastro .form-select option:focus {
+    background: rgba(249,200,14,0.2);
+    color: #fff;
+}
+
+/* Labels */
 .mb-2 label.form-label,
 .mb-2 > label {
+    display: block;
+    text-align: left;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
     font-size: 0.95rem;
-    font-weight: 500;
-    color: #eee;
 }
 
+/* Radio buttons */
 .mb-2 input[type="radio"] {
-    accent-color: #ffcc00;
-    margin-right: 5px;
+    accent-color: #f9c80e;
+    margin-right: 8px;
+    margin-left: 0;
+}
+
+.mb-2 label:has(input[type="radio"]) {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 8px;
+    color: #fff;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
 }
 
 /* Mensagens de erro */
 .text-danger {
-    color: #ff6b6b;
-    font-size: 0.85rem;
-    margin-top: 5px;
-    font-weight: 500;
+    color: #ffcdd2;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    font-weight: 400;
 }
 
 /* Botão principal */
+.btn_container {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
 .btn_container .btn {
-    width: 100%;
-    max-width: 300px;
-    padding: 15px 30px;
+    background: linear-gradient(135deg, #f9c80e, #e0a80b);
+    color: #111;
+    padding: 0.9rem 2rem;
     border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #ffcc00, #e6b800);
-    color: #000;
-    font-weight: 600;
-    font-size: 1.1rem;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 1rem;
     cursor: pointer;
-    transition: 0.3s;
-    margin: 0 auto;
-    display: block;
-    box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    width: 100%;
+    max-width: 320px;
+    text-transform: none;
+    letter-spacing: 0.5px;
 }
 
 .btn_container .btn:hover {
-    background: linear-gradient(135deg, #e6b800, #d4a900);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 204, 0, 0.4);
+    background: linear-gradient(135deg, #44af69, #2e8f52);
+    color: #fff;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.4);
 }
 
 /* Responsividade */
+@media (max-width: 1200px) {
+    .form-content {
+        grid-template-columns: 280px 1fr 1fr;
+        gap: 25px;
+    }
+}
+
 @media (max-width: 992px) {
     .form-content {
         grid-template-columns: 1fr;
         gap: 30px;
     }
+    
+    .right-column {
+        grid-template-columns: 1fr 1fr;
+        grid-column: span 1;
+    }
+    
+    .address-block-full {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    .mb-2:has(input[name="tipo_usuario"]),
+    .mb-2:has(input[name="tipo_documento"]) {
+        grid-column: span 1;
+        margin-bottom: 15px;
+    }
 }
 
 @media (max-width: 768px) {
+    main {
+        padding: 20px 15px;
+        margin-top: 60px;
+    }
+    
     #cadastro {
+        padding: 2rem 1.2rem;
+        border-radius: 16px;
+    }
+    
+    .right-column {
+        grid-template-columns: 1fr;
+    }
+    
+    .address-block-full {
+        grid-template-columns: 1fr;
         padding: 20px;
     }
     
     #cadastro h1 {
-        font-size: 1.6rem;
+        font-size: 1.7rem;
+    }
+    
+    #cadastro h1::after {
+        font-size: 0.9rem;
     }
 
     .profile-photo-placeholder {
@@ -247,36 +540,40 @@ main {
 
     .btn_container .btn {
         max-width: none;
-        padding: 12px;
-        font-size: 1rem;
+        padding: 0.8rem;
+        font-size: 0.95rem;
     }
 }
 
 @media (max-width: 480px) {
     main {
-        padding: 0 10px 10px 10px;
+        padding: 1rem;
     }
 
     #cadastro {
-        padding: 15px;
-        border-radius: 10px;
+        padding: 1.5rem 1rem;
+        border-radius: 16px;
     }
 
     #cadastro h1 {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
+    }
+    
+    #cadastro h1::after {
+        font-size: 0.85rem;
     }
 
     .photo-actions {
-        gap: 15px;
+        gap: 10px;
     }
 
     .photo-btn {
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
     }
 
-    #cadastro .form-control,
-    #cadastro .form-select {
-        padding: 10px 12px;
+    .left-column .login-fields,
+    .address-block-full {
+        padding: 15px;
     }
 }
