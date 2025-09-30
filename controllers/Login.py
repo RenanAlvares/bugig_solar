@@ -1,6 +1,6 @@
 from functools import wraps
 from extensions import db
-from flask import Blueprint, render_template, redirect, session, flash, url_for
+from flask import session, render_template, redirect, session, flash, url_for
 from controllers.validations import validar_documento
 from forms.form_user import FormUser
 from forms.form_login import FormLogin
@@ -9,7 +9,6 @@ from models_DB.users import UsersDb
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # isso faz com que toda rota que tiver auth_bp terá o /bugig antes da rota principal
-
 from . import auth_bp
 
 # decorador que verifica se o usuario está logado em outras sessoes

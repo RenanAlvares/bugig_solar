@@ -1,7 +1,27 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-
-<h1>Menu do gerador</h1>
-
+<main>
+    <div class="dashboard">
+        <h1>Painel do Gerador</h1>
+        <p>Olá! Gerencie suas doações e veja o impacto que você gera.</p>
+        <div class="dashboard-cards">
+            <a href="#" class="card">
+                <div class="card-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                <h3>Doar Créditos</h3>
+                <p>Compartilhe sua energia excedente e ajude quem precisa.</p>
+            </a>
+            <a href="#" class="card">
+                <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <h3>Relatórios de Geração</h3>
+                <p>Acompanhe sua produção de energia e doações realizadas.</p>
+            </a>
+             <a href="{{ url_for('auth.edit_user', user_id=user_id) }}" class="card">
+                <div class="card-icon"><i class="fa-solid fa-user-gear"></i></div>
+                <h3>Editar Perfil</h3>
+                <p>Mantenha seus dados e informações do sistema atualizados.</p>
+            </a>
+        </div>
+    </div>
+</main>
 {% endblock %}

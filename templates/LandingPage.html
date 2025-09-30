@@ -1,25 +1,12 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='style/LandingPage.css') }}">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
-          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <title>LandingPage</title>
-</head>
-
 {% extends 'base.html' %}
 
+{% block head_extra %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/LandingPage.css') }}">
+{% endblock %}
+
 {% block content %}
+<main id="landing-page-main">
 
-<main id="content">
-
-    <!-- HERO -->
     <section class="hero">
         <div class="container">
             <h1>Leve energia solar para quem mais precisa 🌞</h1>
@@ -27,55 +14,46 @@
         </div>
     </section>
 
-    <!-- INFO BOX EM CARDS -->
     <div class="info-box">
         <h3>O que você pode fazer no BugigSolar?</h3>
         <div class="cards-container">
-
             <div class="card" onclick="mostrarFuncionalidade('Entrar na Fila')">
-                <i class="fa-solid fa-user-plus"></i>
+                <i class="fa-solid fa-users"></i>
                 <h4>Entrar na Fila</h4>
-                <p>Solicite créditos solares e aguarde sua vez na fila de recebimento.</p>
+                <p>Receba créditos e economize na sua conta de luz.</p>
             </div>
-
             <div class="card" onclick="mostrarFuncionalidade('Fazer Doação')">
                 <i class="fa-solid fa-hand-holding-heart"></i>
-                <h4>Doar Créditos</h4>
-                <p>Compartilhe sua energia excedente e ajude outras famílias.</p>
+                <h4>Fazer Doação</h4>
+                <p>Doe seus créditos e ajude quem precisa.</p>
             </div>
-
             <div class="card" onclick="mostrarFuncionalidade('Consultar Movimentação')">
                 <i class="fa-solid fa-chart-line"></i>
                 <h4>Consultar Movimentação</h4>
-                <p>Acompanhe em tempo real seus créditos doados e recebidos.</p>
+                <p>Acompanhe suas doações e créditos recebidos.</p>
             </div>
-
             <div class="card" onclick="mostrarFuncionalidade('Simular Economia')">
-                <i class="fa-solid fa-solar-panel"></i>
+                <i class="fa-solid fa-calculator"></i>
                 <h4>Simular Economia</h4>
-                <p>Descubra quanto você pode economizar com energia solar.</p>
+                <p>Calcule o quanto você pode economizar.</p>
             </div>
-
         </div>
     </div>
 
-    <!-- AVISO -->
-    <div id="aviso-funcionalidade" class="aviso-funcionalidade">
-        <button onclick="fecharAviso()" aria-label="Fechar aviso">Fechar</button>
+    <div class="aviso" id="aviso-funcionalidade" style="display:none;">
+        <button class="fechar-aviso" onclick="fecharAviso()">&times;</button>
         <p id="texto-aviso"></p>
     </div>
 
-    <!-- SEÇÃO LATERAL COM IMAGEM -->
     <section class="section-imagem">
         <div class="texto">
             <h2>Energia limpa, impacto real ⚡</h2>
             <p>Desde 2024 ajudando famílias a economizar e compartilhar energia solar no Brasil.</p>
-            <button>Saiba mais</button>
+            <button class="lp-button">Saiba mais</button>
         </div>
         <img src="/static/Imagens/energia-eletrica.png" alt="Painéis solares">
     </section>
 
-    <!-- IMPACTO REAL -->
     <section class="painel-creditos">
         <div class="container">
             <h2>Impacto Real</h2>
@@ -87,21 +65,15 @@
         </div>
     </section>
 
-    <!-- CTA FINAL -->
     <section class="cta-final">
         <div class="container">
             <h2>Pronto para compartilhar energia solar?</h2>
             <p>Ajude alguém ou economize você também.</p>
             <div class="hero-buttons">
-                <button onclick="mostrarFuncionalidade('Entrar na Fila')">Entrar na Fila</button>
-                <button onclick="mostrarFuncionalidade('Fazer Doação')">Fazer Doação</button>
+                <button class="lp-button" onclick="mostrarFuncionalidade('Entrar na Fila')">Entrar na Fila</button>
+                <button class="lp-button" onclick="mostrarFuncionalidade('Fazer Doação')">Fazer Doação</button>
             </div>
         </div>
     </section>
-
 </main>
-
-<script src="{{ url_for('static', filename='style/script.js') }}"></script>
-
 {% endblock %}
-</html>

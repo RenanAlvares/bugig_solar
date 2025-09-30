@@ -2,116 +2,47 @@
 
 {% block content %}
 <main>
-<div id="cadastro" class="container mt-4">
-    <div class="form-card">
+    <div id="edit-user" class="form-container" style="max-width: 800px;">
         <h1>{{ titulo }}</h1>
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            <div class="alert-container">
-              {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-              {% endfor %}
-            </div>
-          {% endif %}
-        {% endwith %}
 
         <form method="post" action="{{ url_for('auth.edit_user', user_id=user_id) }}">
             {{ form.csrf_token() }}
 
-            <div class="form-content">
-                <div class="left-column">
-                    <!-- Foto de perfil -->
-                    <div class="profile-photo-section">
-                        <p class="photo-title">Foto de Perfil</p>
-                        <div class="profile-photo-container">
-                            <div class="profile-photo-placeholder">
-                                <img id="profile-img" src="{{ url_for('static', filename='img/default-avatar.svg') }}" alt="Foto de perfil">
-                            </div>
-                        </div>
-                    </div>
+            <div class="right-column" style="grid-template-columns: 1fr 1fr;">
+                <div class="form-group">
+                    {{ form.nome.label(class='form-label') }}
+                    {{ form.nome(class='form-control') }}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.telefone.label(class='form-label') }}
+                    {{ form.telefone(class='form-control', id='telefone') }}
                 </div>
 
-                <div class="right-column">
-                    <div class="mb-2">
-                        {{ form.nome.label(class='form-label') }}
-                        {{ form.nome(class='form-control') }}
-                        {% for error in form.nome.errors %}
-                            <span class="text-danger">{{ error }}</span>
-                        {% endfor %}
-                    </div>
-
-                    <div class="mb-2">
-                        {{ form.email.label(class='form-label') }}
-                        {{ form.email(class='form-control') }}
-                        {% for error in form.email.errors %}
-                            <span class="text-danger">{{ error }}</span>
-                        {% endfor %}
-                    </div>
-
-                    <div class="mb-2 login-fields">
-                        <label class="form-label">Tipo de usuário:</label>
-                        <input type="text" class="form-control" value="{% if form.tipo_usuario.data == '1' %}Beneficiário{% else %}Gerador{% endif %}" readonly>
-                    </div>
-
-                    <div class="mb-2 login-fields">
-                        <label class="form-label">CPF ou CNPJ?</label><br>
-                        {% for subfield in form.tipo_documento %}
-                            <label>{{ subfield }} {{ subfield.label.text }}</label><br>
-                        {% endfor %}
-                    </div>
-
-                    <div class="mb-2" id="cpf_group" style="display: none;">
-                        {{ form.cpf.label(class='form-label') }}
-                        {{ form.cpf(class='form-control') }}
-                    </div>
-
-                    <div class="mb-2" id="cnpj_group" style="display: none;">
-                        {{ form.cnpj.label(class='form-label') }}
-                        {{ form.cnpj(class='form-control') }}
-                    </div>
-
-                    <div class="mb-2" id="nome_fantasia_group" style="display: none;">
-                        {{ form.nome_fantasia.label(class='form-label') }}
-                        {{ form.nome_fantasia(class='form-control') }}
-                    </div>
-
-                    <fieldset class="address-block-full">
-                        <legend>Endereço</legend>
-                        <div class="mb-2">
+                <fieldset class="address-block">
+                    <legend>Endereço</legend>
+                    <div class="address-grid" style="grid-template-columns: 1fr 1fr;">
+                        <div class="form-group">
                             {{ form.cep.label(class='form-label') }}
-                            {{ form.cep(class='form-control') }}
+                            {{ form.cep(class='form-control', id='cep') }}
                         </div>
-
-                        <div class="mb-2">
+                         <div class="form-group">
                             {{ form.numero.label(class='form-label') }}
                             {{ form.numero(class='form-control') }}
                         </div>
-                    </fieldset>
-
-                    <div class="mb-2">
-                        {{ form.telefone.label(class='form-label') }}
-                        {{ form.telefone(class='form-control') }}
                     </div>
+                </fieldset>
 
-                    <!-- Confirmação de senha -->
-                    <div class="mb-2">
-                        <label class="form-label">Para confirmar alterações, digite sua senha:</label>
-                        <input type="password" name="confirm_senha" class="form-control" required>
-                    </div>
-
-                    <div class="mb-2">
-                        {{ form.distribuidora.label(class='form-label') }}
-                        {{ form.distribuidora(class='form-select', disabled=not form.cep.data or not form.numero.data) }}
-                    </div>
+                <div class="form-group full-width">
+                    <label class="form-label">Para confirmar, digite sua senha:</label>
+                    <input type="password" name="confirm_senha" class="form-control" required>
                 </div>
-            </div>
-
-            <div class="btn_container mt-3">
-                <button type="submit" class="btn btn-success">Salvar alterações</button>
+                
+                <div class="form-group full-width" style="margin-top: 1rem;">
+                    <button type="submit" class="btn-primary">Salvar Alterações</button>
+                </div>
             </div>
         </form>
     </div>
-</div>
 </main>
 {% endblock %}
