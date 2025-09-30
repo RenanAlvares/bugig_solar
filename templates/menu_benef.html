@@ -1,18 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="card p-4 shadow-sm">
-        <h1 class="mb-4">Menu do Beneficiário</h1>
-
-        <p>Bem-vindo, {{ session['user_nome'] }}!</p>
-        
-        <div class="d-flex flex-column gap-3 mt-3">
-            <a href="{{ url_for('auth.edit_user', user_id=user_id) }}" class="btn btn-primary btn-lg">
-                Editar Cadastro
+<main>
+    <div class="dashboard">
+        <h1>Painel do Beneficiário</h1>
+        <p>Bem-vindo(a)! Gerencie seus benefícios e explore novas possibilidades.</p>
+        <div class="dashboard-cards">
+            <a href="#" class="card">
+                <div class="card-icon"><i class="fa-solid fa-users-line"></i></div>
+                <h3>Entrar na Fila</h3>
+                <p>Garanta seu lugar para receber os próximos créditos de energia.</p>
             </a>
-
-            </div>
+            <a href="#" class="card">
+                <div class="card-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                <h3>Meus Relatórios</h3>
+                <p>Acompanhe seu histórico de créditos e a economia gerada.</p>
+            </a>
+            <a href="#" class="card">
+                <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
+                <h3>Simulador de Economia</h3>
+                <p>Calcule o quanto você pode economizar na sua conta de luz.</p>
+            </a>
+            <a href="{{ url_for('auth.edit_user', user_id=user_id) }}" class="card">
+                <div class="card-icon"><i class="fa-solid fa-user-pen"></i></div>
+                <h3>Editar Perfil</h3>
+                <p>Mantenha seus dados cadastrais sempre atualizados.</p>
+            </a>
+        </div>
     </div>
-</div>
+</main>
 {% endblock %}
