@@ -1,37 +1,72 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Seleciona todos os botões de rádio com o name 'tipo_documento'
-    const tipoDocumentoRadios = document.querySelectorAll('input[name="tipo_documento"]');
-    
-    // Seleciona os containers (divs) dos campos que devem ser escondidos/mostrados
+document.addEventListener('DOMContentLoaded', function () {
+    // elementos
+    const radios = Array.from(document.querySelectorAll('input[name="tipo_documento"]'));
     const cpfGroup = document.getElementById('cpf_group');
     const cnpjGroup = document.getElementById('cnpj_group');
     const nomeFantasiaGroup = document.getElementById('nome_fantasia_group');
 
-    // Função para atualizar a visibilidade dos campos
-    function toggleDocumentFields() {
-        // Pega o valor do radio button que está selecionado
-        const selectedValue = document.querySelector('input[name="tipo_documento"]:checked').value;
+    // debug rápido (remova ou comente depois)
+    console.log('script.js carregado. radios encontrados:', radios.length);
+    console.log('cpf_group?', !!cpfGroup, 'cnpj_group?', !!cnpjGroup, 'nomeFantasia?', !!nomeFantasiaGroup);
 
-        if (selectedValue === 'cpf') {
-            cpfGroup.style.display = 'block'; // Mostra o campo CPF
-            cnpjGroup.style.display = 'none'; // Esconde o campo CNPJ
-            nomeFantasiaGroup.style.display = 'none'; // Esconde o campo Nome Fantasia
-        } else if (selectedValue === 'cnpj') {
-            cpfGroup.style.display = 'none'; // Esconde o campo CPF
-            cnpjGroup.style.display = 'block'; // Mostra o campo CNPJ
-            nomeFantasiaGroup.style.display = 'block'; // Mostra o campo Nome Fantasia
+    function hideAll() {
+        if (cpfGroup) cpfGroup.style.display = 'none';
+        if (cnpjGroup) cnpjGroup.style.display = 'none';
+        if (nomeFantasiaGroup) nomeFantasiaGroup.style.display = 'none';
+    }
+
+    function showCPF() {
+        if (cpfGroup) cpfGroup.style.display = 'block';
+        if (cnpjGroup) cnpjGroup.style.display = 'none';
+        if (nomeFantasiaGroup) nomeFantasiaGroup.style.display = 'none';
+    }
+
+    function showCNPJ() {
+        if (cpfGroup) cpfGroup.style.display = 'none';
+        if (cnpjGroup) cnpjGroup.style.display = 'block';
+        if (nomeFantasiaGroup) nomeFantasiaGroup.style.display = 'block';
+    }
+
+    function toggleDocumentFields() {
+        const selected = document.querySelector('input[name="tipo_documento"]:checked');
+        if (!selected) {
+            hideAll();
+            console.log('Nenhum tipo_documento selecionado');
+            return;
+        }
+
+        const raw = (selected.value || '').toString().toLowerCase().trim();
+        console.log('tipo_documento selecionado value=', raw);
+
+        // aceita 'cpf'/'cnpj' ou '1'/'2'
+        if (raw === 'cpf' || raw === '1') {
+            showCPF();
+        } else if (raw === 'cnpj' || raw === '2') {
+            showCNPJ();
+        } else {
+            // fallback: tenta basear no label text se houver data-attribute
+            console.warn('Valor inesperado em tipo_documento:', raw);
+            hideAll();
         }
     }
 
-    // Adiciona um "ouvinte" para cada botão de rádio
-    // Quando qualquer um deles for clicado, a função toggleDocumentFields será executada
-    tipoDocumentoRadios.forEach(radio => {
-        radio.addEventListener('change', toggleDocumentFields);
-    });
-
-    // Chama a função uma vez no início para garantir que o estado inicial esteja correto
-    // (caso um dos botões já venha pré-selecionado)
-    if (document.querySelector('input[name="tipo_documento"]:checked')) {
-        toggleDocumentFields();
+    // se não encontrar radios, sai (evita erro)
+    if (!radios.length) {
+        console.warn('Nenhum input[name="tipo_documento"] encontrado.');
+        return;
     }
+
+    radios.forEach(r => r.addEventListener('change', toggleDocumentFields));
+
+    // estado inicial
+    toggleDocumentFields();
 });
+
+// Debug: monitora o submit
+const form = document.querySelector('form');
+if (form) {
+    form.addEventListener('submit', function(e) {
+        console.log('🚀 Form submit disparado!');
+        console.log('FormData:', new FormData(form));
+    });
+}

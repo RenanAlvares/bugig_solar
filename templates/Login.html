@@ -6,24 +6,34 @@
 
 {% block content %}
 <main>
-    <div id="login">
+    <div class="form-card">
         <h1>{{ titulo }}</h1>
         
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
         <form method="post" action="{{ url_for('auth.login') }}">
             {{ form.hidden_tag() }}
 
-            <div class="label_login mb-2">
+            <div class="form-group">
                 {{ form.email.label(class='form-label') }}
-                {{ form.email(class='form-control') }}
+                {{ form.email(class='form-control', placeholder='seuemail@exemplo.com') }}
             </div>
 
-            <div class="label_login mb-2">
+            <div class="form-group">
                 {{ form.senha.label(class='form-label') }}
-                {{ form.senha(class='form-control') }}
+                {{ form.senha(class='form-control', placeholder='Sua senha') }}
             </div>
 
             <div class="btn_container">
-                <button type="submit" class="btn_login">Entrar</button>
+                <button type="submit" class="btn btn-primary">Entrar</button>
             </div>
         </form>
     </div>
