@@ -1,4 +1,121 @@
-/* ESTILOS ESPECÍFICOS PARA A PÁGINA DE LOGIN */
-#login-form {
+/* ==============================================
+   BUGIGSOLAR - CSS PÁGINA DE LOGIN (FINAL)
+   ============================================== */
+
+/* 1. CORREÇÃO DO FUNDO BRANCO E ALINHAMENTO */
+body {
+    background: linear-gradient(135deg, #111, #1d1d1d, #212121) !important;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    min-height: calc(100vh - 160px); /* Centraliza na tela (descontando header/footer) */
+}
+
+/* 2. QUADRO PRETO COM RELEVO */
+.form-card {
+    width: 100%;
     max-width: 450px;
+    padding: 2.5rem 3rem;
+    background: rgba(30, 30, 30, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); /* Sombra para o efeito de relevo */
+}
+
+.form-card h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    color: var(--cor-amarelo-solar, #F2B705);
+}
+
+/* 3. ESTILO DAS NOTIFICAÇÕES (ALERTAS FLASH) */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    color: #fff;
+    border: 1px solid transparent;
+    text-align: center;
+}
+
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.2);
+    border-color: rgba(220, 53, 69, 0.5);
+}
+
+.alert-success {
+    background-color: rgba(25, 135, 84, 0.2);
+    border-color: rgba(25, 135, 84, 0.5);
+}
+
+.alert-warning {
+    background-color: rgba(255, 193, 7, 0.2);
+    border-color: rgba(255, 193, 7, 0.5);
+}
+
+.alert-info {
+    background-color: rgba(13, 202, 240, 0.2);
+    border-color: rgba(13, 202, 240, 0.5);
+}
+
+
+/* --- ESTILO DOS CAMPOS E LABELS --- */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--cor-texto-principal, #f5f5f5);
+}
+
+.form-control {
+    background-color: rgba(0,0,0,0.3) !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    color: #fff !important; 
+    padding: 0.8rem 1rem; 
+    border-radius: 8px;
+    width: 100%;
+}
+
+.form-control:focus {
+    background-color: rgba(0,0,0,0.4) !important;
+    border-color: var(--cor-amarelo-solar, #F2B705) !important;
+    box-shadow: 0 0 8px rgba(242, 183, 5, 0.3) !important;
+}
+
+/* --- BOTÃO DE LOGIN --- */
+.btn_container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn-primary { 
+    width: 100%;
+    background: var(--cor-amarelo-solar);
+    color: var(--cor-fundo-escuro);
+    border: 1px solid #e0a80b;
+    padding: 0.8rem 2.5rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--cor-fundo-card, #2a2a2a);
+    color: var(--cor-amarelo-solar);
+    border-color: #333;
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
 }
