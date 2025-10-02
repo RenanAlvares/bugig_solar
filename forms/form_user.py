@@ -20,10 +20,12 @@ class FormUser(FlaskForm):
     telefone = StringField('Digite o telefone:', [validators.DataRequired(), validators.Length(min=10, max=15)])    
     cep = StringField('Digite o CEP:', [validators.DataRequired(), validators.Length(min=2, max=150)])
     numero = IntegerField('Digite o número do endereço:', [validators.DataRequired()])
-    senha = PasswordField('Digite a senha:', [validators.DataRequired(), validators.Length(min=6, max=15)])
+    
+    # ALTERADO: Senha opcional para edição, obrigatória para cadastro
+    senha = PasswordField('Digite a senha:', [validators.Optional(), validators.Length(min=6, max=15)])
+    
+    # NOVO: Campo para confirmar senha na edição
+    confirm_senha = PasswordField('Confirme sua senha:', [validators.Optional()])
 
     distribuidora = SelectField('Seleciona sua distribuidora:', [validators.DataRequired()], choices=[])
     cadastrar = SubmitField('Cadastrar novo usuário')
-
-
-    

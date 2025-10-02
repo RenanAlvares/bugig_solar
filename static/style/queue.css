@@ -1,0 +1,186 @@
+/* ==============================================
+   QUEUE.CSS - ESTILO DA FILA (PADRÃO BUGIGSOLAR)
+   ============================================== */
+
+/* --- CARDS DE INFORMAÇÃO PRINCIPAL --- */
+.info-card {
+    background: rgba(30, 30, 30, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.info-card h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    color: #F2B705;
+}
+
+.info-card p {
+    margin: 0;
+    font-size: 1rem;
+    color: #f5f5f5;
+    opacity: 0.9;
+}
+
+/* --- STATUS CARDS (SECUNDÁRIOS) --- */
+.status-card {
+    background: rgba(30, 30, 30, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.status-card h5 {
+    color: #F2B705;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.status-card p {
+    color: #f5f5f5;
+    margin-bottom: 0.3rem;
+}
+
+.status-card strong {
+    color: #F2B705;
+}
+
+.status-card .text-muted,
+.status-card small {
+    color: rgba(245, 245, 245, 0.6);
+}
+
+/* --- BARRA DE PROGRESSO --- */
+.progress-custom {
+    height: 30px;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar-custom {
+    background: #F2B705;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #111;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: width 2s ease-in-out;
+    height: 100%;
+}
+
+/* --- TIMELINE DE STATUS --- */
+.timeline-step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+    gap: 1rem;
+}
+
+.timeline-step:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.timeline-icon.active {
+    background: #F2B705;
+    color: #111;
+    box-shadow: 0 2px 6px rgba(242, 183, 5, 0.4);
+}
+
+.timeline-icon.inactive {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(245, 245, 245, 0.4);
+}
+
+.timeline-step > div {
+    flex: 1;
+}
+
+.timeline-step strong {
+    color: #F2B705;
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+}
+
+.timeline-step .text-muted {
+    color: rgba(245, 245, 245, 0.65);
+    font-size: 0.9rem;
+}
+
+/* --- MENSAGEM MOTIVACIONAL --- */
+.motivational-text {
+    background: rgba(30, 30, 30, 0.6);
+    border-left: 4px solid #F2B705;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 6px;
+    color: #f5f5f5;
+    font-size: 1rem;
+}
+
+.motivational-text i {
+    color: #F2B705;
+    margin-right: 0.7rem;
+    font-size: 1.1rem;
+}
+
+/* --- ALERTS DO BOOTSTRAP (CUSTOMIZADO) --- */
+.alert-info {
+    background-color: rgba(30, 30, 30, 0.8);
+    border: 1px solid rgba(242, 183, 5, 0.3);
+    color: #f5f5f5;
+    border-radius: 8px;
+}
+
+.alert-info i {
+    color: #F2B705;
+}
+
+.alert-info strong {
+    color: #F2B705;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+    .info-card h2 {
+        font-size: 2.5rem;
+    }
+    
+    .timeline-step {
+        gap: 0.8rem;
+    }
+    
+    .timeline-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        font-size: 1rem;
+    }
+}
