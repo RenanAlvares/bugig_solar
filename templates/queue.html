@@ -10,10 +10,17 @@
             Estamos juntos para garantir que a solidariedade chegue até você
         </p>
 
-        {{ form.csrf_token }}
+        {{ form_queue.hidden_tag() }}
         <div>
-            {{ form.hidden_tag() }}
+            {{ form_queue.qtd_solicitada.label(class='form-label')}}
+            {{ form_queue.qtd_solicitada(class='form-control') }}
+            {% for error in form_queue.qtd_solicitada.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
         </div>
 
+        <div>
+            {{ form_queue.submit(class='btn btn-primary') }}
+        </div>
 
 {% endblock %}
