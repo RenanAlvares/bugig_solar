@@ -9,9 +9,10 @@ class Donation(db.Model):
     quantidade_doacao = db.Column(db.Integer, nullable=False)
     data_doacao = db.Column(db.DateTime, nullable=False)
     status = db.Column(db.Boolean, nullable=False)
-    quantidade_recebida = db.Column(db.Integer, nullable=False)
+    quantidade_disponivel = db.Column(db.Integer, nullable=False)
 
-    id_user_doacao = db.relationship('Generators', backref='doacao', lazy=True)
+    # relacionamento ajustado (não deve ter o mesmo nome que algum campo da tabela)
+    gerador = db.relationship('Generators', backref='doacoes', lazy=True)
 
 
 class Queue(db.Model):
@@ -19,10 +20,10 @@ class Queue(db.Model):
     __tablename__ = 'Fila'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_user_fila = db.Column(db.Integer, db.ForeignKey('Beneficiarios.id'), nullable=False)
+    id_beneficiario = db.Column(db.Integer, db.ForeignKey('Beneficiarios.id'), nullable=False)
     quantidade_solicitada = db.Column(db.Integer, nullable=False)
-    data_solicitacao = db.Column(db.DateTime, nullable=False)
+    data_solicitacao = db.Column(db.Date, nullable=False)
     status = db.Column(db.Boolean, nullable=False)
-    quantidade_disponível = db.Column(db.Integer, nullable=False)
+    quantidade_recebida = db.Column(db.Integer, nullable=False)
 
-    id_user = db.relationship('Beneficiaries', backref='fila', lazy=True)
+    beneficiario = db.relationship('Beneficiaries', backref='fila', lazy=True)

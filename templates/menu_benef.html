@@ -6,12 +6,12 @@
         <h1>Painel do Beneficiário</h1>
         <p>Bem-vindo(a)! Gerencie seus benefícios e explore novas possibilidades.</p>
         <div class="dashboard-cards">
-            <a href="#" class="card">
+            <a href="{{ url_for('auth.get_in_queue', user_id=user_id)}}" class="card">
                 <div class="card-icon"><i class="fa-solid fa-users-line"></i></div>
                 <h3>Entrar na Fila</h3>
                 <p>Garanta seu lugar para receber os próximos créditos de energia.</p>
             </a>
-            <a href="{{ url_for('auth.get_in_queue', user_id=user_id)}}" class="card">
+            <a href="#" class="card">
                 <div class="card-icon"><i class="fa-solid fa-chart-pie"></i></div>
                 <h3>Meus Relatórios</h3>
                 <p>Acompanhe seu histórico de créditos e a economia gerada.</p>
