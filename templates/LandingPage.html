@@ -54,13 +54,30 @@
         <img src="/static/Imagens/energia-eletrica.png" alt="Painéis solares">
     </section>
 
-    <section class="painel-creditos">
-        <div class="container">
-            <h2>Impacto Real</h2>
-            <div class="creditos-dados">
-                <p>🔋 Créditos Doados: <strong>2.340 kWh</strong></p>
-                <p>🌱 Créditos Recebidos: <strong>1.890 kWh</strong></p>
-                <p>👥 Pessoas Impactadas: <strong>64</strong></p>
+
+  <section class="painel-creditos">
+    <div class="energy-lines">
+    <div class="impacto-container">
+        <h2>Impacto Real</h2>
+        <p class="impacto-subtitle">Resultados concretos do compartilhamento de energia solar no BugigSolar</p>
+        
+        <div class="metricas">
+            <div class="metrica-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>2.340 kWh</h3>
+                <p>Créditos Doados</p>
+            </div>
+            <div class="metrica-card">
+                <i class="fa-solid fa-solar-panel"></i>
+                <h3>1.890 kWh</h3>
+                <p>Créditos Recebidos</p>
+            </div>
+            <div class="metrica-card">
+                <i class="fa-solid fa-users"></i>
+                <h3>64</h3>
+                <p>Pessoas Impactadas</p>
+            </div>
+            </div>
             </div>
         </div>
     </section>
@@ -76,4 +93,5 @@
         </div>
     </section>
 </main>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}
