@@ -110,22 +110,12 @@ body {
 .section-imagem img { max-width: 450px; border-radius: 12px; }
 
 /* --- IMPACTO REAL COM IMAGEM DE FUNDO --- */
-.painel-creditos {
-  text-align: center;
-  padding: 3rem 2rem;
-  width: 100%;
-  border-radius: 12px;
-  color: #fff;
-  background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
-              url("/static/Imagens/vecteezy_financial-growth-chart_10824746.jpg") center/cover no-repeat;
-}
 .creditos-dados {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   background: transparent;
   padding: 1.5rem;
-  border-radius: 12px;
 }
 
 /* --- CTA FINAL --- */
@@ -135,7 +125,6 @@ body {
   padding: 3rem 2rem;
   max-width: 900px;
   margin: auto;
-  border-radius: 12px;
   color: #fff;
 }
 .cta-final .hero-buttons {
@@ -173,4 +162,144 @@ body {
 
     transform: translateY(-2px); 
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* --- IMPACTO REAL - VISUAL PROFISSIONAL COESO --- */
+.painel-creditos {
+  position: relative;
+  padding: 5rem 2rem;
+  text-align: center;
+  color: #fff;
+  background: radial-gradient(circle at 50% 50%, #0a0a0a, #111);
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Camada 1 — brilho solar dinâmico */
+.painel-creditos::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 30% 50%,
+    rgba(255, 180, 0, 0.25) 0%,
+    rgba(255, 140, 0, 0.05) 40%,
+    transparent 70%
+  );
+  animation: solarPulse 8s ease-in-out infinite alternate;
+  z-index: 0;
+  filter: blur(50px);
+}
+
+/* Camada 2 — energia pulsante em rotação */
+.painel-creditos::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 230, 150, 0.05),
+    rgba(255, 200, 50, 0.15),
+    rgba(255, 150, 0, 0.08),
+    rgba(255, 230, 150, 0.05)
+  );
+  animation: rotateGlow 18s linear infinite;
+  mix-blend-mode: overlay;
+  filter: blur(80px);
+  z-index: 0;
+}
+
+@keyframes solarPulse {
+  0% {
+    transform: scale(1) translate(-10%, -10%);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.2) translate(10%, 10%);
+    opacity: 1;
+  }
+}
+
+@keyframes rotateGlow {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+/* Conteúdo acima das camadas */
+.painel-creditos > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+.impacto-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.impacto-container h2 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #F2B705;
+  margin-bottom: 0.5rem;
+}
+
+.impacto-subtitle {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 3rem;
+}
+
+.metricas {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* --- ESTILO DOS CARDS --- */
+.metrica-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 2rem 1.5rem;
+  width: 240px;
+  transition: all 0.35s ease;
+  box-shadow: 0 4px 20px rgba(58, 42, 1, 0.4);
+}
+
+.metrica-card i {
+  font-size: 2.3rem;
+  color: #F2B705;
+  margin-bottom: 1rem;
+}
+
+.metrica-card h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0.3rem 0;
+  color: #fff;
+}
+
+.metrica-card p {
+  color: #bbb;
+  font-size: 0.95rem;
+}
+
+/* --- EFEITO HOVER SUAVE --- */
+.metrica-card:hover {
+  transform: translateY(-8px);
+  border-color: #F2B705;
+  box-shadow: 0 8px 25px rgba(242, 183, 5, 0.25);
+}
+
+.metrica-card:hover i {
+  color: #fff;
 }

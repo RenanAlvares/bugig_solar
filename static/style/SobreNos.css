@@ -15,14 +15,14 @@ body {
 /* --- HEADER --- */
 header {
   width: 100%;
-  padding: 15px 8%;
+  padding: 23px 8%;
   position: sticky;
   top: 0;
   z-index: 999;
-  background: linear-gradient(to right, #111, #1b1b1b);
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  border-bottom: 2px solid #f9c80e20;
+  background: rgba(17, 17, 17, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--cor-borda-suave);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 #navbar {
