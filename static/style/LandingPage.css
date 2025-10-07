@@ -141,7 +141,6 @@ body {
     background: #F2B705;
     color: #111;
     border: 1px solid #e0a80b;
-
     padding: 0.8rem 1.8rem;
     border-radius: 8px;
     font-weight: 700;
@@ -176,58 +175,18 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Camada 1 — brilho solar dinâmico */
-.painel-creditos::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 30% 50%,
-    rgba(255, 180, 0, 0.25) 0%,
-    rgba(255, 140, 0, 0.05) 40%,
-    transparent 70%
-  );
-  animation: solarPulse 8s ease-in-out infinite alternate;
-  z-index: 0;
-  filter: blur(50px);
-}
 
 /* Camada 2 — energia pulsante em rotação */
-.painel-creditos::after {
-  content: "";
-  position: absolute;
-  inset: -20%;
-  background: conic-gradient(
-    from 0deg,
-    rgba(255, 230, 150, 0.05),
-    rgba(255, 200, 50, 0.15),
-    rgba(255, 150, 0, 0.08),
-    rgba(255, 230, 150, 0.05)
-  );
-  animation: rotateGlow 18s linear infinite;
-  mix-blend-mode: overlay;
-  filter: blur(80px);
-  z-index: 0;
-}
-
-@keyframes solarPulse {
-  0% {
-    transform: scale(1) translate(-10%, -10%);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(1.2) translate(10%, 10%);
-    opacity: 1;
-  }
-}
-
-@keyframes rotateGlow {
-  0% {
-    transform: rotate(0deg) scale(1);
-  }
-  100% {
-    transform: rotate(360deg) scale(1);
-  }
+.painel-creditos {
+  text-align: center;
+  padding: 3rem 2rem;
+  margin: 3rem auto 3rem auto; 
+  max-width: 1200px;
+  border-radius: 12px;
+  position: relative; 
+  z-index: 10;
+  background: #1e1e1e;
+  color: #fff;
 }
 
 /* Conteúdo acima das camadas */
