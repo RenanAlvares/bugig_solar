@@ -1,0 +1,241 @@
+/* =====================================================
+   BUGIGSOLAR - PAINEL DO BENEFICIÁRIO (AVANÇADO)
+   Visual futurista com energia solar e movimento sutil
+   ===================================================== */
+
+body {
+  font-family: "Inter", sans-serif;
+  background: radial-gradient(circle at 50% 50%, #0a0a0a, #111);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== CONTAINER ===== */
+#dashboard-container {
+  max-width: 1200px;
+  margin: 6rem auto;
+  padding: 3rem 2rem;
+  text-align: center;
+  animation: fadeIn 0.8s ease-out;
+  position: relative;
+}
+
+/* ===== CABEÇALHO ENERGIZADO ===== */
+#energy-header {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+#energy-header h1 {
+  font-size: 2.6rem;
+  color: #F2B705;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 0 12px rgba(242,183,5,0.4);
+}
+
+.energy-bar {
+  width: 180px;
+  height: 5px;
+  margin: 0 auto 1rem auto;
+  background: linear-gradient(90deg, #F2B705, #44af69, #F2B705);
+  border-radius: 3px;
+  animation: pulseGlow 3s infinite linear;
+}
+
+#energy-header p {
+  color: #ccc;
+  font-size: 1.1rem;
+}
+
+/* ===== STATUS PANEL ===== */
+#status-panel {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 3rem;
+  box-shadow: 0 0 15px rgba(242,183,5,0.1);
+}
+
+#status-panel i {
+  color: #F2B705;
+  margin-right: 0.5rem;
+}
+
+.status-text {
+  color: #44af69;
+  font-weight: 700;
+}
+
+/* ===== GRID DE CARDS ===== */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+  align-items: stretch;
+  position: relative;
+  background: transparent !important;
+}
+
+/* ===== EFEITO DE PARTÍCULAS ===== */
+.dashboard-cards::before {
+    display: none !important;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(242,183,5,0.08), transparent 60%),
+              radial-gradient(circle at 70% 80%, rgba(68,175,105,0.08), transparent 70%);
+  pointer-events: none;
+  animation: particleShift 10s infinite alternate ease-in-out;
+}
+
+/* ===== CARDS ===== */
+.dashboard-cards .card {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
+  padding: 2.5rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(10px);
+}
+
+.dashboard-cards .card-icon {
+  font-size: 2.8rem;
+  color: #F2B705;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.dashboard-cards h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.dashboard-cards p {
+  color: #bbb;
+  font-size: 0.95rem;
+}
+
+.dashboard-cards .card:hover {
+  transform: translateY(-10px) scale(1.03);
+  border-color: #F2B705;
+  box-shadow: 0 10px 30px rgba(242,183,5,0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dashboard-cards .card:hover .card-icon {
+  color: #fff;
+  transform: scale(1.2);
+}
+
+.dashboard-cards .card:hover h3 {
+  color: #F2B705;
+}
+
+/* ===== CTA FINAL ===== */
+#cta-benef {
+  margin-top: 4rem;
+  padding: 3rem 2rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(242,183,5,0.1);
+}
+
+#cta-benef h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+#cta-benef h2 span {
+  color: #F2B705;
+}
+
+#cta-benef p {
+  color: #bbb;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.5); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes particleShift {
+  0% { background-position: 0 0, 100% 100%; }
+  100% { background-position: 100% 50%, 0 0; }
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+  #dashboard-container { margin: 3rem 1rem; padding: 2rem 1rem; }
+  #energy-header h1 { font-size: 2rem; }
+  .dashboard-cards { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* ===== BOTÃO "COMEÇAR AGORA" ===== */
+.lp-button {
+  display: inline-block;
+  background: linear-gradient(90deg, #F2B705, #44af69);
+  color: #0a0a0a;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px rgba(242, 183, 5, 0.4);
+}
+
+/* Brilho que se move sobre o botão */
+.lp-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.6), transparent);
+  transform: skewX(-20deg);
+  transition: 0.5s;
+}
+
+.lp-button:hover::before {
+  left: 125%;
+}
+
+.lp-button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 20px rgba(242, 183, 5, 0.7);
+  background: linear-gradient(90deg, #ffe066, #44af69);
+}
+
+.lp-button:active {
+  transform: scale(0.97);
+}
