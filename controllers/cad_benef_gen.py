@@ -59,6 +59,8 @@ def signin_benef(user_id):
 @user_owns_resource('user_id', tipo_usuario_esperado=2)
 def signin_gen(user_id):
     form_gen = FormGen()
+    titulo = 'Cadastro Gerador'
+
     # Pega os tipos de geração do banco
     tipos_geracao = TipoGeracao.query.all()
     form_gen.id_tipo_geracao.choices = [(str(g.id), g.nome_tipo_geracao) for g in tipos_geracao]
@@ -69,10 +71,10 @@ def signin_gen(user_id):
         tipo_geracao_id = int(form_gen.id_tipo_geracao.data)
 
         novo_gerador = Generators(
-            producao_mensal=producao_mensal,
+            id_user=user_id,
+            producao_mensal_med=producao_mensal,
             inicio_operacao=inicio_operacao,
-            id_tipo_geracao=tipo_geracao_id,
-            id_user=user_id
+            id_tipo_geracao=tipo_geracao_id
         )
 
         try:
@@ -85,4 +87,4 @@ def signin_gen(user_id):
             db.session.rollback()
             flash(f"Erro ao salvar gerador: {str(e)}", "danger")
 
-    return render_template('gen.html', form_gen=form_gen)
+    return render_template('gen.html', titulo=titulo, form_gen=form_gen)

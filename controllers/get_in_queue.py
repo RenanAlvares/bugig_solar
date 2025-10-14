@@ -9,7 +9,7 @@ from extensions import db
 
 
 # funcao e validacao que verifica se o usuário já doou este mês
-'''def usuario_ja_doou_mes(id_user_doacao):
+'''def ja_entrou_fila(id_user_doacao):
     
     doacao = Queue.query.filter_by(id_user_doacao=id_user_doacao).order_by(Queue.data_doacao.desc()).first()
     if doacao and doacao.data_doacao.month == datetime.now().month:
@@ -22,7 +22,6 @@ from extensions import db
 def get_in_queue(user_id):
     titulo = 'Entrar na Fila'
     form_queue = FormQueue()
-    # seleciona todas as distribuidoras cadastradas no banco
 
     if form_queue.validate_on_submit():
         qtd = form_queue.qtd_solicitada.data
@@ -34,9 +33,9 @@ def get_in_queue(user_id):
             form_queue.qtd_solicitada.errors.append(f'A quantidade solicitada não pode ser maior que o seu consumo mensal ({qtd_max} kWh).')
             return render_template('queue.html', form_queue=form_queue, user_id=user_id, titulo=titulo)
 
-        # funcao e validacao que verifica se o usuário já doou este mês
+        # funcao que valida se o usuário já entrou na fila este mês
         # deixei comentado para realizar testes 
-        '''if usuario_ja_doou_mes(id_user_doacao):
+        '''if ja_entrou_fila(id_user_doacao):
             form_queue.qtd_solicitada.errors.append('Você já entrou na fila este mês. Só é possível entrar uma vez por mês.')
             return render_template('queue.html', form_queue=form_queue, user_id=user_id, titulo=titulo)'''
 
