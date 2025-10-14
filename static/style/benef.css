@@ -1,0 +1,145 @@
+/* =====================================================
+   BUGIGSOLAR - PÁGINA DE BENEFICIÁRIO (UPLOAD DE CONTAS)
+   Visual moderno, escuro e coeso com a landing page
+   ===================================================== */
+
+/* 🎨 Paleta: Preto (#111), Branco (#fff), Amarelo Solar (#F2B705), Verde (#44af69) */
+
+body {
+  font-family: "Inter", sans-serif;
+  background: radial-gradient(circle at 50% 50%, #0a0a0a, #111);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* ===== CONTAINER PRINCIPAL ===== */
+#benef-container {
+  max-width: 850px;
+  margin: 6rem auto;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 3rem 2.5rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* ===== TÍTULO ===== */
+#benef-container h1 {
+  color: #F2B705;
+  font-weight: 800;
+  font-size: 2.3rem;
+  margin-bottom: 1.2rem;
+}
+
+#benef-container p {
+  color: #bbb;
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+/* ===== FORMULÁRIO ===== */
+form {
+  text-align: left;
+}
+
+form .mb-3, form .mb-2 {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  font-weight: 600;
+  color: #F2B705;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+/* ===== INPUTS ===== */
+input.form-control,
+select.form-select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input.form-control:focus,
+select.form-select:focus {
+  border-color: #F2B705;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 8px rgba(242, 183, 5, 0.4);
+}
+
+/* ===== ERROS ===== */
+.text-danger {
+  color: #ff5555;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+  display: block;
+}
+
+/* ===== BOTÃO CADASTRAR ===== */
+.btn_container {
+  text-align: center;
+}
+
+#saveBenef {
+  background: #F2B705;
+  color: #111;
+  font-weight: 700;
+  border: none;
+  padding: 0.9rem 2.2rem;
+  border-radius: 10px;
+  transition: all 0.35s ease;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 6px 15px rgba(242, 183, 5, 0.25);
+}
+
+#saveBenef:hover {
+  background: #2a2a2a;
+  color: #F2B705;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* ===== SEÇÃO DE UPLOAD ===== */
+#upload-section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+#upload-section:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-4px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  #benef-container {
+    margin: 3rem 1rem;
+    padding: 2rem 1.5rem;
+  }
+
+  #benef-container h1 {
+    font-size: 1.8rem;
+  }
+}

@@ -1,10 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main>
-    <div class="dashboard">
-        <h1>Painel do Beneficiário</h1>
-        <p>Bem-vindo(a)! Gerencie seus benefícios e explore novas possibilidades.</p>
+<link rel="stylesheet" href="{{ url_for('static', filename='style/menu_benef.css') }}">
+
+<main id="benef-main">
+    <div class="dashboard" id="dashboard-container">
+
+        <!-- 🔆 Cabeçalho Energizado -->
+        <div id="energy-header">
+            <h1>Painel do Beneficiário</h1>
+            <div class="energy-bar"></div>
+            <p>Bem-vindo(a)! Gerencie seus benefícios e explore novas possibilidades.</p>
+        </div>
+
+        <!-- 💳 Cards Principais -->
         <div class="dashboard-cards">
             <a href="{{ url_for('auth.get_in_queue', user_id=user_id)}}" class="card">
                 <div class="card-icon"><i class="fa-solid fa-users-line"></i></div>
@@ -27,6 +36,14 @@
                 <p>Mantenha seus dados cadastrais sempre atualizados.</p>
             </a>
         </div>
+
+        <!-- 🌞 Seção Motivacional -->
+        <section id="cta-benef">
+            <h2>Transforme sua conta de luz em <span>economia real</span>.</h2>
+            <p>Com a BugigSolar, cada kWh conta — e o futuro é sustentável.</p>
+            <a href="{{ url_for('auth.get_in_queue', user_id=user_id)}}" class="lp-button">Começar Agora</a>
+        </section>
+
     </div>
 </main>
 {% endblock %}
