@@ -5,11 +5,11 @@ class Donation(db.Model):
     __tablename__ = 'Doacao'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_user_doacao = db.Column(db.Integer, db.ForeignKey('Geradores.id'), nullable=False)
     quantidade_doacao = db.Column(db.Integer, nullable=False)
     data_doacao = db.Column(db.DateTime, nullable=False)
-    status = db.Column(db.Boolean, nullable=False)
+    id_gerador = db.Column(db.Integer, db.ForeignKey('Geradores.id'), nullable=False)
     quantidade_disponivel = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.Boolean, nullable=False)
 
     # relacionamento ajustado (não deve ter o mesmo nome que algum campo da tabela)
     gerador = db.relationship('Generators', backref='doacoes', lazy=True)

@@ -18,7 +18,7 @@ class Generators(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_user = db.Column(db.Integer, db.ForeignKey('Usuarios.id'), nullable=False)
-    producao_mensal = db.Column(db.Integer, nullable=False)
+    producao_mensal_med = db.Column(db.Integer, nullable=False)
     inicio_operacao = db.Column(db.Date, nullable=False)
     id_tipo_geracao = db.Column(db.Integer, db.ForeignKey('Tipo_geracao.id'), nullable=False)
 
