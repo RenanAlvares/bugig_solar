@@ -68,6 +68,23 @@
         </div>
     </footer>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const alerts = document.querySelectorAll(".alert");
+
+            alerts.forEach(alert => {
+
+                alert.addEventListener("click", () => alert.remove());
+
+                setTimeout(() => {
+                    alert.style.opacity = "0";
+                    alert.style.transform = "translateX(50px)";
+                    setTimeout(() => alert.remove(), 800);
+                }, 8000);
+            });
+        });
+    </script>
+
     {% block scripts %}{% endblock %}
 </body>
 </html>
