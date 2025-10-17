@@ -4,13 +4,15 @@
 
 body {
     background: linear-gradient(135deg, #111, #1d1d1d, #212121) !important;
+    margin-bottom: 10px;
 }
+
 
 /* --- ESTILO DO CARD PRINCIPAL --- */
 .form-card {
     width: 100%;
     max-width: 1200px;
-    margin: auto;
+    margin: 30px;
     padding: 2.5rem 3rem;
     background: rgba(30, 30, 30, 0.9);
     border: 1px solid var(--cor-borda-suave, rgba(255, 255, 255, 0.1));

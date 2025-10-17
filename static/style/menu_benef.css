@@ -200,7 +200,7 @@ body {
 /* ===== BOTÃO "COMEÇAR AGORA" ===== */
 .lp-button {
   display: inline-block;
-  background: linear-gradient(90deg, #F2B705, #44af69);
+  background: linear-gradient(90deg, #F2B705);
   color: #0a0a0a;
   font-weight: 700;
   font-size: 1.1rem;
@@ -232,10 +232,12 @@ body {
 
 .lp-button:hover {
   transform: scale(1.06);
+  color: #fff;
   box-shadow: 0 0 20px rgba(242, 183, 5, 0.7);
-  background: linear-gradient(90deg, #ffe066, #44af69);
+  background: #2a2a2a;
 }
 
 .lp-button:active {
   transform: scale(0.97);
 }
+

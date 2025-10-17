@@ -137,7 +137,7 @@ body {
 
 /* --- NOVO BOTÃO PADRÃO PARA A LANDING PAGE --- */
 .lp-button {
-    /* Estado Padrão: Amarelo com escrita preta */
+   margin-top: 10px;
     background: #F2B705;
     color: #111;
     border: 1px solid #e0a80b;
@@ -151,6 +151,11 @@ body {
     
     /* Transição suave para todas as propriedades */
     transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
+}
+
+.lp-button a { /*aqui esta usando o "a" para acessar o bota diretamente*/
+    text-decoration: none; /* Remove o sublinhado do link */
+    color: inherit; 
 }
 
 .lp-button:hover {
