@@ -1,74 +1,117 @@
-/* ==============================================
-   BUGIGSOLAR - CSS CORRIGIDO PARA LANDING PAGE (COM BOTÕES PADRONIZADOS)
-   ============================================== */
+/* ===================================================
+   BUGIGSOLAR - VISUAL UNIFORME, MODERNO E COESO
+   =================================================== */
 
-/* 🎨 Paleta: Preto (#111), Branco (#fff), Amarelo Solar (#F2B705), Verde (#44af69) */
+/* 🎨 Paleta: Preto #0e0e0e, Amarelo Solar #F2B705, Branco #fff */
 
 body {
   font-family: "Inter", sans-serif;
   margin: 0;
-  background: linear-gradient(rgba(0,0,0,0.92), rgba(0,0,0,0.92));
-  color: #111;
+  background-color: #0e0e0e;
+  color: #fff;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
-/* --- HERO COM IMAGEM DE FUNDO COM CHANFRADO --- */
+/* --- HERO (CABEÇALHO COM IMAGEM) --- */
 .hero {
   position: relative;
   text-align: center;
-  padding: 8rem 2rem;
-  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+  padding: 8rem 2rem 10rem 2rem; /* um pouco mais de padding inferior */
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
               url("/static/Imagens/hero-solar.jpg") center/cover no-repeat;
   color: #fff;
-  clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
-}
-.hero h1 { font-size: 2.8rem; margin-bottom: 1rem; }
-.hero p { font-size: 1.3rem; color: #f5f5f5; }
 
-/* --- INFO BOX EM CARDS COM SOBREPOSIÇÃO --- */
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+
+  margin-bottom: 0; /* remove o corte negativo */
+  overflow: visible; /* 🔥 libera o conteúdo para aparecer acima */
+  z-index: 1; /* garante que a imagem fique atrás do info-box */
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  color: #eaeaea;
+}
+
+/* --- INFO BOX --- */
 .info-box {
+  position: relative;
+  top: -80px; /* 🔥 move o container para cima, sobre a imagem */
   text-align: center;
   padding: 3rem 2rem;
-  margin: -5rem auto 3rem auto;
+  margin: 0 auto 4rem auto;
   max-width: 1200px;
-  border-radius: 12px;
-  position: relative;
-  z-index: 10;
-  background: #1e1e1e;
-  color: #fff;
+  border-radius: 16px;
+  background: rgba(20, 20, 20, 0.95); /* leve transparência para integrar com o fundo */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+  z-index: 10; /* acima do hero */
 }
+
+.info-box h2 {
+  color: #F2B705;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  z-index: 2;
+}
+
+.info-box h3 {
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  z-index: 2;
+}
+
+.subtexto-info {
+  font-size: 1rem;
+  color: #b5b5b5;
+  margin-top: 0.3rem;
+  z-index: 2;
+}
+
 .cards-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 1.5rem;
-  flex-wrap: wrap;
   margin-top: 2rem;
+  z-index: 2;
 }
+
 .card {
-  background: #2a2a2a;
+  background: #1a1a1a;
   padding: 1.5rem;
-  border-radius: 8px;
-  width: 220px;
-  border: 1px solid #333;
+  border-radius: 10px;
+  width: 230px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
+
 .card:hover {
   transform: translateY(-8px);
   background-color: #F2B705;
   color: #111;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
-.card:hover i, .card:hover h4, .card:hover p { color: #111; }
+
 .card i {
   font-size: 2.5rem;
-  color: #f9c80e;
+  color: #F2B705;
   margin-bottom: 1rem;
   transition: color 0.3s ease;
 }
 
-/* --- QUADRO DE AVISO (MODAL) --- */
+.card:hover i {
+  color: #111;
+}
+
+/* --- AVISO POPUP --- */
 .aviso {
   display: none;
   background-color: rgba(0, 0, 0, 0.92);
@@ -83,6 +126,7 @@ body {
   position: relative;
   text-align: center;
 }
+
 .fechar-aviso {
   position: absolute;
   top: 10px;
@@ -94,176 +138,231 @@ body {
   font-size: 1.5rem;
 }
 
-/* --- SEÇÃO LATERAL COM IMAGEM --- */
-.section-imagem {
+/* --- SEÇÃO IMAGEM (ENERGIA LIMPA) --- */
+.section-imagem.diagonal {
+  position: relative;
+  color: #fff;
+  overflow: hidden;
+  z-index: 1;
+  padding: 5rem 0;
+  background: transparent; /* cor base atrás */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  /*clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%);*/
+}
+
+/* Container com ângulos diagonais suaves */
+.container-diagonal {
+  position: relative;
+  background: #1a1a1a;
+  padding: 7rem 8%;
+}
+/* conteúdo principal */
+.conteudo-energia {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 3rem;
-  padding: 3rem 8%;
-  max-width: 1200px;
-  margin: auto;
+  justify-content: space-between;
+  gap: 4rem;
   flex-wrap: wrap;
-}
-.texto, .section-imagem img { flex: 1; min-width: 300px; }
-.section-imagem .texto h2, .section-imagem .texto p { color: #fff; }
-.section-imagem img { max-width: 450px; border-radius: 12px; }
-
-/* --- IMPACTO REAL COM IMAGEM DE FUNDO --- */
-.creditos-dados {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  background: transparent;
-  padding: 1.5rem;
-}
-
-/* --- CTA FINAL --- */
-.cta-final {
-  text-align: center;
-  background: transparent;
-  padding: 3rem 2rem;
-  max-width: 900px;
-  margin: auto;
-  color: #fff;
-}
-.cta-final .hero-buttons {
-  margin-top: 1.5rem;
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* --- NOVO BOTÃO PADRÃO PARA A LANDING PAGE --- */
-.lp-button {
-   margin-top: 10px;
-    background: #F2B705;
-    color: #111;
-    border: 1px solid #e0a80b;
-    padding: 0.8rem 1.8rem;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 1rem;
-    text-decoration: none;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    
-    /* Transição suave para todas as propriedades */
-    transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
-}
-
-.lp-button a { /*aqui esta usando o "a" para acessar o bota diretamente*/
-    text-decoration: none; /* Remove o sublinhado do link */
-    color: inherit; 
-}
-
-.lp-button:hover {
-    /* Estado Hover: Preto com escrita amarela */
-    background-color: #2a2a2a;
-    color: #F2B705;
-    border-color: #333;
-
-    transform: translateY(-2px); 
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
-}
-
-/* --- IMPACTO REAL - VISUAL PROFISSIONAL COESO --- */
-.painel-creditos {
-  position: relative;
-  padding: 5rem 2rem;
-  text-align: center;
-  color: #fff;
-  background: radial-gradient(circle at 50% 50%, #0a0a0a, #111);
-  overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-
-/* Camada 2 — energia pulsante em rotação */
-.painel-creditos {
-  text-align: center;
-  padding: 3rem 2rem;
-  margin: 3rem auto 3rem auto; 
-  max-width: 1200px;
-  border-radius: 12px;
-  position: relative; 
-  z-index: 10;
-  background: #1e1e1e;
-  color: #fff;
-}
-
-/* Conteúdo acima das camadas */
-.painel-creditos > * {
   position: relative;
   z-index: 2;
-}
-
-
-.impacto-container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.impacto-container h2 {
-  font-size: 2.4rem;
-  font-weight: 800;
+.conteudo-energia .texto {
+  flex: 1 1 450px;
+  min-width: 300px;
+}
+
+.conteudo-energia .texto h2 {
   color: #F2B705;
-  margin-bottom: 0.5rem;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.conteudo-energia .texto p {
+  color: #ddd;
+  margin-bottom: 1rem;
+}
+
+.texto-secundario {
+  color: #bbb;
+  line-height: 1.6;
+  max-width: 550px;
+}
+
+/* imagem */
+.conteudo-energia .imagem {
+  flex: 1 1 450px;
+  text-align: center;
+}
+
+.conteudo-energia .imagem img {
+  max-width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  transform: perspective(1000px) rotateY(-8deg);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* --- IMPACTO REAL --- */
+.painel-creditos {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: transparent;
+}
+
+.impacto-container h2 {
+  color: #F2B705;
+  font-size: 2.2rem;
+  font-weight: 700;
 }
 
 .impacto-subtitle {
-  font-size: 1.1rem;
   color: #ccc;
+  font-size: 1rem;
   margin-bottom: 3rem;
 }
 
 .metricas {
   display: flex;
   justify-content: center;
-  gap: 2rem;
   flex-wrap: wrap;
+  gap: 2rem;
 }
 
-/* --- ESTILO DOS CARDS --- */
 .metrica-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 2rem 1.5rem;
-  width: 240px;
-  transition: all 0.35s ease;
-  box-shadow: 0 4px 20px rgba(58, 42, 1, 0.4);
+  background: #1a1a1a;
+  border-radius: 10px;
+  padding: 2rem;
+  width: 250px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.metrica-card:hover {
+  transform: translateY(-8px);
+  background: #F2B705;
+  color: #111;
 }
 
 .metrica-card i {
-  font-size: 2.3rem;
   color: #F2B705;
+  font-size: 2.3rem;
   margin-bottom: 1rem;
 }
 
-.metrica-card h3 {
-  font-size: 2rem;
-  font-weight: 800;
-  margin: 0.3rem 0;
-  color: #fff;
-}
-
-.metrica-card p {
-  color: #bbb;
-  font-size: 0.95rem;
-}
-
-/* --- EFEITO HOVER SUAVE --- */
-.metrica-card:hover {
-  transform: translateY(-8px);
-  border-color: #F2B705;
-  box-shadow: 0 8px 25px rgba(242, 183, 5, 0.25);
-}
-
 .metrica-card:hover i {
+  color: #111;
+}
+
+/* --- BENEFÍCIOS --- */
+.beneficios {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #181818;
+}
+.beneficios h2 { color: #f2b705; margin-bottom: 1.5rem; }
+.beneficios ul {
+  list-style: none;
+  padding: 0;
+  max-width: 800px;
+  margin: auto;
+}
+.beneficios li {
+  margin: 0.6rem 0;
+  color: #ccc;
+  font-size: 1.05rem;
+}
+.beneficios i { color: #f2b705; margin-right: 8px; }
+
+/* --- FRASE IMPACTO --- */
+.frase-impacto {
+  background: #181818;
+  text-align: center;
+  padding: 2rem 2rem;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #F2B705;
+}
+
+/* --- CTA FINAL --- */
+.cta-final {
+  color: #F2B705;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: transparent;
+}
+
+.cta-final p{
   color: #fff;
+}
+
+.lp-button {
+  margin: 10px;
+  background: #F2B705;
+  color: #111;
+  border: none;
+  padding: 0.9rem 1.8rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  text-decoration: none; /* remove sublinhado */
+}
+
+.lp-button:hover {
+  background: #2a2a2a;
+  color: #F2B705;
+  transform: translateY(-3px);
+}
+.lp-button a{
+  color: #0e0e0e;
+  text-decoration: none; /* remove sublinhado */
+}
+
+.lp-button a:hover{
+  color: #F2B705;
+  text-decoration: none; /* remove sublinhado */
+}
+/* --- RODAPÉ --- */
+footer {
+  text-align: center;
+  padding: 2rem;
+  background: #0e0e0e;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #F2B705;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+  }
+
+  .section-imagem {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  .card,
+  .metrica-card {
+    width: 90%;
+  }
 }

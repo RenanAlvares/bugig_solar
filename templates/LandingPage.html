@@ -1,98 +1,133 @@
 {% extends 'base.html' %}
 
 {% block head_extra %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='style/LandingPage.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style/LandingPage.css') }}">
 {% endblock %}
 
 {% block content %}
 <main id="landing-page-main">
 
-    <section class="hero">
-        <div class="container">
-            <h1>Leve energia solar para quem mais precisa 🌞</h1>
-            <p>No BugigSolar, você doa ou recebe créditos de energia solar com facilidade e segurança.</p>
-        </div>
-    </section>
-
-    <div class="info-box">
-        <h3>O que você pode fazer no BugigSolar?</h3>
-        <div class="cards-container">
-            <div class="card" onclick="mostrarFuncionalidade('Entrar na Fila')">
-                <i class="fa-solid fa-users"></i>
-                <h4>Entrar na Fila</h4>
-                <p>Receba créditos e economize na sua conta de luz.</p>
-            </div>
-            <div class="card" onclick="mostrarFuncionalidade('Fazer Doação')">
-                <i class="fa-solid fa-hand-holding-heart"></i>
-                <h4>Fazer Doação</h4>
-                <p>Doe seus créditos e ajude quem precisa.</p>
-            </div>
-            <div class="card" onclick="mostrarFuncionalidade('Consultar Movimentação')">
-                <i class="fa-solid fa-chart-line"></i>
-                <h4>Consultar Movimentação</h4>
-                <p>Acompanhe suas doações e créditos recebidos.</p>
-            </div>
-            <div class="card" onclick="mostrarFuncionalidade('Simular Economia')">
-                <i class="fa-solid fa-calculator"></i>
-                <h4>Simular Economia</h4>
-                <p>Calcule o quanto você pode economizar.</p>
-            </div>
-        </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>Leve energia solar para quem mais precisa 🌞</h1>
+      <p>No BugigSolar, você doa ou recebe créditos de energia solar com facilidade e segurança.</p>
     </div>
+  </section>
 
-    <div class="aviso" id="aviso-funcionalidade" style="display:none;">
-        <button class="fechar-aviso" onclick="fecharAviso()">&times;</button>
-        <p id="texto-aviso"></p>
+  <!-- INFO BOX -->
+  <div class="info-box">
+    <h3>O que você pode fazer no BugigSolar?</h3>
+    <p class="subtexto-info">Escolha uma das opções abaixo e descubra como participar do BugigSolar:</p>
+    <div class="cards-container">
+      <div class="card" onclick="mostrarFuncionalidade('Entrar na Fila')">
+        <i class="fa-solid fa-users"></i>
+        <h4>Entrar na Fila</h4>
+        <p>Receba créditos e economize na sua conta de luz.</p>
+      </div>
+      <div class="card" onclick="mostrarFuncionalidade('Fazer Doação')">
+        <i class="fa-solid fa-hand-holding-heart"></i>
+        <h4>Fazer Doação</h4>
+        <p>Doe seus créditos e ajude quem precisa.</p>
+      </div>
+      <div class="card" onclick="mostrarFuncionalidade('Consultar Movimentação')">
+        <i class="fa-solid fa-chart-line"></i>
+        <h4>Consultar Movimentação</h4>
+        <p>Acompanhe suas doações e créditos recebidos.</p>
+      </div>
+      <div class="card" onclick="mostrarFuncionalidade('Simular Economia')">
+        <i class="fa-solid fa-calculator"></i>
+        <h4>Simular Economia</h4>
+        <p>Calcule o quanto você pode economizar.</p>
+      </div>
     </div>
+  </div>
 
-    <section class="section-imagem">
-        <div class="texto">
-            <h2>Energia limpa, impacto real ⚡</h2>
-            <p>O que é Energia Limpa e como ela transforma o futuro.</p>
-            <button class="lp-button"><a href="https://clicklivre.com.br/blog/o-que-e-energia-limpa-e-como-ela-transforma-o-futuro" 
-            target="_blank">Saiba mais</a></button>
-        </div>
-        <img src="/static/Imagens/energia-eletrica.png" alt="Painéis solares">
-    </section>
+  <div class="aviso" id="aviso-funcionalidade" style="display:none;">
+    <button class="fechar-aviso" onclick="fecharAviso()">&times;</button>
+    <p id="texto-aviso"></p>
+  </div>
 
+  <!-- ENERGIA LIMPA -->
+ <section class="section-imagem diagonal">
+  <div class="container-diagonal">
+    <div class="conteudo-energia">
+      <div class="texto">
+        <h2>Energia limpa, impacto real ⚡</h2>
+        <p>O que é Energia Limpa e como ela transforma o futuro.</p>
+        <p class="texto-secundario">
+          Pequenas ações de hoje constroem o futuro sustentável de amanhã. 
+          A energia solar é mais do que economia — é solidariedade em movimento, 
+          iluminando vidas e comunidades inteiras.
+        </p>
+        <button class="lp-button">
+          <a href="https://clicklivre.com.br/blog/o-que-e-energia-limpa-e-como-ela-transforma-o-futuro" target="_blank">
+            Saiba mais
+          </a>
+        </button>
+      </div>
 
+      <div class="imagem">
+        <img src="/static/Imagens/energia-eletrica.png" alt="Energia solar transformando o futuro">
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- IMPACTO REAL -->
   <section class="painel-creditos">
-    <div class="energy-lines">
     <div class="impacto-container">
-        <h2>Impacto Real</h2>
-        <p class="impacto-subtitle">Resultados concretos do compartilhamento de energia solar no BugigSolar</p>
-        
-        <div class="metricas">
-            <div class="metrica-card">
-                <i class="fa-solid fa-bolt"></i>
-                <h3>2.340 kWh</h3>
-                <p>Créditos Doados</p>
-            </div>
-            <div class="metrica-card">
-                <i class="fa-solid fa-solar-panel"></i>
-                <h3>1.890 kWh</h3>
-                <p>Créditos Recebidos</p>
-            </div>
-            <div class="metrica-card">
-                <i class="fa-solid fa-users"></i>
-                <h3>64</h3>
-                <p>Pessoas Impactadas</p>
-            </div>
-            </div>
-            </div>
+      <h2>Impacto Real</h2>
+      <p class="impacto-subtitle">Resultados concretos do compartilhamento de energia solar no BugigSolar</p>
+      <div class="metricas">
+        <div class="metrica-card">
+          <i class="fa-solid fa-bolt"></i>
+          <h3>2.340 kWh</h3>
+          <p>Créditos Doados</p>
         </div>
-    </section>
+        <div class="metrica-card">
+          <i class="fa-solid fa-solar-panel"></i>
+          <h3>1.890 kWh</h3>
+          <p>Créditos Recebidos</p>
+        </div>
+        <div class="metrica-card">
+          <i class="fa-solid fa-users"></i>
+          <h3>64</h3>
+          <p>Pessoas Impactadas</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section class="cta-final">
-        <div class="container">
-            <h2>Pronto para compartilhar energia solar?</h2>
-            <p>Ajude alguém ou economize você também.</p>
-            <div class="hero-buttons">
-                <button class="lp-button" onclick="mostrarFuncionalidade('Entrar na Fila')">Entrar na Fila</button>
-                <button class="lp-button" onclick="mostrarFuncionalidade('Fazer Doação')">Fazer Doação</button>
-            </div>
-        </div>
-    </section>
+  <!-- BENEFÍCIOS -->
+  <section class="beneficios">
+    <h2>Benefícios de participar 🌎</h2>
+    <ul>
+      <li><i class="fa-solid fa-circle-check"></i> Reduza sua conta de luz de forma simples e digital.</li>
+      <li><i class="fa-solid fa-circle-check"></i> Contribua para um mundo mais sustentável.</li>
+      <li><i class="fa-solid fa-circle-check"></i> Faça parte de uma comunidade de solidariedade energética.</li>
+      <li><i class="fa-solid fa-circle-check"></i> Sem burocracia — tudo 100% online.</li>
+    </ul>
+  </section>
+
+  <!-- FRASE FINAL -->
+  <section class="frase-impacto">
+    🌍 Cada crédito doado representa menos carbono e mais esperança. Faça parte dessa mudança!
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final">
+    <div class="container">
+      <h2>Pronto para compartilhar energia solar?</h2>
+      <p>Ajude alguém ou economize você também.</p>
+      <div class="hero-buttons">
+        <button class="lp-button" onclick="mostrarFuncionalidade('Entrar na Fila')">Entrar na Fila</button>
+        <button class="lp-button" onclick="mostrarFuncionalidade('Fazer Doação')">Fazer Doação</button>
+      </div>
+    </div>
+  </section>
+
 </main>
+
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}
