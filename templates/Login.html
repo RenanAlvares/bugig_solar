@@ -8,16 +8,6 @@
 <main>
     <div class="form-card">
         <h1>{{ titulo }}</h1>
-        
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}" role="alert">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
 
         <form method="post" action="{{ url_for('auth.login') }}">
             {{ form.hidden_tag() }}

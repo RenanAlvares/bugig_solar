@@ -3,54 +3,81 @@ from models_DB.donation_queue import Donation, Queue
 from extensions import db
 from models_DB.transfer import Transfer
 from datetime import datetime
-from models_DB.users import UsersDb as Usuarios # fiz o as para deixar de acordo com a funcao
+from models_DB.users import UsersDb as Usuarios  # alterei para usuarios pq fiz a funcao com esse nome
+
+def valida_mes_fila_doacao():
+
+    mes_atual, ano_atual = datetime.now().month, datetime.now().year
+    doacoes = Donation.query.filter_by(status=1).all()
+
+    for doacao in doacoes:
+        if (doacao.data_doacao.year, doacao.data_doacao.month) != (ano_atual, mes_atual):
+            doacao.status = 0 # expirou a dooacao daquele mes
+
+    filas = Queue.query.filter_by(status=1).all()
+
+    for fila in filas:
+        if (fila.data_solicitacao.year, fila.data_solicitacao.month) != (ano_atual, mes_atual):
+            fila.status = 0 # expirou a fila daquele mes
+
+    db.session.commit()
+
 
 def transfer():
+    # busca todas as doações ativas ordenadas pela data da doação
+    valida_mes_fila_doacao()
+    doacoes = Donation.query.filter_by(status=1).order_by(Donation.data_doacao.asc()).all()
 
-    while True:
-        
-        doacao = Donation.query.filter_by(status=1).order_by(Donation.data_doacao.asc()).first()
-        if not doacao:
-            break
-        
-        # pega a distribuidora do gerador que fez a doacao
-        gen_distribuidora   = doacao.gerador.usuario.id_distribuidora
+    # se não houver nenhuma doação ativa, encerra
+    if not doacoes:
+        return
 
-        # filtra a fila somente pela distribuidora do gerador
-        fila = Queue.query.join(Beneficiaries, Beneficiaries.id == Queue.id_beneficiario)\
-                  .join(Usuarios, Usuarios.id == Beneficiaries.id_user)\
-                  .filter(Queue.status==1, Usuarios.id_distribuidora == gen_distribuidora)\
-                  .order_by(Queue.data_solicitacao.asc()).first()
-        
+    for doacao in doacoes:
+        # pega a distribuidora do gerador que fez a doação
+        gen_distribuidora = doacao.gerador.usuario.id_distribuidora
+
+        # busca a fila compatível (mesma distribuidora)
+        fila = (
+            Queue.query
+            .join(Beneficiaries, Beneficiaries.id == Queue.id_beneficiario)
+            .join(Usuarios, Usuarios.id == Beneficiaries.id_user)
+            .filter(
+                Queue.status == 1,
+                Usuarios.id_distribuidora == gen_distribuidora
+            )
+            .order_by(Queue.data_solicitacao.asc())
+            .first()
+        )
+
+        # se não houver fila compatível, passa para a próxima doação
         if not fila:
             continue
 
-        else:
+        # calcula a quantidade transferida (mínimo entre disponível e solicitada restante)
+        qtd_transferencia = min(
+            doacao.quantidade_disponivel,
+            fila.quantidade_solicitada - fila.quantidade_recebida
+        )
 
-            # ve o valor disponivel e o solicitado para realizar a transferencia
-            qtd_transferencia = min(doacao.quantidade_disponivel, fila.quantidade_solicitada - fila.quantidade_recebida)
-            
-            # atualiza a quantidade disponivel na doacao de acordo com a qtd transferida
-            doacao.quantidade_disponivel -= qtd_transferencia
+        # atualiza a quantidade disponível da doação
+        doacao.quantidade_disponivel -= qtd_transferencia
 
-            # atualiza o status da fila e a quantidade recebida
-            fila.quantidade_recebida += qtd_transferencia
-            if fila.quantidade_recebida >= fila.quantidade_solicitada:
-                fila.status = 0
+        # atualiza a fila
+        fila.quantidade_recebida += qtd_transferencia
+        if fila.quantidade_recebida >= fila.quantidade_solicitada:
+            fila.status = 0  # fila completa
 
-            # atualiza o status da doação
-            if doacao.quantidade_disponivel <= 0:
-                doacao.status = 0
+        # atualiza o status da doação se esgotou
+        if doacao.quantidade_disponivel <= 0:
+            doacao.status = 0
 
-            # cria as transferencias no banco
-            transferencia = Transfer(
-                id_fila=fila.id,
-                id_doador=doacao.id,
-                quantidade_transferida=qtd_transferencia,
-                data_transferencia=datetime.now()
-            )
-            db.session.add(transferencia)
-            db.session.commit()
+        # cria o registro da transferência
+        transferencia = Transfer(
+            id_fila=fila.id,
+            id_doador=doacao.id,
+            data_transferencia=datetime.now(),
+            quantidade_transferencia=qtd_transferencia
+        )
 
-
-    
+        db.session.add(transferencia)
+        db.session.commit()
