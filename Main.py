@@ -3,6 +3,7 @@ from extensions import db, csrf
 
 from controllers.public_routes import public_bp
 from controllers.login import auth_bp  # importa blueprint já com todas as rotas
+from controllers.errors import errors_bp
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -13,6 +14,7 @@ csrf.init_app(app)
 # registra blueprints
 app.register_blueprint(public_bp)
 app.register_blueprint(auth_bp, url_prefix='/bugig')
+app.register_blueprint(errors_bp)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

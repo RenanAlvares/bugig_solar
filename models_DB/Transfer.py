@@ -6,8 +6,8 @@ class Transfer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_fila = db.Column(db.Integer, db.ForeignKey('Fila.id'), nullable=False)
     id_doador = db.Column(db.Integer, db.ForeignKey('Doacao.id'), nullable=False)
-    quantidade_transferida = db.Column(db.Float, nullable=False)
+    quantidade_transferencia = db.Column(db.Float, nullable=False)
     data_transferencia = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     user_fila = db.relationship('Queue', foreign_keys=[id_fila])
-    user_doador = db.relationship('Donations', foreign_keys=[id_doador])
+    user_doador = db.relationship('Donation', foreign_keys=[id_doador])

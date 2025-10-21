@@ -6,6 +6,7 @@ from forms.form_queue import FormQueue
 from models_DB.donation_queue import Queue
 from models_DB.benef_gen import Beneficiaries
 from extensions import db
+from .transfer import transfer
 
 
 # funcao e validacao que verifica se o usuário já doou este mês
@@ -49,6 +50,8 @@ def get_in_queue(user_id):
         db.session.add(entrar_fila)
         db.session.commit()
         # após entrar na fila, redireciona para a tela de menu principal
+
+        transfer() # <- função que faz a consulta se há pendencias para gerar transferencia.
 
         return redirect(url_for('auth.menu_benef', user_id=user_id)) # após entrar na fila retorna para a tela de menu principal
     return render_template('queue.html', form_queue=form_queue, user_id=user_id, titulo=titulo)

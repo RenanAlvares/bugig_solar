@@ -6,6 +6,7 @@ from controllers.login import user_owns_resource
 from forms.form_donation import FormDonation
 from models_DB.benef_gen import Generators
 from extensions import db
+from .transfer import transfer
 
 '''
 def usuario_ja_doou(id_user_doacao):
@@ -48,6 +49,8 @@ def make_donation(user_id):
 
         db.session.add(nova_doacao)
         db.session.commit()
+
+        transfer() # <- função que faz a consulta se há pendencias para gerar transferencia.
 
         return redirect(url_for('auth.menu_gen', user_id=user_id)) # após doar retorna para a tela de menu principal
 
