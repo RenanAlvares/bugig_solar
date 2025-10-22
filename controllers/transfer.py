@@ -2,7 +2,8 @@ from models_DB.benef_gen import Beneficiaries
 from models_DB.donation_queue import Donation, Queue
 from extensions import db
 from models_DB.transfer import Transfer
-from datetime import datetime
+from models_DB.payments import Payment 
+from datetime import datetime, timedelta
 from models_DB.users import UsersDb as Usuarios  # alterei para usuarios pq fiz a funcao com esse nome
 
 def valida_mes_fila_doacao():
@@ -20,6 +21,23 @@ def valida_mes_fila_doacao():
         if (fila.data_solicitacao.year, fila.data_solicitacao.month) != (ano_atual, mes_atual):
             fila.status = 0 # expirou a fila daquele mes
 
+    db.session.commit()
+
+# aqui será criado o pagamento parcial para cada transferencia realizada
+def create_payment_per_transfer(transfer: Transfer):
+
+    vencimento = datetime.now() + timedelta(days=7)
+
+    pagamento = Payment(
+        id_transferencia=transfer.id,
+        data_emissao=datetime.now(),
+        id_tipo_pagamento=4,  # 4 pois esse campo é not null e o beneficiario vai alterar ao realizar o pagamento
+        data_vencimento=vencimento,
+        data_liquidacao=None,
+        valor=transfer.quantidade_transferencia * 0.1  # já é definido 10 centavos por crédito
+    )
+
+    db.session.add(pagamento)
     db.session.commit()
 
 
@@ -81,3 +99,6 @@ def transfer():
 
         db.session.add(transferencia)
         db.session.commit()
+
+        # cria o pagamento associado à transferência
+        create_payment_per_transfer(transferencia)

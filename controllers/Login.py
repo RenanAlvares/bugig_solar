@@ -121,19 +121,6 @@ def signin():
 
     return render_template('Cadastro.html', titulo=titulo, form=form)
 
-
-@auth_bp.route('/<int:user_id>/menu-benef', methods=['GET', 'POST'])
-@user_owns_resource('user_id', tipo_usuario_esperado=1)
-def menu_benef(user_id):
-    return render_template('menu_benef.html', user_id=user_id)
-
-
-@auth_bp.route('/<int:user_id>/menu-gen', methods=['GET', 'POST'])
-@user_owns_resource('user_id', tipo_usuario_esperado=2)
-def menu_gen(user_id):
-    return render_template('menu_gen.html', user_id=user_id)
-
-
 # rota de login 
 @auth_bp.route('/login', methods=['POST', 'GET'])
 def login():
