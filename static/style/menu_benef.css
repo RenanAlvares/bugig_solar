@@ -1,6 +1,5 @@
 /* =====================================================
-   BUGIGSOLAR - PAINEL DO BENEFICIÁRIO (AVANÇADO)
-   Visual futurista com energia solar e movimento sutil
+   BUGIGSOLAR - PAINEL DO BENEFICIÁRIO (ALINHAMENTO AJUSTADO E VISUAL LIMPO)
    ===================================================== */
 
 body {
@@ -39,68 +38,42 @@ body {
   text-shadow: 0 0 12px rgba(242,183,5,0.4);
 }
 
-.energy-bar {
-  width: 180px;
-  height: 5px;
-  margin: 0 auto 1rem auto;
-  background: linear-gradient(90deg, #F2B705, #44af69, #F2B705);
-  border-radius: 3px;
-  animation: pulseGlow 3s infinite linear;
-}
-
 #energy-header p {
   color: #ccc;
   font-size: 1.1rem;
 }
 
-/* ===== STATUS PANEL ===== */
-#status-panel {
-  display: inline-block;
-  padding: 0.8rem 1.5rem;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  margin-bottom: 3rem;
-  box-shadow: 0 0 15px rgba(242,183,5,0.1);
-}
-
-#status-panel i {
-  color: #F2B705;
-  margin-right: 0.5rem;
-}
-
-.status-text {
-  color: #44af69;
-  font-weight: 700;
-}
-
 /* ===== GRID DE CARDS ===== */
 .dashboard-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: 1.3fr 1fr; /* simulador maior à esquerda */
   gap: 2rem;
   justify-content: center;
-  align-items: stretch;
-  position: relative;
-  background: transparent !important;
+  align-items: start;
+  text-align: left;
 }
 
-/* ===== EFEITO DE PARTÍCULAS ===== */
-.dashboard-cards::before {
-    display: none !important;
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 30% 20%, rgba(242,183,5,0.08), transparent 60%),
-              radial-gradient(circle at 70% 80%, rgba(68,175,105,0.08), transparent 70%);
-  pointer-events: none;
-  animation: particleShift 10s infinite alternate ease-in-out;
+/* ===== COLUNA ESQUERDA ===== */
+.dashboard-cards a:nth-child(3) {
+  grid-column: 1;
+  grid-row: 1 / span 3; /* ocupa toda a altura da outra coluna */
+  align-self: stretch;
+  justify-self: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== COLUNA DIREITA (OUTROS CARDS) ===== */
+.dashboard-cards a:nth-child(1),
+.dashboard-cards a:nth-child(2),
+.dashboard-cards a:nth-child(4) {
+  grid-column: 2;
+  width: 100%;
 }
 
 /* ===== CARDS ===== */
 .dashboard-cards .card {
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
   border-radius: 16px;
   padding: 2.5rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -108,21 +81,24 @@ body {
   color: #fff;
   position: relative;
   overflow: hidden;
-  transition: all 0.35s ease;
+  transition: border-color 0.25s ease, background 0.25s ease;
   backdrop-filter: blur(10px);
 }
 
+/* Ícone */
 .dashboard-cards .card-icon {
   font-size: 2.8rem;
   color: #F2B705;
   margin-bottom: 1rem;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease;
 }
 
+/* Título e texto */
 .dashboard-cards h3 {
   font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 0.6rem;
+  transition: color 0.3s ease;
 }
 
 .dashboard-cards p {
@@ -130,20 +106,26 @@ body {
   font-size: 0.95rem;
 }
 
+/* ===== NOVO HOVER SUAVE (SEM BUG E SEM POLUIR) ===== */
 .dashboard-cards .card:hover {
-  transform: translateY(-10px) scale(1.03);
   border-color: #F2B705;
-  box-shadow: 0 10px 30px rgba(242,183,5,0.3);
   background: rgba(255, 255, 255, 0.08);
 }
 
 .dashboard-cards .card:hover .card-icon {
-  color: #fff;
-  transform: scale(1.2);
+  color: #F2B705;
+  transform: none;
 }
 
 .dashboard-cards .card:hover h3 {
   color: #F2B705;
+}
+
+/* ===== REMOÇÃO TOTAL DE SOMBRAS ===== */
+.dashboard-cards .card,
+.dashboard-cards .card:hover {
+  box-shadow: none !important;
+  transform: none !important;
 }
 
 /* ===== CTA FINAL ===== */
@@ -154,6 +136,7 @@ body {
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 14px;
   box-shadow: 0 0 25px rgba(242,183,5,0.1);
+  text-align: center;
 }
 
 #cta-benef h2 {
@@ -173,30 +156,6 @@ body {
   margin-bottom: 2rem;
 }
 
-/* ===== ANIMAÇÕES ===== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(25px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulseGlow {
-  0% { filter: brightness(1); }
-  50% { filter: brightness(1.5); }
-  100% { filter: brightness(1); }
-}
-
-@keyframes particleShift {
-  0% { background-position: 0 0, 100% 100%; }
-  100% { background-position: 100% 50%, 0 0; }
-}
-
-/* ===== RESPONSIVO ===== */
-@media (max-width: 768px) {
-  #dashboard-container { margin: 3rem 1rem; padding: 2rem 1rem; }
-  #energy-header h1 { font-size: 2rem; }
-  .dashboard-cards { grid-template-columns: 1fr; gap: 1.5rem; }
-}
-
 /* ===== BOTÃO "COMEÇAR AGORA" ===== */
 .lp-button {
   display: inline-block;
@@ -213,7 +172,6 @@ body {
   box-shadow: 0 0 12px rgba(242, 183, 5, 0.4);
 }
 
-/* Brilho que se move sobre o botão */
 .lp-button::before {
   content: "";
   position: absolute;
@@ -241,3 +199,233 @@ body {
   transform: scale(0.97);
 }
 
+/* ===== SIMULADOR DE ECONOMIA ===== */
+.simulador {
+  width: 100%;
+  background: rgba(20, 20, 20, 0.6);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 1.5rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.3s ease;
+}
+
+.simulador label {
+  display: block;
+  margin-bottom: 0.7rem;
+  font-weight: 700;
+  color: #f2b705;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.simulador input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.simulador input:focus {
+  border-color: #f2b705;
+}
+
+.simulador button {
+  width: 100%;
+  background: #f2b705;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.3px;
+  margin-top: 20px;
+}
+
+.simulador button:hover {
+  background: #ffca1a;
+}
+
+/* Resultado */
+.resultado {
+  margin-top: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.2rem;
+  border-radius: 12px;
+  display: none;
+  border-left: 3px solid #f2b705;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.resultado.mostrar {
+  display: block;
+}
+
+.resultado h4 {
+  color: #f2b705;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.4rem;
+}
+
+.resultado p {
+  color: #ccc;
+  font-size: 0.95rem;
+  margin: 0.3rem 0;
+}
+
+.resultado p strong {
+  color: #fff;
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 900px) {
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-cards a:nth-child(3) {
+    grid-row: auto;
+  }
+}
+
+/*grafico relatorio*/
+
+/* ===== RELATÓRIO VISUAL ===== */
+#grafico-section {
+  margin-top: 5rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 25px rgba(242, 183, 5, 0.08);
+}
+
+#grafico-section h2 {
+  font-size: 1.8rem;
+  color: #F2B705;
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+#grafico-section p {
+  color: #ccc;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* ===== CONTAINER DO GRÁFICO ===== */
+.grafico-container {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2rem;
+  margin-top: 2rem;
+  min-height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.grafico-placeholder {
+  color: #aaa;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  text-align: center;
+  animation: pulseText 2s infinite;
+}
+
+@keyframes pulseText {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+
+#graficoEconomia {
+  width: 100% !important;
+  max-height: 300px;
+  display: none; /* inicialmente escondido */
+}
+
+#mensagemGrafico {
+  color: #bbb;
+  font-size: 1rem;
+  text-align: center;
+  opacity: 0.8;
+  font-style: italic;
+  transition: opacity 0.5s ease;
+}
+
+.grafico-container.mostrar #graficoEconomia {
+  display: block;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.grafico-container.mostrar #mensagemGrafico {
+  opacity: 0;
+}
+
+.simulador-btns {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.simulador button,
+.btn-secundario {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.simulador button {
+  background: #f2b705;
+  color: #0a0a0a;
+}
+
+.simulador button:hover {
+  background: #ffcc22;
+}
+
+.btn-secundario {
+  background: transparent;
+  color: #f2b705;
+  border: 1px solid #f2b705;
+}
+
+.btn-secundario:hover {
+  background: #f2b705;
+  color: #0a0a0a;
+}
