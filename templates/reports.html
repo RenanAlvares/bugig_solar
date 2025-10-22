@@ -6,67 +6,114 @@
 <main class="report-container">
     <h1>{{ titulo }}</h1>
 
-    {% if fila %}
-    <table class="report-table">
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Créditos Recebidos (kWh)</th>
-                <th>Valor Economizado (R$)</th>
-                <th> Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for posicao in fila %}
-            <tr>
-                <td>{{ posicao.data_solicitacao.strftime('%d/%m/%Y') if posicao.data_solicitacao else '—' }}</td>
-                <td>{{ posicao.quantidade_recebida or 0 }}</td>
-                <td>
-                    {% if posicao.quantidade_recebida %}
-                        R$ {{ (posicao.quantidade_recebida * 0.95) | round(2) }}
-                    {% else %}
-                        —
+    {% if fila or doacao %}
+        <table class="report-table">
+            <thead>
+                <tr>
+                    {% if fila %}
+                        <th>Data</th>
+                        <th>Créditos Recebidos (kWh)</th>
+                        <th>Valor Economizado (R$)</th>
+                        <th>Status</th>
+                    {% elif doacao %}
+                        <th>Data</th>
+                        <th>Quantidade Doada (kWh)</th>
+                        <th>Quantidade Disponível (kWh)</th>
+                        <th>Status</th>
                     {% endif %}
-                </td>
-                <td>
-                    {% if posicao.status == 0 %}
-                        <span class="status status-concluido">Concluído</span>
-                    {% else %}
-                        <span class="status status-pendente">Pendente</span>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                </tr>
+            </thead>
+            <tbody>
+                {% if fila %}
+                    {% for posicao in fila %}
+                    <tr>
+                        <td>{{ posicao.data_solicitacao.strftime('%d/%m/%Y') if posicao.data_solicitacao else '—' }}</td>
+                        <td>{{ posicao.quantidade_recebida or 0 }}</td>
+                        <td>
+                            {% if posicao.quantidade_recebida %}
+                                {{ (posicao.quantidade_recebida * 0.95) | round(2) }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if not posicao.status %}
+                                <span class="status status-concluido">Concluído</span>
+                            {% else %}
+                                <span class="status status-pendente">Pendente</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% elif doacao %}
+                    {% for d in doacao %}
+                    <tr>
+                        <td>{{ d.data_doacao.strftime('%d/%m/%Y') if d.data_doacao else '—' }}</td>
+                        <td>{{ d.quantidade_doacao or 0 }}</td>
+                        <td>{{ d.quantidade_disponivel or 0 }}</td>
+                        <td>
+                            {% if not d.status %}
+                                <span class="status status-concluido">Concluído</span>
+                            {% else %}
+                                <span class="status status-pendente">Pendente</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
 
-    <!-- Gráfico de créditos -->
-    <div class="report-chart-section">
-        <h2>Gráfico de Créditos Recebidos</h2>
-        <canvas id="chart"></canvas>
-    </div>
+        <!-- Seção do gráfico -->
+        <div class="report-chart-section">
+            {% if fila %}
+                <h2>Gráfico de Créditos Recebidos</h2>
+                <canvas id="chart"></canvas>
+            {% elif doacao %}
+                <h2>Gráfico de Doações Realizadas</h2>
+                <canvas id="chart"></canvas>
+            {% endif %}
+        </div>
 
-    <!-- Botão de download -->
-    <div class="report-download">
-        <a href="{{ url_for('auth.download_report', user_id=user_id) }}" class="lp-button">Baixar Relatório</a>
-    </div>
+        <!-- Botão de download -->
+        <div class="report-download">
+            <a href="{{ url_for('auth.download_report', user_id=user_id) }}" class="lp-button">Baixar Relatório</a>
+        </div>
 
     {% else %}
-    <p class="sem-dados">Nenhum registro encontrado na sua fila ainda.</p>
+        {% if 'Beneficiário' in titulo %}
+            <p class="sem-dados">Nenhum registro encontrado na sua fila ainda.</p>
+        {% else %}
+            <p class="sem-dados">Nenhuma doação registrada ainda.</p>
+        {% endif %}
     {% endif %}
 </main>
 
 <!-- Script do gráfico -->
+{% if fila or doacao %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const ctx = document.getElementById('chart').getContext('2d');
-    const chart = new Chart(ctx, {
+
+    {% if fila %}
+    const labels = [{% for posicao in fila|reverse %}"{{ posicao.data_solicitacao.strftime('%d/%m') }}"{% if not loop.last %}, {% endif %}{% endfor %}];
+    const dataValues = [{% for posicao in fila|reverse %}{{ posicao.quantidade_recebida or 0 }}{% if not loop.last %}, {% endif %}{% endfor %}];
+
+    const chartLabel = 'Créditos Recebidos (kWh)';
+    {% elif doacao %}
+    const labels = [{% for d in doacao|reverse %}"{{ d.data_doacao.strftime('%d/%m') }}"{% if not loop.last %}, {% endif %}{% endfor %}];
+    const dataValues = [{% for d in doacao|reverse %}{{ d.quantidade_doacao or 0 }}{% if not loop.last %}, {% endif %}{% endfor %}];
+
+    const chartLabel = 'Doações Realizadas (kWh)';
+    {% endif %}
+
+    new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [{% for posicao in fila %}"{{ posicao.data_solicitacao.strftime('%d/%m') }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+            labels: labels,
             datasets: [{
-                label: 'Créditos Recebidos (kWh)',
-                data: [{% for posicao in fila %}{{ posicao.quantidade_recebida or 0 }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                label: chartLabel,
+                data: dataValues,
                 backgroundColor: 'rgba(242, 183, 5, 0.7)',
                 borderColor: '#F2B705',
                 borderWidth: 1,
@@ -84,5 +131,6 @@
         }
     });
 </script>
+{% endif %}
 
 {% endblock %}

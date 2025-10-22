@@ -11,7 +11,7 @@
                 <h3>Doar Créditos</h3>
                 <p>Compartilhe sua energia excedente e ajude quem precisa.</p>
             </a>
-            <a href="#" class="card">
+            <a href="{{ url_for('auth.report_gen', user_id=user_id) }}" class="card">
                 <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
                 <h3>Relatórios de Geração</h3>
                 <p>Acompanhe sua produção de energia e doações realizadas.</p>

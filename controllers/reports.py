@@ -1,17 +1,11 @@
 from . import auth_bp
-from flask import render_template, redirect, send_file, url_for
+from flask import render_template, send_file
 from .login import user_owns_resource
 from models_DB.donation_queue import Queue, Donation
 from models_DB.benef_gen import Beneficiaries, Generators
-from reportlab.lib.pagesizes import A4
-from reportlab.lib import colors
 from reportlab.lib.units import cm
-import matplotlib.pyplot as plt
-from reportlab.platypus import Table, TableStyle, Paragraph, SimpleDocTemplate, Spacer
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from datetime import datetime
 from reportlab.lib.styles import getSampleStyleSheet
-import io
+from reportlab.lib.styles import getSampleStyleSheet
 
 # funcao que gera o relatorio do beneficiario
 @auth_bp.route('/<int:user_id>/report-benef', methods=['GET'])
@@ -28,26 +22,57 @@ def report_benef(user_id):
 
     return render_template('reports.html', user_id=user_id, fila=fila, titulo=titulo)
 
+# funcao que gera o relatorio do gerador
+@auth_bp.route('/<int:user_id>/report-gen', methods=['GET'])
+@user_owns_resource('user_id', tipo_usuario_esperado=2)
+def report_gen(user_id):
+
+    titulo = 'Relatório do Gerador'
+
+    #busca o id do gerador associado ao user_id
+    id_gerador = Generators.query.filter_by(id_user=user_id).first().id
+
+    # seleciona todas as acoes desse gerador
+    doacao = Donation.query.filter_by(id_gerador=id_gerador).order_by(Donation.data_doacao.desc()).all()
+
+    return render_template('reports.html', user_id=user_id, doacao=doacao, titulo=titulo)
+
 
 # funcao que gera o pdf do relatorio (beneficiario ou gerador)
 @auth_bp.route('/<int:user_id>/download-report')
 @user_owns_resource('user_id')
 def download_report(user_id):
+    from flask import abort
+    import io
+    from datetime import datetime
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.units import cm
 
-    user = Beneficiaries.query.filter_by(id_user=user_id).first()
-    
-    tipo_usuario = 1  if user else 2  # 1 = Beneficiário, 2 = Gerador
+    # identifica o tipo de usuário
+    benef = Beneficiaries.query.filter_by(id_user=user_id).first()
+    gen = Generators.query.filter_by(id_user=user_id).first()
 
-    """
-    Gera um relatório em PDF com tabela de movimentações da fila
-    (sem gráfico), com o tema amarelo e preto futurista.
-    """
+    if benef:
+        tipo_usuario = 1
+    elif gen:
+        tipo_usuario = 2
+    else:
+        abort(404)
 
     buffer = io.BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=A4)
+    doc = SimpleDocTemplate(
+        buffer,
+        pagesize=A4,
+        leftMargin=2*cm,
+        rightMargin=2*cm,
+        topMargin=2*cm,
+        bottomMargin=2*cm
+    )
     styles = getSampleStyleSheet()
 
-    # ====== ESTILOS PERSONALIZADOS ======
     titulo_style = ParagraphStyle(
         'Titulo',
         parent=styles['Heading1'],
@@ -61,75 +86,111 @@ def download_report(user_id):
         'NormalCustom',
         parent=styles['Normal'],
         textColor="#111",
-        fontSize=11,
-        leading=16,
+        fontSize=12,
+        leading=18,
     )
 
-    # ====== CABEÇALHO ======
     titulo = "Relatório do Beneficiário" if tipo_usuario == 1 else "Relatório do Gerador"
 
     elements = [
         Paragraph(f"<b>{titulo}</b>", titulo_style),
-        Spacer(1, 0.3 * cm),
+        Spacer(1, 0.5 * cm),
         Paragraph(f"Data de geração: {datetime.now().strftime('%d/%m/%Y %H:%M')}", normal_style),
-        Spacer(1, 0.8 * cm),
+        Spacer(1, 1.0 * cm),
     ]
 
-    # ====== CONSULTA DE DADOS ======
+    # ======== BENEFICIÁRIO ========
     if tipo_usuario == 1:
-        fila = Queue.query.filter_by(id_beneficiario=user.id).all()
+        fila = Queue.query.filter_by(id_beneficiario=benef.id).order_by(Queue.data_solicitacao.desc()).all()
+
+        if not fila:
+            elements.append(Paragraph("Nenhum registro encontrado na sua fila.", normal_style))
+        else:
+            data = [["Data", "Créditos Recebidos (kWh)", "Valor Economizado (R$)", "Status"]]
+
+            for pos in fila:
+                data_solic = pos.data_solicitacao.strftime("%d/%m/%Y") if pos.data_solicitacao else "—"
+                creditos = pos.quantidade_recebida or 0
+                valor = f" {creditos * 0.95:.2f}" if creditos else "—"
+                status_text = "Concluído" if not pos.status else "Pendente"
+                data.append([data_solic, str(creditos), valor, status_text])
+
+            # Aumentando o espaçamento horizontal
+            tabela = Table(data, colWidths=[4 * cm, 5.5 * cm, 5.5 * cm, 4 * cm])
+            tabela.hAlign = 'CENTER'
+
+            estilo_tabela = TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.Color(0.95, 0.72, 0.02)),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+                ('FONTSIZE', (0, 0), (-1, -1), 11),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('TOPPADDING', (0, 1), (-1, -1), 10),
+                ('BOTTOMPADDING', (0, 1), (-1, -1), 10),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
+                ('BOX', (0, 0), (-1, -1), 1.2, colors.gray),
+                ('GRID', (0, 0), (-1, -1), 0.7, colors.gray),
+            ])
+
+            for i, pos in enumerate(fila, start=1):
+                cor = colors.green if not pos.status else colors.red
+                estilo_tabela.add('TEXTCOLOR', (-1, i), (-1, i), cor)
+
+            tabela.setStyle(estilo_tabela)
+            elements.append(Spacer(1, 0.7 * cm))
+            elements.append(tabela)
+            elements.append(Spacer(1, 1.0 * cm))
+
+    # ======== GERADOR ========
     else:
-        user = Generators.query.filter_by(id_user=user_id).first()
-        fila = Queue.query.filter_by(id_beneficiario=user.id).all()  # ajuste se gerador usar outra FK
+        doacoes = Donation.query.filter_by(id_gerador=gen.id).order_by(Donation.data_doacao.desc()).all()
 
-    if not fila:
-        elements.append(Paragraph("Nenhum registro encontrado na sua fila.", normal_style))
-    else:
-        # Cabeçalho da tabela
-        data = [["Data", "Créditos Recebidos (kWh)", "Valor Economizado (R$)", "Status"]]
+        if not doacoes:
+            elements.append(Paragraph("Nenhuma doação encontrada para este gerador.", normal_style))
+        else:
+            data = [["Data", "Quantidade Doada (kWh)", "Quantidade Disponível (kWh)", "Status"]]
 
-        for posicao in fila:
-            data_solic = posicao.data_solicitacao.strftime("%d/%m/%Y") if posicao.data_solicitacao else "—"
-            creditos = posicao.quantidade_recebida or 0
-            valor = f"R$ {creditos * 0.95:.2f}" if creditos else "—"
-            status_text = "Concluído" if posicao.status == 0 else "Pendente"
-            status_color = colors.green if posicao.status == 0 else colors.red
+            for d in doacoes:
+                data_doacao = d.data_doacao.strftime("%d/%m/%Y") if d.data_doacao else "—"
+                qtd_doada = d.quantidade_doacao or 0
+                qtd_disp = d.quantidade_disponivel or 0
+                status_text = "Concluído" if not d.status else "Pendente"
+                data.append([data_doacao, str(qtd_doada), str(qtd_disp), status_text])
 
-            data.append([data_solic, creditos, valor, status_text])
+            tabela = Table(data, colWidths=[4 * cm, 5.5 * cm, 5.5 * cm, 4 * cm])
 
-        # ====== ESTILO DA TABELA ======
-        tabela = Table(data, colWidths=[4 * cm, 5 * cm, 5 * cm, 4 * cm])
+            estilo_tabela = TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.Color(0.95, 0.72, 0.02)),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+                ('FONTSIZE', (0, 0), (-1, -1), 11),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('TOPPADDING', (0, 1), (-1, -1), 10),
+                ('BOTTOMPADDING', (0, 1), (-1, -1), 10),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
+                ('BOX', (0, 0), (-1, -1), 1.2, colors.gray),
+                ('GRID', (0, 0), (-1, -1), 0.7, colors.gray),
+            ])
 
-        estilo_tabela = TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), colors.Color(0.95, 0.72, 0.02)),  # amarelo
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-            ('FONTSIZE', (0, 0), (-1, 0), 12),
-            ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
-            ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
-            ('BOX', (0, 0), (-1, -1), 1, colors.gray),
-            ('GRID', (0, 0), (-1, -1), 0.5, colors.gray),
-        ])
+            for i, d in enumerate(doacoes, start=1):
+                cor = colors.green if not d.status else colors.red
+                estilo_tabela.add('TEXTCOLOR', (-1, i), (-1, i), cor)
 
-        tabela.setStyle(estilo_tabela)
+            tabela.setStyle(estilo_tabela)
+            elements.append(Spacer(1, 0.7 * cm))
+            elements.append(tabela)
+            elements.append(Spacer(1, 1.0 * cm))
 
-        # Aplica cor verde/vermelha nas células de status
-        for i, posicao in enumerate(fila, start=1):
-            cor = colors.green if posicao.status == 0 else colors.red
-            estilo_tabela.add('TEXTCOLOR', (-1, i), (-1, i), cor)
-
-        tabela.setStyle(estilo_tabela)
-
-        elements.append(tabela)
-
-    # ====== GERA O PDF ======
+    # ======== GERA O PDF ========
     doc.build(elements)
-
     buffer.seek(0)
+
+    nome = "beneficiario" if tipo_usuario == 1 else "gerador"
     return send_file(
         buffer,
         as_attachment=True,
-        download_name=f"relatorio_{tipo_usuario}_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
+        download_name=f"relatorio_{nome}_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
         mimetype='application/pdf'
     )
