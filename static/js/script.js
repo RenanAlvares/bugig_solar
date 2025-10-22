@@ -176,3 +176,27 @@ document.querySelector('.remove-btn').addEventListener('click', function() {
     img.src = "{{ url_for('static', filename='img/default-avatar.svg') }}";
     document.getElementById('photo-upload').value = "";
 });
+
+//animação carrossel
+
+const track = document.querySelector(".carrossel-track");
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+let index = 0;
+
+function moveCarousel() {
+  const items = document.querySelectorAll(".card-item");
+  const itemWidth = items[0].offsetWidth + 16; // margem lateral
+  track.style.transform = `translateX(-${index * itemWidth}px)`;
+}
+
+nextBtn.addEventListener("click", () => {
+  const items = document.querySelectorAll(".card-item");
+  if (index < items.length - 3) index++;
+  moveCarousel();
+});
+
+prevBtn.addEventListener("click", () => {
+  if (index > 0) index--;
+  moveCarousel();
+});

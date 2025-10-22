@@ -4,45 +4,82 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style/menu_benef.css') }}">
 
 <main id="benef-main">
-    <div class="dashboard" id="dashboard-container">
+  <div class="dashboard" id="dashboard-container">
 
-        <!-- 🔆 Cabeçalho Energizado -->
-        <div id="energy-header">
-            <h1>Painel do Beneficiário</h1>
-            <p>Bem-vindo(a)! Gerencie seus benefícios e explore novas possibilidades.</p>
+    <!-- 🔆 Cabeçalho Energizado -->
+    <div id="energy-header">
+      <h1>Painel do Beneficiário</h1>
+      <p>Bem-vindo(a)! Gerencie seus benefícios e explore novas possibilidades.</p>
+    </div>
+
+    <!-- 💳 Cards Principais -->
+    <div class="dashboard-cards">
+      <a href="{{ url_for('auth.get_in_queue', user_id=user_id)}}" class="card">
+        <div class="card-icon"><i class="fa-solid fa-users-line"></i></div>
+        <h3>Entrar na Fila</h3>
+        <p>Garanta seu lugar para receber os próximos créditos de energia.</p>
+      </a>
+
+      <a href="#" class="card">
+        <div class="card-icon"><i class="fa-solid fa-chart-pie"></i></div>
+        <h3>Meus Relatórios</h3>
+        <p>Acompanhe seu histórico de créditos e a economia gerada.</p>
+      </a>
+
+      <!-- ⚡ Simulador de Economia -->
+      <a href="#" class="card simulador-card">
+        <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
+        <h3>Simulador de Economia</h3>
+        <p>Calcule o quanto você pode economizar na sua conta de luz.</p>
+
+        <div class="simulador">
+          <label for="valorConta">💰 Valor da Conta (R$)</label>
+          <input type="number" id="valorConta" placeholder="Ex: 350" min="0">
+
+          <!-- 🔘 Botões -->
+          <div class="simulador-btns">
+            <button id="calcularBtn">Calcular</button>
+            <button id="verGraficoBtn" class="btn-secundario">Ver Gráfico</button>
+          </div>
+
+          <!-- 📊 Resultados -->
+          <div id="resultadoSimulador" class="resultado">
+            <h4>Resultados Estimados:</h4>
+            <p><strong>Economia Mensal:</strong> <span id="economiaValor">—</span></p>
+            <p><strong>kWh Economizados:</strong> <span id="kwhEconomia">—</span></p>
+            <p><strong>CO₂ Evitado:</strong> <span id="co2Evitado">—</span></p>
+            <p><strong>Economia Anual:</strong> <span id="economiaAnual">—</span></p>
+          </div>
         </div>
+      </a>
 
-        <!-- 💳 Cards Principais -->
-        <div class="dashboard-cards">
-            <a href="{{ url_for('auth.get_in_queue', user_id=user_id)}}" class="card">
-                <div class="card-icon"><i class="fa-solid fa-users-line"></i></div>
-                <h3>Entrar na Fila</h3>
-                <p>Garanta seu lugar para receber os próximos créditos de energia.</p>
-            </a>
-            <a href="#" class="card">
-                <div class="card-icon"><i class="fa-solid fa-chart-pie"></i></div>
-                <h3>Meus Relatórios</h3>
-                <p>Acompanhe seu histórico de créditos e a economia gerada.</p>
-            </a>
-            <a href="#" class="card">
-                <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
-                <h3>Simulador de Economia</h3>
-                <p>Calcule o quanto você pode economizar na sua conta de luz.</p>
-            </a>
-            <a href="{{ url_for('auth.edit_user', user_id=user_id) }}" class="card">
-                <div class="card-icon"><i class="fa-solid fa-user-pen"></i></div>
-                <h3>Editar Perfil</h3>
-                <p>Mantenha seus dados cadastrais sempre atualizados.</p>
-            </a>
-        </div>
+      <a href="{{ url_for('auth.edit_user', user_id=user_id) }}" class="card">
+        <div class="card-icon"><i class="fa-solid fa-user-pen"></i></div>
+        <h3>Editar Perfil</h3>
+        <p>Mantenha seus dados cadastrais sempre atualizados.</p>
+      </a>
+    </div>
 
-        <!-- 🌞 Seção Motivacional -->
-    <section id="cta-benef">
-        <h2>Transforme sua conta de luz em <span>economia real</span>.</h2>
-        <p>Com a BugigSolar, cada kWh conta — e o futuro é sustentável.</p>
-        <a href="{{ url_for('auth.get_in_queue', user_id=user_id)}}" class="lp-button">Começar Agora</a>
+    <!-- 🎨 GRÁFICO INTERATIVO -->
+    <section id="graficoContainer" class="grafico-container">
+      <div id="graficoPlaceholder" class="grafico-placeholder">
+        ⚡ Nenhum cálculo realizado ainda.<br>
+        Insira um valor e clique em <strong>Calcular</strong> para gerar o gráfico.
+      </div>
+      <canvas id="graficoEconomia" style="display: none; width:100%; height:400px;"></canvas>
     </section>
 
-    </div>
+    <!-- 🌞 Seção Motivacional -->
+    <section id="cta-benef">
+      <h2>Transforme sua conta de luz em <span>economia real</span>.</h2>
+      <p>Com a BugigSolar, cada kWh conta — e o futuro é sustentável.</p>
+      <a href="{{ url_for('auth.get_in_queue', user_id=user_id)}}" class="lp-button">Começar Agora</a>
+    </section>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/menu_benef.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </main>
 {% endblock %}

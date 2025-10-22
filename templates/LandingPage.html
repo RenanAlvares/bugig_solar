@@ -8,7 +8,7 @@
 <main id="landing-page-main">
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero fade-in">
     <div class="container">
       <h1>Leve energia solar para quem mais precisa 🌞</h1>
       <p>No BugigSolar, você doa ou recebe créditos de energia solar com facilidade e segurança.</p>
@@ -16,16 +16,16 @@
   </section>
 
   <!-- INFO BOX -->
-  <div class="info-box">
+  <div class="info-box fade-in">
     <h3>O que você pode fazer no BugigSolar?</h3>
-    <p class="subtexto-info">Escolha uma das opções abaixo e descubra como participar do BugigSolar:</p>
+    <p class="subtexto-info">Escolha uma das opções abaixo e descubra como participar:</p>
     <div class="cards-container">
-      <div class="card" onclick="mostrarFuncionalidade('Entrar na Fila')">
+      <div class="card fade-in" onclick="mostrarFuncionalidade('Entrar na Fila')">
         <i class="fa-solid fa-users"></i>
         <h4>Entrar na Fila</h4>
         <p>Receba créditos e economize na sua conta de luz.</p>
       </div>
-      <div class="card" onclick="mostrarFuncionalidade('Fazer Doação')">
+      <div class="card fade-in" onclick="mostrarFuncionalidade('Fazer Doação')">
         <i class="fa-solid fa-hand-holding-heart"></i>
         <h4>Fazer Doação</h4>
         <p>Doe seus créditos e ajude quem precisa.</p>
@@ -49,43 +49,42 @@
   </div>
 
   <!-- ENERGIA LIMPA -->
- <section class="section-imagem diagonal">
-  <div class="container-diagonal">
-    <div class="conteudo-energia">
-      <div class="texto">
-        <h2>Energia limpa, impacto real ⚡</h2>
-        <p>O que é Energia Limpa e como ela transforma o futuro.</p>
-        <p class="texto-secundario">
-          Pequenas ações de hoje constroem o futuro sustentável de amanhã. 
-          A energia solar é mais do que economia — é solidariedade em movimento, 
-          iluminando vidas e comunidades inteiras.
-        </p>
-        <button class="lp-button">
-          <a href="https://clicklivre.com.br/blog/o-que-e-energia-limpa-e-como-ela-transforma-o-futuro" target="_blank">
-            Saiba mais
-          </a>
-        </button>
-      </div>
+  <section class="section-imagem diagonal fade-in">
+    <div class="container-diagonal">
+      <div class="conteudo-energia">
+        <div class="texto fade-in">
+          <h2>Energia limpa, impacto real ⚡</h2>
+          <p>O que é Energia Limpa e como ela transforma o futuro.</p>
+          <p class="texto-secundario">
+            Pequenas ações de hoje constroem o futuro sustentável de amanhã. 
+            A energia solar é mais do que economia — é solidariedade em movimento.
+          </p>
+          <button class="lp-button">
+            <a href="https://clicklivre.com.br/blog/o-que-e-energia-limpa-e-como-ela-transforma-o-futuro" target="_blank">
+              Saiba mais
+            </a>
+          </button>
+        </div>
 
-      <div class="imagem">
-        <img src="/static/Imagens/energia-eletrica.png" alt="Energia solar transformando o futuro">
+        <div class="imagem">
+          <img src="/static/Imagens/energia-eletrica.png" alt="Energia solar transformando o futuro">
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- IMPACTO REAL -->
-  <section class="painel-creditos">
+  <section class="painel-creditos fade-in">
     <div class="impacto-container">
       <h2>Impacto Real</h2>
       <p class="impacto-subtitle">Resultados concretos do compartilhamento de energia solar no BugigSolar</p>
       <div class="metricas">
-        <div class="metrica-card">
+        <div class="metrica-card fade-in">
           <i class="fa-solid fa-bolt"></i>
           <h3>2.340 kWh</h3>
           <p>Créditos Doados</p>
         </div>
-        <div class="metrica-card">
+        <div class="metrica-card fade-in">
           <i class="fa-solid fa-solar-panel"></i>
           <h3>1.890 kWh</h3>
           <p>Créditos Recebidos</p>
@@ -99,7 +98,57 @@
     </div>
   </section>
 
-  <!-- BENEFÍCIOS -->
+  <!-- CARROSSEL -->
+  <section class="carrossel fade-in">
+    <div class="carrossel-container">
+      <h2 class="titulo-carrossel">A energia solar impulsiona <br> todos os tipos de empreendimentos</h2>
+      <p class="subtitulo-carrossel">Economize e invista no futuro — empresas, comércios, residências e muito mais podem compartilhar créditos de energia.</p>
+
+      <div class="carrossel-slider">
+        <button class="seta esquerda" id="prevBtn">&#10094;</button>
+        <div class="carrossel-track">
+          <div class="card-item fade-in">
+            <img src="/static/Imagens/empresa.jpg" alt="Empresas">
+            <div class="card-texto">
+              <h3>Empresas</h3>
+              <p>Reduza custos operacionais e torne seu negócio mais sustentável.</p>
+            </div>
+          </div>
+          <div class="card-item fade-in">
+            <img src="/static/Imagens/comercio.jpg" alt="Comércios">
+            <div class="card-texto">
+              <h3>Comércios</h3>
+              <p>Padarias, mercados e lojas podem economizar até 20% na conta de luz.</p>
+            </div>
+          </div>
+          <div class="card-item">
+            <img src="/static/Imagens/casas.jpg" alt="Casas">
+            <div class="card-texto">
+              <h3>Casas</h3>
+              <p>Traga a energia solar para o seu lar de forma simples e acessível.</p>
+            </div>
+          </div>
+          <div class="card-item">
+            <img src="/static/Imagens/predios.jpg" alt="Prédios">
+            <div class="card-texto">
+              <h3>Prédios</h3>
+              <p>Condomínios podem compartilhar energia limpa entre os moradores.</p>
+            </div>
+          </div>
+          <div class="card-item">
+            <img src="/static/Imagens/lojas.jpg" alt="Lojas">
+            <div class="card-texto">
+              <h3>Lojas</h3>
+              <p>Mais economia e imagem verde para o seu negócio.</p>
+            </div>
+          </div>
+        </div>
+        <button class="seta direita" id="nextBtn">&#10095;</button>
+      </div>
+    </div>
+  </section>
+
+    <!-- BENEFÍCIOS -->
   <section class="beneficios">
     <h2>Benefícios de participar 🌎</h2>
     <ul>
@@ -116,11 +165,11 @@
   </section>
 
   <!-- CTA FINAL -->
-  <section class="cta-final">
+  <section class="cta-final fade-in">
     <div class="container">
       <h2>Pronto para compartilhar energia solar?</h2>
       <p>Ajude alguém ou economize você também.</p>
-      <div class="hero-buttons">
+      <div class="hero-buttons fade-in">
         <button class="lp-button" onclick="mostrarFuncionalidade('Entrar na Fila')">Entrar na Fila</button>
         <button class="lp-button" onclick="mostrarFuncionalidade('Fazer Doação')">Fazer Doação</button>
       </div>
@@ -129,5 +178,21 @@
 
 </main>
 
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const elementos = document.querySelectorAll(".fade-in");
+  const observer = new IntersectionObserver((entradas) => {
+    entradas.forEach((entrada) => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add("visible");
+        observer.unobserve(entrada.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  elementos.forEach(el => observer.observe(el));
+});
+</script>
+
+<script src="{{ url_for('static', filename='js/landingpage.js') }}"></script>
 {% endblock %}
