@@ -9,11 +9,12 @@
     <!-- 🔆 Cabeçalho Energizado -->
     <div id="energy-header">
       <h1>Painel do Beneficiário</h1>
-      <p>Bem-vindo(a)! Gerencie seus benefícios e explore novas possibilidades.</p>
+      <p>Gerencie sua conta de energia e aproveite todos os benefícios disponíveis.</p>
     </div>
 
     <!-- 💳 Cards Principais -->
     <div class="dashboard-cards">
+      
       <a href="{{ url_for('auth.get_in_queue', user_id=user_id)}}" class="card">
         <div class="card-icon"><i class="fa-solid fa-users-line"></i></div>
         <h3>Entrar na Fila</h3>
@@ -52,22 +53,26 @@
           </div>
         </div>
       </a>
-
+      
       <a href="{{ url_for('auth.edit_user', user_id=user_id) }}" class="card">
         <div class="card-icon"><i class="fa-solid fa-user-pen"></i></div>
         <h3>Editar Perfil</h3>
         <p>Mantenha seus dados cadastrais sempre atualizados.</p>
       </a>
-    </div>
 
-    <!-- 🎨 GRÁFICO INTERATIVO -->
-    <section id="graficoContainer" class="grafico-container">
-      <div id="graficoPlaceholder" class="grafico-placeholder">
-        ⚡ Nenhum cálculo realizado ainda.<br>
-        Insira um valor e clique em <strong>Calcular</strong> para gerar o gráfico.
-      </div>
-      <canvas id="graficoEconomia" style="display: none; width:100%; height:400px;"></canvas>
-    </section>
+      <a href="#" class="card" id="card-pagamento">
+          <div class="card-icon">
+              <i class="fa-solid fa-users-line"></i>
+              {% if pagamento_pendente %}
+                  <!-- Badge de notificação -->
+                  <span class="badge">!</span>
+              {% endif %}
+          </div>
+          <h3>Pagamento</h3>
+          <p>Realize o pagamento da transferência para que possa receber os créditos solicitados.</p>
+      </a>
+      
+    </div>
 
     <!-- 🌞 Seção Motivacional -->
     <section id="cta-benef">
@@ -76,6 +81,33 @@
       <a href="{{ url_for('auth.get_in_queue', user_id=user_id)}}" class="lp-button">Começar Agora</a>
     </section>
 
+  </div>
+
+  <!-- ======= Modal de Pagamento ======= -->
+  <div id="modal-pagamento" class="modal">
+    <div class="modal-content">
+      <span class="close" id="fechar-modal">&times;</span>
+      <h2>Pagamento</h2>
+
+      {% if pagamento_pendente %}
+        <p><strong>Valor:</strong> R$ {{ pagamento_pendente.valor }}</p>
+        <p><strong>Vencimento:</strong> {{ pagamento_pendente.data_vencimento.strftime('%d/%m/%Y') }}</p>
+      {% else %}
+        <p>Não há pagamentos pendentes.</p>
+      {% endif %}
+
+      {% if pagamento_pendente %}
+        <form method="POST" action="{{ url_for('auth.payment', user_id=user_id) }}">
+          <label for="tipo_pagamento">Tipo de pagamento:</label>
+          <select name="tipo_pagamento" id="tipo_pagamento" required>
+            {% for tp in tipo_pagamento %}
+              <option value="{{ tp.id }}">{{ tp.nome_tipo }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit">Confirmar pagamento</button>
+        </form>
+      {% endif %}
+    </div>
   </div>
 
   <!-- Scripts -->

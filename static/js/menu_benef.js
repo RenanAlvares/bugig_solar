@@ -1,7 +1,3 @@
-// =====================================================
-// BUGIGSOLAR - SIMULADOR DE ECONOMIA + GRÁFICO INTELIGENTE
-// =====================================================
-
 document.addEventListener("DOMContentLoaded", () => {
   const btnCalcular = document.getElementById("calcularBtn");
   const btnGrafico = document.getElementById("verGraficoBtn");
@@ -13,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let chartInstance = null;
 
-  // ======= Função: Atualiza o gráfico com base na economia =======
+  // ======= Função: Atualiza o gráfico =======
   function atualizarGrafico(economiaMensal) {
     const ctx = canvas.getContext("2d");
     const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
@@ -66,26 +62,16 @@ document.addEventListener("DOMContentLoaded", () => {
           },
         },
         scales: {
-          x: {
-            ticks: { color: "#ccc" },
-            grid: { color: "rgba(255,255,255,0.05)" },
-          },
-          y: {
-            ticks: {
-              color: "#ccc",
-              callback: (val) => `R$ ${val.toFixed(0)}`,
-            },
-            grid: { color: "rgba(255,255,255,0.05)" },
-          },
+          x: { ticks: { color: "#ccc" }, grid: { color: "rgba(255,255,255,0.05)" } },
+          y: { ticks: { color: "#ccc", callback: (val) => `R$ ${val.toFixed(0)}` }, grid: { color: "rgba(255,255,255,0.05)" } },
         },
       },
     });
   }
 
-  // ======= Função: Executa o cálculo e atualiza o gráfico =======
+  // ======= Função: Executa o cálculo =======
   function calcularEconomia() {
     const valor = parseFloat(input.value);
-
     if (isNaN(valor) || valor <= 0) {
       alert("⚠️ Por favor, insira um valor válido!");
       input.focus();
@@ -114,23 +100,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 400);
   }
 
-  // ======= Evento: Clique no botão Calcular =======
-  btnCalcular.addEventListener("click", (e) => {
-    e.preventDefault();
-    calcularEconomia();
-  });
+  // ======= Eventos do simulador =======
+  btnCalcular.addEventListener("click", (e) => { e.preventDefault(); calcularEconomia(); });
+  input.addEventListener("keypress", (e) => { if (e.key === "Enter") { e.preventDefault(); calcularEconomia(); } });
+  btnGrafico.addEventListener("click", (e) => { e.preventDefault(); graficoContainer.scrollIntoView({ behavior: "smooth", block: "center" }); });
 
-  // ======= Evento: Pressionar Enter no input =======
-  input.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
+  // ======= Modal de pagamento =======
+  const modal = document.getElementById('modal-pagamento');
+  const btnPagamento = document.getElementById('card-pagamento'); // seu card
+  const fecharModal = document.getElementById('fechar-modal');
+
+  if (btnPagamento && modal && fecharModal) {
+    btnPagamento.addEventListener("click", (e) => {
       e.preventDefault();
-      calcularEconomia();
-    }
-  });
+      modal.style.display = "block";
+    });
 
-  // ======= Evento: Ver Gráfico (de qualquer lugar) =======
-  btnGrafico.addEventListener("click", (e) => {
-    e.preventDefault();
-    graficoContainer.scrollIntoView({ behavior: "smooth", block: "center" });
-  });
+    fecharModal.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target == modal) modal.style.display = "none";
+    });
+  }
 });
