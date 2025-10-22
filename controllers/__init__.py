@@ -8,3 +8,4 @@ from . import edit_cad
 from . import cad_benef_gen
 from . import get_in_queue
 from . import make_donation
+from . import reports
