@@ -443,12 +443,15 @@ body {
 }
 
 .modal-content {
-  background-color: #fff;
+  background: #1c1c1c;
+  color: #fff;
   margin: 10% auto;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 15px;
   width: 400px;
-  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(242, 183, 5, 0.3);
+  text-align: left;
 }
 
 .close {
