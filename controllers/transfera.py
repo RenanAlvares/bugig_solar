@@ -38,7 +38,6 @@ def create_payment_per_transfer(transfer: Transfer):
     )
 
     db.session.add(pagamento)
-    db.session.commit()
 
 
 def transfer():
@@ -97,8 +96,9 @@ def transfer():
             quantidade_transferencia=qtd_transferencia
         )
 
+        # cria a transferencia
         db.session.add(transferencia)
-        db.session.commit()
-
         # cria o pagamento associado à transferência
         create_payment_per_transfer(transferencia)
+
+        db.session.commit()

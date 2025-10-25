@@ -104,7 +104,12 @@
               <option value="{{ tp.id }}">{{ tp.nome_tipo }}</option>
             {% endfor %}
           </select>
-          <button type="submit">Confirmar pagamento</button>
+          <div>
+            {{ form_payment.senha.label }}<br>
+            {{ form_payment.senha }}
+          </div>
+          {{ form_payment.pagar(class="lp-button") }}
+          {{ form_payment.hidden_tag() }}
         </form>
       {% endif %}
     </div>
