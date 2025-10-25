@@ -5,7 +5,7 @@ from werkzeug.security import check_password_hash
 from models_DB.benef_gen import Beneficiaries
 from models_DB.users import UsersDb
 from . import auth_bp
-from login import user_owns_resource
+from .login import user_owns_resource
 from models_DB.types import TipoPagamento
 from models_DB.transfer import Transfer
 from models_DB.payments import Payment
@@ -30,7 +30,7 @@ def payment(user_id):
             flash('Senha incorreta. Tente novamente.', 'danger')
             return render_template(
                 'menu_benef.html', 
-                form=form_payment, 
+                form_payment=int(form_payment), 
                 user_id=user_id, 
                 titulo='Pagamento',
                 tipo_pagamento=tipo_pagamento
@@ -60,7 +60,7 @@ def payment(user_id):
     
     return render_template(
         'menu_benef.html', 
-        form=form_payment, 
+        form_payment=form_payment, 
         user_id=user_id, 
         titulo='Pagamento',
         tipo_pagamento=tipo_pagamento
