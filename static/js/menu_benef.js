@@ -112,9 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btnPagamento && modal && fecharModal) {
     btnPagamento.addEventListener("click", (e) => {
-      e.preventDefault();
-      modal.style.display = "block";
-    });
+    e.preventDefault();
+    modal.style.display = "flex"; // troque "block" por "flex"
+  });
 
     fecharModal.addEventListener("click", () => {
       modal.style.display = "none";

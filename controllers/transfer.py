@@ -98,6 +98,7 @@ def transfer():
 
         # cria a transferencia
         db.session.add(transferencia)
+        db.session.flush()
         # cria o pagamento associado à transferência
         create_payment_per_transfer(transferencia)
 
