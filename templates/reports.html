@@ -12,6 +12,7 @@
                 <tr>
                     {% if fila %}
                         <th>Data</th>
+                        <th>Quantidade Solicitada (kWh)</th>
                         <th>Créditos Recebidos (kWh)</th>
                         <th>Valor Economizado (R$)</th>
                         <th>Status</th>
@@ -28,6 +29,7 @@
                     {% for posicao in fila %}
                     <tr>
                         <td>{{ posicao.data_solicitacao.strftime('%d/%m/%Y') if posicao.data_solicitacao else '—' }}</td>
+                        <td>{{ posicao.quantidade_solicitada or 0 }}</td>
                         <td>{{ posicao.quantidade_recebida or 0 }}</td>
                         <td>
                             {% if posicao.quantidade_recebida %}

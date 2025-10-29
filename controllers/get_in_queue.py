@@ -48,10 +48,12 @@ def get_in_queue(user_id):
             quantidade_recebida=0
         )
         db.session.add(entrar_fila)
-        db.session.commit()
         # após entrar na fila, redireciona para a tela de menu principal
 
+        db.session.flush()
         transfer() # <- função que faz a consulta se há pendencias para gerar transferencia.
+
+        db.session.commit()
 
         return redirect(url_for('auth.menu_benef', user_id=user_id)) # após entrar na fila retorna para a tela de menu principal
     return render_template('queue.html', form_queue=form_queue, user_id=user_id, titulo=titulo)
