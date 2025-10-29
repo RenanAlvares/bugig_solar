@@ -1,31 +1,51 @@
 {% extends "base.html" %}
 
+
+
 {% block content %}
-<main>
-<div class="container mt-4">
-    <div class="form-card">
-        <h1>Bem-vindo à Fila de Doação</h1>
-        <p id="frase-motivacional" class="text-center mb-4" style="color: rgba(245, 245, 245, 0.8);">
-            Estamos juntos para garantir que a solidariedade chegue até você
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style/queue.css') }}">
+
+<main id="fila-doacao-page">
+  <div class="container mt-4">
+    <div class="form-card" id="form-solicitar-creditos">
+      
+      <h1>Bem-vindo à Fila de Doação</h1>
+      
+
+      <!-- FORMULÁRIO -->
+      <form method="POST" id="form-creditos">
+        {{ form_queue.hidden_tag() }}
+
+        <div id="campo-quantidade">
+          {{ form_queue.qtd_solicitada.label(class='form-label') }}
+          <div id="input-wrapper">
+            {{ form_queue.qtd_solicitada(class='form-control', placeholder='Digite a quantidade em kWh') }}
+          </div>
+          
+          <div id="error-messages">
+            {% for error in form_queue.qtd_solicitada.errors %}
+              <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="mt-3" id="submit-wrapper">
+          {{ form_queue.submit(class='btn btn-primary', value='Solicitar Créditos') }}
+        </div>
+      </form>
+
+      <!-- Informação adicional -->
+      <div id="info-adicional" style="margin-top: 2rem; padding: 1.5rem; background: rgba(242, 183, 5, 0.05); border-radius: 12px; border-left: 4px solid var(--amarelo);">
+        <p style="color: var(--cinza-claro); margin: 0; font-size: 0.95rem; line-height: 1.6;">
+          <strong style="color: var(--amarelo);">💡 Dica:</strong> Informe a quantidade de créditos que você precisa em kWh. Nossa comunidade solidária irá ajudar você a economizar na conta de luz!
         </p>
+      </div>
 
-        <!-- FORMULÁRIO CORRIGIDO -->
-        <form method="POST">
-            {{ form_queue.hidden_tag() }}
-
-            <div>
-                {{ form_queue.qtd_solicitada.label(class='form-label') }}
-                {{ form_queue.qtd_solicitada(class='form-control') }}
-                {% for error in form_queue.qtd_solicitada.errors %}
-                    <span class="text-danger">{{ error }}</span>
-                {% endfor %}
-            </div>
-
-            <div class="mt-3">
-                {{ form_queue.submit(class='btn btn-primary') }}
-            </div>
-        </form>
     </div>
-</div>
+  </div>
 </main>
+
+<script src="{{ url_for('static', filename='js/fila.js') }}"></script>
+
 {% endblock %}

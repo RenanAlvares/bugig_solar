@@ -79,19 +79,18 @@ header {
 
 
 /* --- BOTÃO 'CADASTRAR-SE' COM ESTILO IDÊNTICO AO "SAIBA MAIS" --- */
-.btn-default {
+.btn-default{
     /* Estado Padrão: Amarelo com escrita preta */
     background: var(--cor-amarelo-solar);
     color: var(--cor-fundo-escuro);
     border: 1px solid #e0a80b;
-
     padding: 0.6rem 1.2rem;
     border-radius: 8px;
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    
+    margin-top: -5px;
     /* Transição suave idêntica à do botão "Saiba Mais" */
     transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
 }
@@ -101,11 +100,14 @@ header {
     background-color: var(--cor-fundo-card);
     color: var(--cor-amarelo-solar);
     border-color: #333;
-
     transform: translateY(-2px); 
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
 }
 
+.btn-default a{
+    text-decoration: none !important;
+    color: inherit !important;
+}
 
 #mobile_btn, #mobile_menu {
     display: none;
