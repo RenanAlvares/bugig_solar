@@ -21,7 +21,7 @@ def valida_mes_fila_doacao():
         if (fila.data_solicitacao.year, fila.data_solicitacao.month) != (ano_atual, mes_atual):
             fila.status = 0 # expirou a fila daquele mes
 
-    db.session.commit()
+    db.session.flush()
 
 # aqui será criado o pagamento parcial para cada transferencia realizada
 def create_payment_per_transfer(transfer: Transfer):
@@ -41,19 +41,15 @@ def create_payment_per_transfer(transfer: Transfer):
 
 
 def transfer():
-    # busca todas as doações ativas ordenadas pela data da doação
     valida_mes_fila_doacao()
     doacoes = Donation.query.filter_by(status=1).order_by(Donation.data_doacao.asc()).all()
 
-    # se não houver nenhuma doação ativa, encerra
     if not doacoes:
         return
 
     for doacao in doacoes:
-        # pega a distribuidora do gerador que fez a doação
         gen_distribuidora = doacao.gerador.usuario.id_distribuidora
 
-        # busca a fila compatível (mesma distribuidora)
         fila = (
             Queue.query
             .join(Beneficiaries, Beneficiaries.id == Queue.id_beneficiario)
@@ -66,29 +62,25 @@ def transfer():
             .first()
         )
 
-        # se não houver fila compatível, passa para a próxima doação
         if not fila:
             continue
 
-        # calcula a quantidade transferida (mínimo entre disponível e solicitada restante)
-        qtd_transferencia = min(
+        qtd_transferencia = int(min(
             doacao.quantidade_disponivel,
             fila.quantidade_solicitada - fila.quantidade_recebida
-        )
+        ))
 
-        # atualiza a quantidade disponível da doação
+        # Atualiza a doação
         doacao.quantidade_disponivel -= qtd_transferencia
-
-        # atualiza a fila
-        fila.quantidade_recebida += qtd_transferencia
-        if fila.quantidade_recebida >= fila.quantidade_solicitada:
-            fila.status = 0  # fila completa
-
-        # atualiza o status da doação se esgotou
         if doacao.quantidade_disponivel <= 0:
             doacao.status = 0
 
-        # cria o registro da transferência
+        # Atualiza a fila
+        fila.quantidade_recebida += qtd_transferencia
+        if fila.quantidade_recebida >= fila.quantidade_solicitada:
+            fila.status = 0
+
+        # Cria a transferência
         transferencia = Transfer(
             id_fila=fila.id,
             id_doador=doacao.id,
@@ -96,9 +88,26 @@ def transfer():
             quantidade_transferencia=qtd_transferencia
         )
 
-        # cria a transferencia
         db.session.add(transferencia)
-        # cria o pagamento associado à transferência
+        db.session.flush()
+        
         create_payment_per_transfer(transferencia)
 
-        db.session.commit()
+    # NÃO FAZ COMMIT AQUI - o commit será feito em get_in_queue
+
+
+def valida_mes_fila_doacao():
+    mes_atual, ano_atual = datetime.now().month, datetime.now().year
+    doacoes = Donation.query.filter_by(status=1).all()
+
+    for doacao in doacoes:
+        if (doacao.data_doacao.year, doacao.data_doacao.month) != (ano_atual, mes_atual):
+            doacao.status = 0
+
+    filas = Queue.query.filter_by(status=1).all()
+
+    for fila in filas:
+        if (fila.data_solicitacao.year, fila.data_solicitacao.month) != (ano_atual, mes_atual):
+            fila.status = 0
+
+    # NÃO FAZ COMMIT AQUI
