@@ -9,38 +9,9 @@ body {
   font-family: "Inter", sans-serif;
   color: #fff;
   background: linear-gradient(to bottom, #111, #333);
-  overflow-x: hidden;
 }
 
 /* --- HEADER --- */
-header {
-  width: 100%;
-  padding: 23px 8%;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background: rgba(17, 17, 17, 0.9);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--cor-borda-suave);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-#navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#nav_logo h1 {
-  font-size: 1.6rem;
-  color: #f9c80e;
-  font-weight: 700;
-}
-
-#nav_logo p {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
-}
 
 /* --- BOTÃO HOME --- */
 a.btn-default {

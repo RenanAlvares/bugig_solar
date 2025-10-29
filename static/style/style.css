@@ -24,50 +24,12 @@ main {
 }
 
 /* --- HEADER (CABEÇALHO GLOBAL) --- */
-header {
-    width: 100%;
-    padding: 28px 8%;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: linear-gradient(to right, #111, #222);
-    color: #ffffff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
 
-#navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
-#navbar .logo {
-    font-size: 24px;
-    font-weight: 800;
-    color: #f9c80e; /* Amarelo Solar */
-    text-decoration: none;
-}
 
 #navbar .logo i {
     margin-right: 8px;
 }
 
-#itens_nav {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.btn-default {
-    background-color: #f9c80e;
-    color: #111;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 700;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
 
 .btn-default:hover {
     background-color: #44af69; /* Verde Sucesso */
@@ -236,13 +198,7 @@ header {
 }
 
 /* --- FOOTER --- */
-footer {
-    background-color: #111;
-    color: #ccc;
-    padding: 2rem;
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
+
 
 #itens-footer {
     display: flex;
