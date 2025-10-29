@@ -2,6 +2,7 @@
 
 {% block head_extra %}
 <link rel="stylesheet" href="{{ url_for('static', filename='style/LandingPage.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style/header.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -10,7 +11,7 @@
   <!-- HERO -->
   <section class="hero fade-in">
     <div class="container">
-      <h1>Leve energia solar para quem mais precisa 🌞</h1>
+      <h1>Leve energia solar para quem mais precisa</h1>
       <p>No BugigSolar, você doa ou recebe créditos de energia solar com facilidade e segurança.</p>
     </div>
   </section>
@@ -20,32 +21,27 @@
     <h3>O que você pode fazer no BugigSolar?</h3>
     <p class="subtexto-info">Escolha uma das opções abaixo e descubra como participar:</p>
     <div class="cards-container">
-      <div class="card fade-in" onclick="mostrarFuncionalidade('Entrar na Fila')">
+      <div class="card">
         <i class="fa-solid fa-users"></i>
         <h4>Entrar na Fila</h4>
         <p>Receba créditos e economize na sua conta de luz.</p>
       </div>
-      <div class="card fade-in" onclick="mostrarFuncionalidade('Fazer Doação')">
+      <div class="card">
         <i class="fa-solid fa-hand-holding-heart"></i>
         <h4>Fazer Doação</h4>
         <p>Doe seus créditos e ajude quem precisa.</p>
       </div>
-      <div class="card" onclick="mostrarFuncionalidade('Consultar Movimentação')">
+      <div class="card">
         <i class="fa-solid fa-chart-line"></i>
         <h4>Consultar Movimentação</h4>
         <p>Acompanhe suas doações e créditos recebidos.</p>
       </div>
-      <div class="card" onclick="mostrarFuncionalidade('Simular Economia')">
+      <div class="card">
         <i class="fa-solid fa-calculator"></i>
         <h4>Simular Economia</h4>
         <p>Calcule o quanto você pode economizar.</p>
       </div>
     </div>
-  </div>
-
-  <div class="aviso" id="aviso-funcionalidade" style="display:none;">
-    <button class="fechar-aviso" onclick="fecharAviso()">&times;</button>
-    <p id="texto-aviso"></p>
   </div>
 
   <!-- ENERGIA LIMPA -->
@@ -59,15 +55,15 @@
             Pequenas ações de hoje constroem o futuro sustentável de amanhã. 
             A energia solar é mais do que economia — é solidariedade em movimento.
           </p>
-          <button class="lp-button">
-            <a href="https://clicklivre.com.br/blog/o-que-e-energia-limpa-e-como-ela-transforma-o-futuro" target="_blank">
+          <button class="btn-default">
+            <a href="https://clicklivre.com.br/blog/o-que-e-energia-limpa-e-como-ela-transforma-o-futuro" target="_blank" rel="noopener">
               Saiba mais
             </a>
           </button>
         </div>
 
         <div class="imagem">
-          <img src="/static/Imagens/energia-eletrica.png" alt="Energia solar transformando o futuro">
+          <img src="/static/Imagens/energia-eletrica.png" alt="Energia solar transformando o futuro" loading="lazy">
         </div>
       </div>
     </div>
@@ -79,12 +75,12 @@
       <h2>Impacto Real</h2>
       <p class="impacto-subtitle">Resultados concretos do compartilhamento de energia solar no BugigSolar</p>
       <div class="metricas">
-        <div class="metrica-card fade-in">
+        <div class="metrica-card">
           <i class="fa-solid fa-bolt"></i>
           <h3>2.340 kWh</h3>
           <p>Créditos Doados</p>
         </div>
-        <div class="metrica-card fade-in">
+        <div class="metrica-card">
           <i class="fa-solid fa-solar-panel"></i>
           <h3>1.890 kWh</h3>
           <p>Créditos Recebidos</p>
@@ -101,55 +97,59 @@
   <!-- CARROSSEL -->
   <section class="carrossel fade-in">
     <div class="carrossel-container">
-      <h2 class="titulo-carrossel">A energia solar impulsiona <br> todos os tipos de empreendimentos</h2>
+      <h2 class="titulo-carrossel">A energia solar impulsiona todos os tipos de empreendimentos</h2>
       <p class="subtitulo-carrossel">Economize e invista no futuro — empresas, comércios, residências e muito mais podem compartilhar créditos de energia.</p>
 
       <div class="carrossel-slider">
-        <button class="seta esquerda" id="prevBtn">&#10094;</button>
-        <div class="carrossel-track">
-          <div class="card-item fade-in">
-            <img src="/static/Imagens/empresa.jpg" alt="Empresas">
-            <div class="card-texto">
-              <h3>Empresas</h3>
-              <p>Reduza custos operacionais e torne seu negócio mais sustentável.</p>
+        <button class="seta esquerda" id="prevBtn" aria-label="Card anterior">&#10094;</button>
+        
+        <div class="carrossel-wrapper">
+          <div class="carrossel-track">
+            <div class="card-item">
+              <img src="/static/Imagens/empresa.jpg" alt="Empresas utilizando energia solar" loading="lazy">
+              <div class="card-texto">
+                <h3>Empresas</h3>
+                <p>Reduza custos operacionais e torne seu negócio mais sustentável.</p>
+              </div>
             </div>
-          </div>
-          <div class="card-item fade-in">
-            <img src="/static/Imagens/comercio.jpg" alt="Comércios">
-            <div class="card-texto">
-              <h3>Comércios</h3>
-              <p>Padarias, mercados e lojas podem economizar até 20% na conta de luz.</p>
+            <div class="card-item">
+              <img src="/static/Imagens/comercio.jpg" alt="Comércios com energia solar" loading="lazy">
+              <div class="card-texto">
+                <h3>Comércios</h3>
+                <p>Padarias, mercados e lojas podem economizar até 20% na conta de luz.</p>
+              </div>
             </div>
-          </div>
-          <div class="card-item">
-            <img src="/static/Imagens/casas.jpg" alt="Casas">
-            <div class="card-texto">
-              <h3>Casas</h3>
-              <p>Traga a energia solar para o seu lar de forma simples e acessível.</p>
+            <div class="card-item">
+              <img src="/static/Imagens/casas.jpg" alt="Casas residenciais com energia solar" loading="lazy">
+              <div class="card-texto">
+                <h3>Casas</h3>
+                <p>Traga a energia solar para o seu lar de forma simples e acessível.</p>
+              </div>
             </div>
-          </div>
-          <div class="card-item">
-            <img src="/static/Imagens/predios.jpg" alt="Prédios">
-            <div class="card-texto">
-              <h3>Prédios</h3>
-              <p>Condomínios podem compartilhar energia limpa entre os moradores.</p>
+            <div class="card-item">
+              <img src="/static/Imagens/predios.jpg" alt="Prédios e condomínios" loading="lazy">
+              <div class="card-texto">
+                <h3>Prédios</h3>
+                <p>Condomínios podem compartilhar energia limpa entre os moradores.</p>
+              </div>
             </div>
-          </div>
-          <div class="card-item">
-            <img src="/static/Imagens/lojas.jpg" alt="Lojas">
-            <div class="card-texto">
-              <h3>Lojas</h3>
-              <p>Mais economia e imagem verde para o seu negócio.</p>
+            <div class="card-item">
+              <img src="/static/Imagens/lojas.jpg" alt="Lojas e varejo" loading="lazy">
+              <div class="card-texto">
+                <h3>Lojas</h3>
+                <p>Mais economia e imagem verde para o seu negócio.</p>
+              </div>
             </div>
           </div>
         </div>
-        <button class="seta direita" id="nextBtn">&#10095;</button>
+        
+        <button class="seta direita" id="nextBtn" aria-label="Próximo card">&#10095;</button>
       </div>
     </div>
   </section>
 
-    <!-- BENEFÍCIOS -->
-  <section class="beneficios">
+  <!-- BENEFÍCIOS -->
+  <section class="beneficios fade-in">
     <h2>Benefícios de participar 🌎</h2>
     <ul>
       <li><i class="fa-solid fa-circle-check"></i> Reduza sua conta de luz de forma simples e digital.</li>
@@ -164,35 +164,7 @@
     🌍 Cada crédito doado representa menos carbono e mais esperança. Faça parte dessa mudança!
   </section>
 
-  <!-- CTA FINAL -->
-  <section class="cta-final fade-in">
-    <div class="container">
-      <h2>Pronto para compartilhar energia solar?</h2>
-      <p>Ajude alguém ou economize você também.</p>
-      <div class="hero-buttons fade-in">
-        <button class="lp-button" onclick="mostrarFuncionalidade('Entrar na Fila')">Entrar na Fila</button>
-        <button class="lp-button" onclick="mostrarFuncionalidade('Fazer Doação')">Fazer Doação</button>
-      </div>
-    </div>
-  </section>
-
 </main>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const elementos = document.querySelectorAll(".fade-in");
-  const observer = new IntersectionObserver((entradas) => {
-    entradas.forEach((entrada) => {
-      if (entrada.isIntersecting) {
-        entrada.target.classList.add("visible");
-        observer.unobserve(entrada.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  elementos.forEach(el => observer.observe(el));
-});
-</script>
 
 <script src="{{ url_for('static', filename='js/landingpage.js') }}"></script>
 {% endblock %}

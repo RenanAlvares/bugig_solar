@@ -1,186 +1,384 @@
-/* ==============================================
-   QUEUE.CSS - ESTILO DA FILA (PADRÃO BUGIGSOLAR)
-   ============================================== */
+/* ===================================================
+   FILA DE DOAÇÃO - DESIGN PREMIUM
+   =================================================== */
 
-/* --- CARDS DE INFORMAÇÃO PRINCIPAL --- */
-.info-card {
-    background: rgba(30, 30, 30, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 2rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    text-align: center;
-    backdrop-filter: blur(10px);
+:root {
+  --preto: #0a0a0a;
+  --preto-suave: #141414;
+  --amarelo: #F2B705;
+  --amarelo-hover: #ffc800;
+  --branco: #ffffff;
+  --cinza-escuro: #1e1e1e;
+  --cinza-claro: #cccccc;
+  --verde-sucesso: #10b981;
+  --vermelho-erro: #ef4444;
 }
 
-.info-card h2 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin: 0.5rem 0;
-    color: #F2B705;
+/* Fundo da página */
+main {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--preto) 0%, var(--preto-suave) 100%);
+  padding: 4rem 1rem;
+  position: relative;
+  overflow: hidden;
 }
 
-.info-card p {
-    margin: 0;
-    font-size: 1rem;
-    color: #f5f5f5;
-    opacity: 0.9;
+/* Efeito de brilho de fundo */
+main::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(242, 183, 5, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse 8s ease-in-out infinite;
+  pointer-events: none;
 }
 
-/* --- STATUS CARDS (SECUNDÁRIOS) --- */
-.status-card {
-    background: rgba(30, 30, 30, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 0.8; }
 }
 
-.status-card h5 {
-    color: #F2B705;
-    margin-bottom: 1rem;
-    font-weight: 600;
-    font-size: 1.1rem;
+/* Container */
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 600px !important;
+  margin: 0 auto;
 }
 
-.status-card p {
-    color: #f5f5f5;
-    margin-bottom: 0.3rem;
+/* Card do formulário */
+.form-card {
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(242, 183, 5, 0.2);
+  animation: slideUp 0.6s ease-out;
 }
 
-.status-card strong {
-    color: #F2B705;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.status-card .text-muted,
-.status-card small {
-    color: rgba(245, 245, 245, 0.6);
+/* Título */
+.form-card h1 {
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 900;
+  margin-bottom: 1rem;
+  text-align: center;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
-/* --- BARRA DE PROGRESSO --- */
-.progress-custom {
-    height: 30px;
-    border-radius: 15px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    overflow: hidden;
-    margin-bottom: 0.5rem;
+/* Frase motivacional */
+#frase-motivacional {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--cinza-claro) !important;
+  font-weight: 300;
+  line-height: 1.7;
+  font-style: italic;
+  animation: fadeIn 1s ease-out 0.3s both;
 }
 
-.progress-bar-custom {
-    background: #F2B705;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #111;
-    font-weight: 700;
-    font-size: 0.9rem;
-    transition: width 2s ease-in-out;
-    height: 100%;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* --- TIMELINE DE STATUS --- */
-.timeline-step {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 1.2rem;
-    gap: 1rem;
+/* Estilização do formulário */
+form {
+  margin-top: 2.5rem;
 }
 
-.timeline-step:last-child {
-    margin-bottom: 0;
+/* Labels */
+.form-label {
+  display: block;
+  color: var(--branco);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.01em;
 }
 
-.timeline-icon {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
+/* Inputs */
+.form-control {
+  width: 100%;
+  background: rgba(40, 40, 40, 0.6);
+  border: 2px solid rgba(242, 183, 5, 0.2);
+  color: var(--branco);
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
-.timeline-icon.active {
-    background: #F2B705;
-    color: #111;
-    box-shadow: 0 2px 6px rgba(242, 183, 5, 0.4);
+.form-control:focus {
+  border-color: var(--amarelo);
+  box-shadow: 0 0 0 4px rgba(242, 183, 5, 0.1);
+  background: rgba(40, 40, 40, 0.8);
 }
 
-.timeline-icon.inactive {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(245, 245, 245, 0.4);
+.form-control:hover {
+  border-color: rgba(242, 183, 5, 0.4);
 }
 
-.timeline-step > div {
-    flex: 1;
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.3);
 }
 
-.timeline-step strong {
-    color: #F2B705;
-    display: block;
-    margin-bottom: 0.25rem;
-    font-size: 1rem;
+/* Botão submit */
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  color: var(--preto);
+  border: none;
+  padding: 1.2rem 2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(242, 183, 5, 0.3);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
-.timeline-step .text-muted {
-    color: rgba(245, 245, 245, 0.65);
-    font-size: 0.9rem;
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(242, 183, 5, 0.5);
+  background: linear-gradient(135deg, #ffc800 0%, #F2B705 100%);
 }
 
-/* --- MENSAGEM MOTIVACIONAL --- */
-.motivational-text {
-    background: rgba(30, 30, 30, 0.6);
-    border-left: 4px solid #F2B705;
-    padding: 1.2rem 1.5rem;
-    margin: 1.5rem 0;
-    border-radius: 6px;
-    color: #f5f5f5;
-    font-size: 1rem;
+.btn-primary:active {
+  transform: translateY(-1px);
 }
 
-.motivational-text i {
-    color: #F2B705;
-    margin-right: 0.7rem;
-    font-size: 1.1rem;
+/* Mensagens de erro */
+.text-danger {
+  display: block;
+  color: var(--vermelho-erro);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  animation: shake 0.4s ease;
 }
 
-/* --- ALERTS DO BOOTSTRAP (CUSTOMIZADO) --- */
-.alert-info {
-    background-color: rgba(30, 30, 30, 0.8);
-    border: 1px solid rgba(242, 183, 5, 0.3);
-    color: #f5f5f5;
-    border-radius: 8px;
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
 }
 
-.alert-info i {
-    color: #F2B705;
+/* Espaçamento entre campos */
+.mt-3 {
+  margin-top: 2rem !important;
 }
 
-.alert-info strong {
-    color: #F2B705;
+.mt-4 {
+  margin-top: 3rem !important;
 }
 
-/* --- RESPONSIVIDADE --- */
+.mb-4 {
+  margin-bottom: 2rem !important;
+}
+
+/* Estilo para mensagens de sucesso (flash messages) */
+.alert {
+  background: rgba(16, 185, 129, 0.15);
+  border: 2px solid rgba(16, 185, 129, 0.4);
+  color: var(--verde-sucesso);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-danger {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: var(--vermelho-erro);
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: var(--verde-sucesso);
+}
+
+/* Ícone decorativo no formulário */
+.form-card::before {
+  content: "⚡";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid rgba(242, 183, 5, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Linha decorativa abaixo do título */
+.form-card h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+/* Indicador de loading no botão (opcional) */
+.btn-primary.loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn-primary.loading::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  border: 3px solid var(--preto);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===================================================
+   RESPONSIVIDADE
+   =================================================== */
+
 @media (max-width: 768px) {
-    .info-card h2 {
-        font-size: 2.5rem;
-    }
-    
-    .timeline-step {
-        gap: 0.8rem;
-    }
-    
-    .timeline-icon {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        font-size: 1rem;
-    }
+  main {
+    padding: 3rem 1rem;
+  }
+
+  .form-card {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .form-card::before {
+    width: 70px;
+    height: 70px;
+    font-size: 2.5rem;
+    top: -25px;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 2rem 0.5rem;
+  }
+
+  .form-card {
+    padding: 2rem 1.2rem;
+    border-radius: 20px;
+  }
+
+  .form-control {
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    padding: 1.1rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .form-card::before {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    top: -20px;
+  }
+}
+
+/* ===================================================
+   ANIMAÇÕES EXTRAS
+   =================================================== */
+
+/* Brilho no foco do input */
+.form-control:focus {
+  animation: inputGlow 0.3s ease;
+}
+
+@keyframes inputGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(242, 183, 5, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 4px rgba(242, 183, 5, 0.1);
+  }
+}
+
+/* Hover suave nos labels */
+.form-label {
+  transition: color 0.3s ease;
+}
+
+.form-control:focus ~ .form-label,
+.form-control:focus + .form-label {
+  color: var(--amarelo);
+}
+
+/* Efeito de digitação na frase motivacional */
+#frase-motivacional {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 3s steps(60) 0.5s both, blink 0.75s step-end infinite;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  #frase-motivacional {
+    white-space: normal;
+    animation: fadeIn 1s ease-out 0.3s both;
+  }
 }

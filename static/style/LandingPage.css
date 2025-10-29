@@ -1,562 +1,668 @@
 /* ===================================================
-   BUGIGSOLAR - VISUAL UNIFORME, MODERNO E COESO
+   BUGIGSOLAR - DESIGN LIMPO E PROFISSIONAL
    =================================================== */
 
-/* 🎨 Paleta: Preto #0e0e0e, Amarelo Solar #F2B705, Branco #fff */
-
-body {
-  font-family: "Inter", sans-serif;
-  margin: 0;
-  background-color: #0e0e0e;
-  color: #fff;
-  line-height: 1.6;
-  overflow-x: hidden;
+:root {
+  --preto: #0a0a0a;
+  --preto-suave: #141414;
+  --amarelo: #F2B705;
+  --amarelo-hover: #ffc800;
+  --branco: #ffffff;
+  --cinza-escuro: #1e1e1e;
+  --cinza-claro: #cccccc;
 }
 
-/* --- HERO (CABEÇALHO COM IMAGEM) --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--preto);
+  color: var(--branco);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===================================================
+   HERO SECTION
+   =================================================== */
+
 .hero {
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(10, 10, 10, 0.6) 100%),
+              url("/static/Imagens/hero-solar.jpg") center/cover no-repeat fixed;
+  color: var(--branco);
   text-align: center;
-  padding: 8rem 2rem 10rem 2rem; /* um pouco mais de padding inferior */
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
-              url("/static/Imagens/hero-solar.jpg") center/cover no-repeat;
-  color: #fff;
+  padding: 2rem;
+  overflow: hidden;
+}
 
-  clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(242, 183, 5, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse 8s ease-in-out infinite;
+}
 
-  margin-bottom: 0; /* remove o corte negativo */
-  overflow: visible; /* 🔥 libera o conteúdo para aparecer acima */
-  z-index: 1; /* garante que a imagem fique atrás do info-box */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent 0%, var(--preto) 100%);
+  pointer-events: none;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
 }
 
 .hero h1 {
-  font-size: 2.8rem;
-  margin-bottom: 1rem;
-  font-weight: 800;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 .hero p {
-  font-size: 1.3rem;
-  color: #eaeaea;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: #e0e0e0;
+  max-width: 700px;
+  margin: 0 auto 2.5rem;
+  font-weight: 300;
+  line-height: 1.7;
 }
 
-/* --- INFO BOX --- */
+/* ===================================================
+   INFO BOX - CARDS COM ANIMAÇÃO IMPACTO REAL
+   =================================================== */
+
 .info-box {
   position: relative;
-  top: -80px; /* 🔥 move o container para cima, sobre a imagem */
-  text-align: center;
-  padding: 3rem 2rem;
-  margin: 0 auto 4rem auto;
+  top: -100px;
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+  backdrop-filter: blur(20px);
+  padding: 3.5rem 2rem;
+  margin: 0 auto 2rem;
   max-width: 1200px;
-  border-radius: 16px;
-  background: rgba(20, 20, 20, 0.95); /* leve transparência para integrar com o fundo */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-  z-index: 10; /* acima do hero */
-}
-
-.info-box h2 {
-  color: #F2B705;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  z-index: 2;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(242, 183, 5, 0.15);
 }
 
 .info-box h3 {
-  color: #fff;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  z-index: 2;
+  color: var(--branco);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  letter-spacing: -0.02em;
+}
+
+.info-box h3::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  margin: 1rem auto 0;
+  border-radius: 2px;
 }
 
 .subtexto-info {
-  font-size: 1rem;
-  color: #b5b5b5;
-  margin-top: 0.3rem;
-  z-index: 2;
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  color: var(--cinza-claro);
+  margin-bottom: 3rem;
+  font-weight: 300;
 }
 
 .cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
-  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
 }
+
+/* ===================================================
+   CARDS ESTILO IMPACTO REAL
+   =================================================== */
 
 .card {
-  background: #1a1a1a;
-  padding: 1.5rem;
-  border-radius: 10px;
-  width: 230px;
+  background: linear-gradient(135deg, rgba(40, 40, 40, 0.8) 0%, rgba(25, 25, 25, 0.9) 100%);
+  padding: 3rem 2rem;
+  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.card:hover {
-  transform: translateY(-8px);
-  background-color: #F2B705;
-  color: #111;
-}
-
-.card i {
-  font-size: 2.5rem;
-  color: #F2B705;
-  margin-bottom: 1rem;
-  transition: color 0.3s ease;
-}
-
-.card:hover i {
-  color: #111;
-}
-
-/* --- AVISO POPUP --- */
-.aviso {
-  display: none;
-  background-color: rgba(0, 0, 0, 0.92);
-  color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  z-index: 20;
-  width: 90%;
-  max-width: 1150px;
-  margin: 1.5rem auto -1.5rem auto;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border: 2px solid transparent;
   position: relative;
+  overflow: hidden;
   text-align: center;
 }
 
-.fechar-aviso {
+.card::before {
+  content: "";
   position: absolute;
-  top: 10px;
-  right: 15px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 1.5rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
 }
 
-/* --- SEÇÃO IMAGEM (ENERGIA LIMPA) --- */
-.section-imagem.diagonal {
-  position: relative;
-  color: #fff;
-  overflow: hidden;
-  margin-top: -90px;
-  z-index: 1;
-  padding: 5rem 0;
-  background: transparent; /* cor base atrás */
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  /*clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 80%);*/
+.card:hover::before {
+  transform: scaleX(1);
 }
 
-/* Container com ângulos diagonais suaves */
-.container-diagonal {
-  position: relative;
-  background: transparent;
-  padding: 7rem 8%;
-  margin-top: -90px;
+.card i {
+  font-size: 3rem;
+  color: var(--amarelo);
+  margin-bottom: 1.5rem;
+  display: block;
+  transition: all 0.4s ease;
 }
-/* conteúdo principal */
+
+.card h4 {
+  margin: 1rem 0 0.8rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--branco);
+  transition: color 0.4s ease;
+}
+
+.card p {
+  font-size: 1rem;
+  color: var(--cinza-claro);
+  line-height: 1.6;
+  transition: color 0.4s ease;
+  margin: 0;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  border-color: var(--amarelo-hover);
+  box-shadow: 0 15px 40px rgba(242, 183, 5, 0.3);
+}
+
+.card:hover i {
+  color: var(--preto);
+  transform: scale(1.15) rotateY(360deg);
+}
+
+.card:hover h4,
+.card:hover p {
+  color: var(--preto);
+}
+
+/* ===================================================
+   SEÇÃO ENERGIA LIMPA
+   =================================================== */
+
+.section-imagem {
+  background: linear-gradient(135deg, var(--preto-suave) 0%, var(--preto) 100%);
+  padding: 8rem 2rem 6rem;
+  position: relative;
+}
+
 .conteudo-energia {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 4rem;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 2;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.conteudo-energia .texto {
-  flex: 1 1 450px;
-  min-width: 300px;
-}
-
 .conteudo-energia .texto h2 {
-  color: #F2B705;
-  font-size: 2.2rem;
-  font-weight: 800;
-  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
 }
 
 .conteudo-energia .texto p {
-  color: #ddd;
-  margin-bottom: 1rem;
+  color: #e0e0e0;
+  margin-bottom: 1.2rem;
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.8;
 }
 
 .texto-secundario {
-  color: #bbb;
-  line-height: 1.6;
-  max-width: 550px;
+  color: var(--cinza-claro);
+  line-height: 1.9;
+  font-weight: 300;
 }
 
-/* imagem */
+.btn-default {
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  color: var(--preto);
+  border: none;
+  padding: 1.1rem 2.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-default:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(242, 183, 5, 0.5);
+}
+
+.btn-default a {
+  color: var(--preto);
+  text-decoration: none;
+}
+
 .conteudo-energia .imagem {
-  flex: 1 1 450px;
-  text-align: center;
+  position: relative;
+  padding: 2rem;
+}
+
+.conteudo-energia .imagem::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(242, 183, 5, 0.1) 0%, transparent 70%);
+  border-radius: 20px;
+  z-index: 0;
 }
 
 .conteudo-energia .imagem img {
-  max-width: 100%;
-  border-radius: 14px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-  transform: perspective(1000px) rotateY(-8deg);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  transition: transform 0.5s ease;
+  position: relative;
+  z-index: 1;
 }
 
-/* --- IMPACTO REAL --- */
+.conteudo-energia .imagem img:hover {
+  transform: scale(1.03) rotate(1deg);
+}
+
+/* ===================================================
+   IMPACTO REAL - MÉTRICAS
+   =================================================== */
+
 .painel-creditos {
+  padding: 8rem 2rem;
+  background: var(--preto);
   text-align: center;
-  padding: 3rem 2rem;
-  background: transparent;
 }
 
-.impacto-container h2 {
-  color: #F2B705;
-  font-size: 2.2rem;
-  font-weight: 700;
+.painel-creditos h2 {
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  margin-bottom: 1rem;
+  letter-spacing: -0.03em;
 }
 
 .impacto-subtitle {
-  color: #ccc;
-  font-size: 1rem;
-  margin-bottom: 3rem;
+  color: var(--cinza-claro);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  margin-bottom: 4rem;
+  font-weight: 300;
 }
 
 .metricas {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .metrica-card {
-  background: #1a1a1a;
-  border-radius: 10px;
-  padding: 2rem;
-  width: 250px;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, rgba(40, 40, 40, 0.8) 0%, rgba(25, 25, 25, 0.9) 100%);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
 }
 
-.metrica-card:hover {
-  transform: translateY(-8px);
-  background: #F2B705;
-  color: #111;
+.metrica-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.metrica-card:hover::before {
+  transform: scaleX(1);
 }
 
 .metrica-card i {
-  color: #F2B705;
-  font-size: 2.3rem;
-  margin-bottom: 1rem;
+  color: var(--amarelo);
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  display: block;
+  transition: all 0.4s ease;
+}
+
+.metrica-card h3 {
+  font-size: 2.5rem;
+  margin: 1rem 0;
+  color: var(--branco);
+  font-weight: 900;
+  transition: color 0.4s ease;
+}
+
+.metrica-card p {
+  color: var(--cinza-claro);
+  font-size: 1.1rem;
+  transition: color 0.4s ease;
+  margin: 0;
+}
+
+.metrica-card:hover {
+  transform: translateY(-10px);
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  border-color: var(--amarelo-hover);
+  box-shadow: 0 15px 40px rgba(242, 183, 5, 0.3);
 }
 
 .metrica-card:hover i {
-  color: #111;
+  color: var(--preto);
+  transform: scale(1.15) rotateY(360deg);
 }
 
-/* --- BENEFÍCIOS --- */
-.beneficios {
-  text-align: center;
-  padding: 4rem 2rem;
-  background: #181818;
+.metrica-card:hover h3,
+.metrica-card:hover p {
+  color: var(--preto);
 }
-.beneficios h2 { color: #f2b705; margin-bottom: 1.5rem; }
-.beneficios ul {
-  list-style: none;
-  padding: 0;
-  max-width: 800px;
-  margin: auto;
-}
-.beneficios li {
-  margin: 0.6rem 0;
-  color: #ccc;
-  font-size: 1.05rem;
-}
-.beneficios i { color: #f2b705; margin-right: 8px; }
 
-/*Carrossel*/
-/* Container geral do carrossel */
+/* ===================================================
+   CARROSSEL 100% RESPONSIVO CORRIGIDO
+   =================================================== */
+
 .carrossel {
-  background: #181818;
-  color: #fff;
-  padding: 4rem 0;
+  background: linear-gradient(135deg, var(--preto-suave) 0%, var(--preto) 100%);
+  padding: 8rem 2rem;
   overflow: hidden;
 }
-.carrossel h2{
-  color: #F2B705;
-}
+
 .carrossel-container {
-  width: 90%;
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
   text-align: center;
 }
 
 .titulo-carrossel {
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 1rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
 }
 
 .subtitulo-carrossel {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  margin-bottom: 3rem;
+  color: var(--cinza-claro);
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  margin-bottom: 4rem;
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 300;
+  line-height: 1.7;
 }
 
-/* Área do slider */
 .carrossel-slider {
-  overflow: hidden;
   position: relative;
-  padding: 0 80px; /* deixa ver um pedacinho dos cards laterais */
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 60px;
 }
 
-.carrossel-track {
-  display: flex;
-  gap: 24px;
-  transition: transform 0.6s ease;
-}
-
-.card-item {
-  flex: 0 0 calc((100% / 3) - 16px);
-  scroll-snap-align: center;
-  transition: transform 0.3s ease;
-}
-
-
-/* ===== Setas ===== */
-.seta {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #FFD400;
-  color: #000;
-  border: none;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 10; /* 🔥 garante que fiquem por cima das imagens */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.3s;
-}
-
-.seta:hover {
-  background: #ffcc00;
-}
-
-.seta.esquerda {
-  left: 0.5rem; /* 👈 move para dentro do carrossel */
-}
-
-.seta.direita {
-  right: 0.5rem; /* 👉 move para dentro do carrossel */
-}
-
-
-/* Faixa com os cards */
-.carrossel-track {
-  display: flex;
-  gap: 1.5rem;
-  transition: transform 0.4s ease;
-  cursor: grab;
-  width: max-content; /* evita quebra dos cards */
-}
-
-.carrossel-track.dragging {
-  cursor: grabbing;
-}
-
-/* Cada card */
-.card-item {
-  flex: 0 0 calc((100% - 3rem) / 3); /* 3rem = 2 gaps de 1.5rem */
-  background: #111;
-  border-radius: 1rem;
+.carrossel-wrapper {
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease;
+  padding: 1rem 0;
+}
+
+.carrossel-track {
+  display: flex;
+  gap: 2rem;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.card-item {
+  flex: 0 0 auto;
+  width: calc((100% - 4rem) / 3);
+  background: linear-gradient(135deg, rgba(40, 40, 40, 0.8) 0%, rgba(25, 25, 25, 0.9) 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
 }
 
 .card-item:hover {
-  transform: scale(1.03);
+  transform: translateY(-10px);
+  border-color: var(--amarelo);
+  box-shadow: 0 15px 40px rgba(242, 183, 5, 0.3);
 }
 
 .card-item img {
   width: 100%;
   height: 220px;
   object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.card-item:hover img {
+  transform: scale(1.1);
 }
 
 .card-texto {
-  padding: 1.5rem;
+  padding: 2rem;
   text-align: left;
 }
 
 .card-texto h3 {
-  font-size: 1.4rem;
-  margin-bottom: 0.5rem;
+  color: var(--amarelo);
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .card-texto p {
+  color: var(--cinza-claro);
   font-size: 1rem;
-  opacity: 0.85;
+  line-height: 1.7;
+  font-weight: 300;
+  margin: 0;
 }
 
-/* Responsividade */
-@media (max-width: 1000px) {
-  .card-item {
-    flex: 0 0 70%;
-  }
-
-  .seta.esquerda { left: 5px; }
-  .seta.direita { right: 5px; }
+.seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  color: var(--preto);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-@media (max-width: 700px) {
-  .card-item {
-    flex: 0 0 85%;
-  }
-
-  .seta {
-    width: 40px;
-    height: 40px;
-    font-size: 1.4rem;
-  }
+.seta:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 25px rgba(242, 183, 5, 0.5);
 }
 
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .card-item {
-    min-width: 260px;
-  }
+.seta:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
+.seta.esquerda {
+  left: 0;
+}
 
-/* --- FRASE IMPACTO --- */
-.frase-impacto {
-  background: #181818;
+.seta.direita {
+  right: 0;
+}
+
+/* ===================================================
+   BENEFÍCIOS
+   =================================================== */
+
+.beneficios {
+  padding: 6rem 2rem;
+  background: var(--preto);
   text-align: center;
-  padding: 2rem 2rem;
-  font-style: italic;
-  font-size: 1.1rem;
-  color: #F2B705;
 }
 
-/* --- CTA FINAL --- */
-.cta-final {
-  color: #F2B705;
+.beneficios h2 {
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 3rem;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.beneficios ul {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.beneficios li {
+  margin: 1.5rem 0;
+  color: var(--cinza-claro);
+  font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.beneficios li i {
+  color: var(--amarelo);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* ===================================================
+   FRASE IMPACTO
+   =================================================== */
+
+.frase-impacto {
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
   text-align: center;
   padding: 4rem 2rem;
-  background: transparent;
+  color: var(--amarelo);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  border-top: 1px solid rgba(242, 183, 5, 0.2);
+  border-bottom: 1px solid rgba(242, 183, 5, 0.2);
+  font-weight: 500;
+  line-height: 1.8;
 }
 
-.cta-final p{
-  color: #fff;
-}
+/* ===================================================
+   FOOTER
+   =================================================== */
 
-.lp-button {
-  display: inline-block;
-  background: linear-gradient(90deg, #F2B705);
-  color: #0a0a0a;
-  font-weight: 700;
-  font-size: 1.1rem;
-  padding: 0.9rem 2rem;
-  border-radius: 50px;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 12px rgba(242, 183, 5, 0.4);
-}
-
-.lp-button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.6), transparent);
-  transform: skewX(-20deg);
-  transition: 0.5s;
-}
-
-.lp-button:hover::before {
-  left: 125%;
-}
-
-.lp-button:hover {
-  transform: scale(1.06);
-  color: #fff;
-  box-shadow: 0 0 20px rgba(242, 183, 5, 0.7);
-  background: #2a2a2a;
-}
-
-.lp-button:active {
-  transform: scale(0.97);
-}
-
-.lp-button a {
-  text-decoration: none !important;
-  color: inherit !important;
-}
-
-/* --- RODAPÉ --- */
 footer {
-  text-align: center;
-  padding: 2rem;
-  background: #0e0e0e;
+  background: var(--preto);
   color: #888;
-  font-size: 0.9rem;
+  text-align: center;
+  padding: 3rem 2rem;
+  font-size: 1rem;
+  border-top: 1px solid rgba(242, 183, 5, 0.1);
 }
 
 footer a {
-  color: #F2B705;
+  color: var(--amarelo);
+  transition: color 0.3s;
   text-decoration: none;
-  margin: 0 0.5rem;
 }
 
 footer a:hover {
-  text-decoration: underline;
+  color: var(--amarelo-hover);
 }
 
-/* --- RESPONSIVIDADE --- */
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2.2rem;
-  }
+/* ===================================================
+   ANIMAÇÕES
+   =================================================== */
 
-  .hero p {
-    font-size: 1.1rem;
-  }
-
-  .section-imagem {
-    flex-direction: column-reverse;
-    text-align: center;
-  }
-
-  .card,
-  .metrica-card {
-    width: 90%;
-  }
-}
-
-/* --- ANIMAÇÃO DE APARIÇÃO SUAVE --- */
 .fade-in {
   opacity: 0;
   transform: translateY(40px);
@@ -566,4 +672,151 @@ footer a:hover {
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ===================================================
+   RESPONSIVIDADE COMPLETA
+   =================================================== */
+
+@media (max-width: 1200px) {
+  .card-item {
+    width: calc((100% - 2rem) / 2);
+  }
+}
+
+@media (max-width: 992px) {
+  .hero {
+    min-height: 80vh;
+    padding: 2rem 1.5rem;
+  }
+
+  .info-box {
+    top: -80px;
+    padding: 3rem 1.5rem;
+  }
+
+  .cards-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .conteudo-energia {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .section-imagem {
+    padding: 6rem 2rem 4rem;
+  }
+
+  .painel-creditos {
+    padding: 6rem 2rem;
+  }
+
+  .carrossel {
+    padding: 6rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 70vh;
+  }
+
+  .info-box {
+    top: -60px;
+    padding: 2.5rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .cards-container {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .section-imagem {
+    padding: 5rem 1.5rem 3rem;
+  }
+
+  .painel-creditos {
+    padding: 5rem 1.5rem;
+  }
+
+  .metricas {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 350px;
+  }
+
+  .carrossel-slider {
+    padding: 0 55px;
+  }
+
+  .card-item {
+    width: 100%;
+  }
+
+  .seta {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+
+  .beneficios {
+    padding: 5rem 1.5rem;
+  }
+
+  .beneficios li {
+    justify-content: flex-start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 65vh;
+    padding: 1.5rem 1rem;
+  }
+
+  .hero::after {
+    height: 150px;
+  }
+
+  .info-box {
+    top: -40px;
+    padding: 2rem 1rem;
+  }
+
+  .section-imagem {
+    padding: 4rem 1rem 2.5rem;
+  }
+
+  .painel-creditos {
+    padding: 4rem 1rem;
+  }
+
+  .carrossel {
+    padding: 5rem 1rem;
+  }
+
+  .carrossel-slider {
+    padding: 0 50px;
+  }
+
+  .seta {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .beneficios {
+    padding: 4rem 1rem;
+  }
+
+  .frase-impacto {
+    padding: 3rem 1.5rem;
+  }
 }

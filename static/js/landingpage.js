@@ -1,101 +1,136 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ------------------- ANIMAÇÃO DE CONTADORES -------------------
-  const posicao = document.getElementById("posicao");
-  const tempo = document.getElementById("tempo");
-  const doadores = document.getElementById("doadores");
-  const progressBar = document.getElementById("progress-bar");
+  
+  // ===============================================
+  // ANIMAÇÃO FADE IN
+  // ===============================================
+  const elementos = document.querySelectorAll(".fade-in");
+  const observer = new IntersectionObserver((entradas) => {
+    entradas.forEach((entrada) => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add("visible");
+        observer.unobserve(entrada.target);
+      }
+    });
+  }, { threshold: 0.1 });
 
-  if (posicao && tempo && doadores && progressBar) {
-    function animateCounter(id, finalValue, duration = 2000) {
-      const element = document.getElementById(id);
-      let start = 0;
-      const increment = finalValue / (duration / 30);
+  elementos.forEach(el => observer.observe(el));
 
-      const interval = setInterval(() => {
-        start += increment;
-        if (start >= finalValue) {
-          element.textContent = finalValue;
-          clearInterval(interval);
-        } else {
-          element.textContent = Math.floor(start);
-        }
-      }, 30);
-    }
-
-    animateCounter("posicao", 12);
-    animateCounter("tempo", 3);
-    animateCounter("doadores", 58);
-    setTimeout(() => progressBar.style.width = "40%", 500);
-  }
-
-  // ------------------- FRASES MOTIVACIONAIS -------------------
-  const fraseElement = document.getElementById("frase-motivacional");
-  if (fraseElement) {
-    const frases = [
-      "A solidariedade é a energia que nos move 💡",
-      "Cada dia mais perto de sua vez ✨",
-      "Você não está sozinho nessa jornada 🤝",
-      "Esperança compartilhada é esperança multiplicada 💙"
-    ];
-    let index = 0;
-    setInterval(() => {
-      index = (index + 1) % frases.length;
-      fraseElement.style.opacity = 0;
-      setTimeout(() => {
-        fraseElement.textContent = frases[index];
-        fraseElement.style.opacity = 1;
-      }, 500);
-    }, 4000);
-  }
-
-  // ------------------- CARROSSEL -------------------
+  // ===============================================
+  // CARROSSEL TOTALMENTE RESPONSIVO E CORRIGIDO
+  // ===============================================
   const track = document.querySelector(".carrossel-track");
   const nextBtn = document.getElementById("nextBtn");
   const prevBtn = document.getElementById("prevBtn");
+  const wrapper = document.querySelector(".carrossel-wrapper");
 
-  if (track && nextBtn && prevBtn) {
-    let index = 0;
+  if (track && nextBtn && prevBtn && wrapper) {
+    const items = Array.from(document.querySelectorAll(".card-item"));
+    
+    if (items.length === 0) return;
 
-    function moveCarousel() {
-      const items = document.querySelectorAll(".card-item");
-      if (!items.length) return;
-      const itemWidth = items[0].offsetWidth + 16; // margem lateral
-      track.style.transform = `translateX(-${index * itemWidth}px)`;
+    let currentIndex = 0;
+
+    // Calcula quantos cards são visíveis
+    function getVisibleCards() {
+      const wrapperWidth = wrapper.offsetWidth;
+      const cardWidth = items[0].offsetWidth;
+      const gap = 32; // 2rem
+      
+      return Math.floor((wrapperWidth + gap) / (cardWidth + gap));
     }
 
+    // Calcula o deslocamento
+    function calculateOffset() {
+      if (items.length === 0) return 0;
+      
+      const cardWidth = items[0].offsetWidth;
+      const gap = 32;
+      
+      return currentIndex * (cardWidth + gap);
+    }
+
+    // Move o carrossel
+    function moveCarousel() {
+      const offset = calculateOffset();
+      track.style.transform = `translateX(-${offset}px)`;
+      updateButtons();
+    }
+
+    // Atualiza os botões
+    function updateButtons() {
+      const visibleCards = getVisibleCards();
+      const maxIndex = Math.max(0, items.length - visibleCards);
+      
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex >= maxIndex;
+      
+      prevBtn.style.opacity = currentIndex === 0 ? "0.3" : "1";
+      nextBtn.style.opacity = currentIndex >= maxIndex ? "0.3" : "1";
+    }
+
+    // Próximo
     nextBtn.addEventListener("click", () => {
-      const items = document.querySelectorAll(".card-item");
-      if (index < items.length - 3) index++;
-      moveCarousel();
+      const visibleCards = getVisibleCards();
+      const maxIndex = Math.max(0, items.length - visibleCards);
+      
+      if (currentIndex < maxIndex) {
+        currentIndex++;
+        moveCarousel();
+      }
     });
 
+    // Anterior
     prevBtn.addEventListener("click", () => {
-      if (index > 0) index--;
-      moveCarousel();
+      if (currentIndex > 0) {
+        currentIndex--;
+        moveCarousel();
+      }
     });
 
-    // arrastar com mouse
-    let isDragging = false, startX, scrollLeft;
-    track.addEventListener("mousedown", e => {
-      isDragging = true;
-      track.classList.add("dragging");
-      startX = e.pageX - track.offsetLeft;
-      scrollLeft = track.scrollLeft;
-    });
-    track.addEventListener("mouseleave", () => (isDragging = false));
-    track.addEventListener("mouseup", () => (isDragging = false));
-    track.addEventListener("mousemove", e => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - track.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      track.scrollLeft = scrollLeft - walk;
+    // Redimensionar
+    let resizeTimeout;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const visibleCards = getVisibleCards();
+        const maxIndex = Math.max(0, items.length - visibleCards);
+        
+        if (currentIndex > maxIndex) {
+          currentIndex = maxIndex;
+        }
+        
+        moveCarousel();
+      }, 150);
     });
 
-    // ✅ Faz o carrossel começar no 3º card (Casas)
-    window.addEventListener("load", () => {
-      index = 1;
-      moveCarousel();
-    });
+    // Touch/Swipe para mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    wrapper.addEventListener("touchstart", (e) => {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    wrapper.addEventListener("touchend", (e) => {
+      touchEndX = e.changedTouches[0].clientX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const diff = touchStartX - touchEndX;
+      const visibleCards = getVisibleCards();
+      const maxIndex = Math.max(0, items.length - visibleCards);
+      
+      if (diff > 50 && currentIndex < maxIndex) {
+        currentIndex++;
+        moveCarousel();
+      } else if (diff < -50 && currentIndex > 0) {
+        currentIndex--;
+        moveCarousel();
+      }
+    }
+
+    // Inicializar
+    moveCarousel();
   }
 });

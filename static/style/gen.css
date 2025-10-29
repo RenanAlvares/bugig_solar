@@ -1,0 +1,508 @@
+/* ===================================================
+   MODAL GERADOR - DESIGN PREMIUM (ESTILO FILA)
+   =================================================== */
+
+:root {
+  --preto: #0a0a0a;
+  --preto-suave: #141414;
+  --amarelo: #F2B705;
+  --amarelo-hover: #ffc800;
+  --branco: #ffffff;
+  --cinza-escuro: #1e1e1e;
+  --cinza-claro: #cccccc;
+  --verde-sucesso: #10b981;
+  --vermelho-erro: #ef4444;
+}
+
+/* ===== BACKDROP DO BOOTSTRAP ===== */
+.modal-backdrop {
+  background-color: #0a0a0a !important;
+}
+
+.modal-backdrop.show {
+  opacity: 0.95 !important;
+}
+
+.modal-backdrop.fade {
+  opacity: 0;
+}
+
+/* ===== MODAL - FORÇAR FUNDO ESCURO ===== */
+.modal {
+  background: rgba(10, 10, 10, 0.95) !important;
+}
+
+.modal.show {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Camada extra de fundo caso o backdrop não funcione */
+.modal::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #0a0a0a;
+  z-index: -1;
+}
+
+/* ===== CONTAINER DO MODAL ===== */
+.modal-dialog {
+  max-width: 600px;
+  margin: 1.75rem auto;
+  animation: slideUp 0.6s ease-out;
+  position: relative;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== CONTEÚDO DO MODAL ===== */
+.modal-content {
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(242, 183, 5, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Efeito de brilho no topo */
+.modal-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #F2B705, transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ===== CABEÇALHO DO MODAL ===== */
+.modal-header {
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+  border-bottom: 1px solid rgba(242, 183, 5, 0.15);
+  padding: 2rem 2.5rem 1.5rem;
+  position: relative;
+}
+
+.modal-title {
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: clamp(1.5rem, 3vw, 1.8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0;
+  position: relative;
+}
+
+/* REMOVER linha decorativa abaixo do título */
+
+/* Botão de fechar - OCULTAR */
+.btn-close {
+  display: none !important;
+}
+
+/* ===== CORPO DO MODAL ===== */
+.modal-body {
+  padding: 2.5rem;
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+}
+
+/* ===== ESPAÇAMENTO ===== */
+.mb-2 {
+  margin-bottom: 1.8rem !important;
+}
+
+/* ===== LABELS ===== */
+.form-label {
+  display: block;
+  color: var(--branco);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+/* ===== INPUTS E SELECTS ===== */
+.form-control,
+.form-select {
+  width: 100%;
+  background: rgba(40, 40, 40, 0.6);
+  border: 2px solid rgba(242, 183, 5, 0.2);
+  color: var(--branco);
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* Estilo especial para input de data */
+.form-control[type="date"] {
+  position: relative;
+  padding-right: 3rem;
+  color: var(--branco);
+  cursor: pointer;
+}
+
+.form-control[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23F2B705' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E") no-repeat center;
+  background-size: 20px;
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  filter: brightness(1);
+}
+
+.form-control[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Firefox */
+.form-control[type="date"]::-moz-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0;
+}
+
+/* Estilo do texto da data */
+.form-control[type="date"]::-webkit-datetime-edit {
+  color: var(--branco);
+}
+
+.form-control[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  color: var(--branco);
+}
+
+.form-control[type="date"]::-webkit-datetime-edit-text {
+  color: rgba(242, 183, 5, 0.6);
+  padding: 0 0.3rem;
+}
+
+.form-control[type="date"]::-webkit-datetime-edit-month-field,
+.form-control[type="date"]::-webkit-datetime-edit-day-field,
+.form-control[type="date"]::-webkit-datetime-edit-year-field {
+  color: var(--branco);
+  background: rgba(242, 183, 5, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+
+.form-control[type="date"]::-webkit-datetime-edit-month-field:focus,
+.form-control[type="date"]::-webkit-datetime-edit-day-field:focus,
+.form-control[type="date"]::-webkit-datetime-edit-year-field:focus {
+  background: rgba(242, 183, 5, 0.2);
+  color: var(--amarelo);
+  outline: none;
+}
+
+/* ===== ESTILO DO CALENDÁRIO DROPDOWN ===== */
+.form-control[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23F2B705' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E") no-repeat center;
+  background-size: 20px;
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  filter: brightness(1);
+}
+
+/* Estilizar o popup do calendário (WebKit) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(0.8) sepia(1) saturate(5) hue-rotate(5deg);
+}
+
+/* Container do calendário */
+::-webkit-calendar-picker-indicator {
+  background: transparent;
+  color: #F2B705;
+}
+
+/* Personalizar cores do calendário do Chrome/Edge */
+@media (prefers-color-scheme: dark) {
+  .form-control[type="date"] {
+    color-scheme: dark;
+  }
+}
+
+/* Forçar tema escuro no calendário */
+.form-control[type="date"] {
+  color-scheme: dark;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--amarelo);
+  box-shadow: 0 0 0 4px rgba(242, 183, 5, 0.1);
+  background: rgba(40, 40, 40, 0.8);
+  animation: inputGlow 0.3s ease;
+}
+
+@keyframes inputGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(242, 183, 5, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 4px rgba(242, 183, 5, 0.1);
+  }
+}
+
+.form-control:hover,
+.form-select:hover {
+  border-color: rgba(242, 183, 5, 0.4);
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== SELECT CUSTOMIZADO ===== */
+.form-select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F2B705' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 12px;
+  appearance: none;
+  padding-right: 2.5rem;
+}
+
+.form-select option {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 0.8rem;
+}
+
+/* ===== MENSAGENS DE ERRO ===== */
+.text-danger {
+  display: block;
+  color: var(--vermelho-erro);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+/* ===== RODAPÉ DO MODAL ===== */
+.modal-footer {
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+  border-top: 1px solid rgba(242, 183, 5, 0.15);
+  padding: 1.8rem 2.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ===== BOTÃO PRINCIPAL ===== */
+.btn-primary {
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  color: var(--preto);
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(242, 183, 5, 0.3);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(242, 183, 5, 0.5);
+  background: linear-gradient(135deg, #ffc800 0%, #F2B705 100%);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
+}
+
+/* Estado de loading no botão */
+.btn-primary.loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn-primary.loading::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 50%;
+  left: 50%;
+  margin-left: -9px;
+  margin-top: -9px;
+  border: 3px solid var(--preto);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .modal-dialog {
+    margin: 1rem;
+    max-width: calc(100% - 2rem);
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-left: 1.8rem;
+    padding-right: 1.8rem;
+  }
+
+  .modal-header {
+    padding-top: 1.8rem;
+  }
+
+  .modal-title {
+    font-size: 1.4rem;
+  }
+
+  .btn-primary {
+    width: 100%;
+  }
+
+  .modal-header::before {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    top: -35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-dialog {
+    margin: 0.5rem;
+    max-width: calc(100% - 1rem);
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .modal-header {
+    padding-top: 1.5rem;
+    padding-bottom: 1.2rem;
+  }
+
+  .modal-body {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .modal-footer {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .modal-title {
+    font-size: 1.3rem;
+  }
+
+  .form-control,
+  .form-select {
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    padding: 0.95rem 2rem;
+    font-size: 1rem;
+  }
+
+  .modal-header::before {
+    width: 55px;
+    height: 55px;
+    font-size: 1.8rem;
+    top: -30px;
+  }
+}
+
+/* ===== ANIMAÇÕES EXTRAS ===== */
+
+/* Efeito de brilho de fundo (sutil) */
+.modal-body::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(242, 183, 5, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1) translate(0, -50%); opacity: 0.3; }
+  50% { transform: scale(1.2) translate(0, -50%); opacity: 0.6; }
+}
