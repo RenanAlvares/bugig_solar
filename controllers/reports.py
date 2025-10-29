@@ -5,40 +5,35 @@ from models_DB.donation_queue import Queue, Donation
 from models_DB.benef_gen import Beneficiaries, Generators
 from reportlab.lib.units import cm
 from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib.styles import getSampleStyleSheet
 
-# funcao que gera o relatorio do beneficiario
+
+# =================== RELATÓRIO DO BENEFICIÁRIO ===================
 @auth_bp.route('/<int:user_id>/report-benef', methods=['GET'])
 @user_owns_resource('user_id', tipo_usuario_esperado=1)
 def report_benef(user_id):
 
     titulo = 'Relatório do Beneficiário'
 
-    #busca o id do beneficiario associado ao user_id
     id_beneficiario = Beneficiaries.query.filter_by(id_user=user_id).first().id
-
-    # seleciona todas as acoes desse beneficiario
     fila = Queue.query.filter_by(id_beneficiario=id_beneficiario).order_by(Queue.data_solicitacao.desc()).all()
 
     return render_template('reports.html', user_id=user_id, fila=fila, titulo=titulo)
 
-# funcao que gera o relatorio do gerador
+
+# =================== RELATÓRIO DO GERADOR ===================
 @auth_bp.route('/<int:user_id>/report-gen', methods=['GET'])
 @user_owns_resource('user_id', tipo_usuario_esperado=2)
 def report_gen(user_id):
 
     titulo = 'Relatório do Gerador'
 
-    #busca o id do gerador associado ao user_id
     id_gerador = Generators.query.filter_by(id_user=user_id).first().id
-
-    # seleciona todas as acoes desse gerador
     doacao = Donation.query.filter_by(id_gerador=id_gerador).order_by(Donation.data_doacao.desc()).all()
 
     return render_template('reports.html', user_id=user_id, doacao=doacao, titulo=titulo)
 
 
-# funcao que gera o pdf do relatorio (beneficiario ou gerador)
+# =================== DOWNLOAD DO RELATÓRIO (PDF) ===================
 @auth_bp.route('/<int:user_id>/download-report')
 @user_owns_resource('user_id')
 def download_report(user_id):
@@ -49,9 +44,7 @@ def download_report(user_id):
     from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
     from reportlab.lib import colors
     from reportlab.lib.pagesizes import A4
-    from reportlab.lib.units import cm
 
-    # identifica o tipo de usuário
     benef = Beneficiaries.query.filter_by(id_user=user_id).first()
     gen = Generators.query.filter_by(id_user=user_id).first()
 
@@ -66,10 +59,10 @@ def download_report(user_id):
     doc = SimpleDocTemplate(
         buffer,
         pagesize=A4,
-        leftMargin=2*cm,
-        rightMargin=2*cm,
-        topMargin=2*cm,
-        bottomMargin=2*cm
+        leftMargin=2 * cm,
+        rightMargin=2 * cm,
+        topMargin=2 * cm,
+        bottomMargin=2 * cm
     )
     styles = getSampleStyleSheet()
 
@@ -99,24 +92,42 @@ def download_report(user_id):
         Spacer(1, 1.0 * cm),
     ]
 
-    # ======== BENEFICIÁRIO ========
+    # ========== RELATÓRIO DO BENEFICIÁRIO ==========
     if tipo_usuario == 1:
         fila = Queue.query.filter_by(id_beneficiario=benef.id).order_by(Queue.data_solicitacao.desc()).all()
 
         if not fila:
             elements.append(Paragraph("Nenhum registro encontrado na sua fila.", normal_style))
         else:
-            data = [["Data", "Créditos Recebidos (kWh)", "Valor Economizado (R$)", "Status"]]
+            # ✅ Nova coluna "Quantidade Solicitada"
+            data = [
+                ["Data", 
+                "Quantidade Solicitada", 
+                "Créditos Recebidos", 
+                "Valor Economizado", 
+                "Status"]
+            ]
 
             for pos in fila:
                 data_solic = pos.data_solicitacao.strftime("%d/%m/%Y") if pos.data_solicitacao else "—"
-                creditos = pos.quantidade_recebida or 0
-                valor = f" {creditos * 0.95:.2f}" if creditos else "—"
+                qtd_solicitada = pos.quantidade_solicitada or 0
+                qtd_recebida = pos.quantidade_recebida or 0
+                valor = f"{qtd_recebida * 0.90:.2f}" if qtd_recebida else "—"
                 status_text = "Concluído" if not pos.status else "Pendente"
-                data.append([data_solic, str(creditos), valor, status_text])
+                data.append([
+                    data_solic,
+                    f"{qtd_solicitada} KWh",
+                    f"{qtd_recebida} KWh",
+                    f"{valor} R$",
+                    status_text
+                ])
 
-            # Aumentando o espaçamento horizontal
-            tabela = Table(data, colWidths=[4 * cm, 5.5 * cm, 5.5 * cm, 4 * cm])
+            # ✅ Aumentando o espaçamento entre colunas
+            tabela = Table(
+                data,
+                colWidths=[3.2 * cm, 5 * cm, 5 * cm, 4 * cm, 3 * cm],
+                repeatRows=1  # repete cabeçalho se o relatório for grande
+            )
             tabela.hAlign = 'CENTER'
 
             estilo_tabela = TableStyle([
@@ -142,21 +153,22 @@ def download_report(user_id):
             elements.append(tabela)
             elements.append(Spacer(1, 1.0 * cm))
 
-    # ======== GERADOR ========
+
+    # ========== RELATÓRIO DO GERADOR ==========
     else:
         doacoes = Donation.query.filter_by(id_gerador=gen.id).order_by(Donation.data_doacao.desc()).all()
 
         if not doacoes:
             elements.append(Paragraph("Nenhuma doação encontrada para este gerador.", normal_style))
         else:
-            data = [["Data", "Quantidade Doada (kWh)", "Quantidade Disponível (kWh)", "Status"]]
+            data = [["Data", "Quantidade Doada", "Quantidade Disponível", "Status"]]
 
             for d in doacoes:
                 data_doacao = d.data_doacao.strftime("%d/%m/%Y") if d.data_doacao else "—"
                 qtd_doada = d.quantidade_doacao or 0
                 qtd_disp = d.quantidade_disponivel or 0
                 status_text = "Concluído" if not d.status else "Pendente"
-                data.append([data_doacao, str(qtd_doada), str(qtd_disp), status_text])
+                data.append([f'{data_doacao}', f'{qtd_doada} KWh', f'{qtd_disp} KWh', status_text])
 
             tabela = Table(data, colWidths=[4 * cm, 5.5 * cm, 5.5 * cm, 4 * cm])
 
@@ -183,7 +195,6 @@ def download_report(user_id):
             elements.append(tabela)
             elements.append(Spacer(1, 1.0 * cm))
 
-    # ======== GERA O PDF ========
     doc.build(elements)
     buffer.seek(0)
 
