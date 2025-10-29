@@ -12,18 +12,14 @@
   --cinza-claro: #cccccc;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* REMOVIDO O * RESET PARA NAO CONFLITAR COM header.css */
 
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--preto);
   color: var(--branco);
   line-height: 1.6;
-  overflow-x: hidden;
+  /* REMOVIDO overflow-x: hidden PARA NAO CONFLITAR */
   -webkit-font-smoothing: antialiased;
 }
 
@@ -101,7 +97,7 @@ body {
 }
 
 /* ===================================================
-   INFO BOX - CARDS COM ANIMAÇÃO IMPACTO REAL
+   INFO BOX - CARDS COM ANIMACAO IMPACTO REAL
    =================================================== */
 
 .info-box {
@@ -225,7 +221,7 @@ body {
 }
 
 /* ===================================================
-   SEÇÃO ENERGIA LIMPA
+   SECAO ENERGIA LIMPA
    =================================================== */
 
 .section-imagem {
@@ -268,29 +264,7 @@ body {
   font-weight: 300;
 }
 
-.btn-default {
-  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
-  color: var(--preto);
-  border: none;
-  padding: 1.1rem 2.5rem;
-  border-radius: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1.5rem;
-  font-size: 1.05rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.btn-default:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(242, 183, 5, 0.5);
-}
-
-.btn-default a {
-  color: var(--preto);
-  text-decoration: none;
-}
+/* REMOVIDO .btn-default DAQUI - JA ESTA NO header.css */
 
 .conteudo-energia .imagem {
   position: relative;
@@ -324,7 +298,7 @@ body {
 }
 
 /* ===================================================
-   IMPACTO REAL - MÉTRICAS
+   IMPACTO REAL - METRICAS
    =================================================== */
 
 .painel-creditos {
@@ -574,7 +548,7 @@ body {
 }
 
 /* ===================================================
-   BENEFÍCIOS
+   BENEFICIOS
    =================================================== */
 
 .beneficios {
@@ -636,31 +610,10 @@ body {
   line-height: 1.8;
 }
 
-/* ===================================================
-   FOOTER
-   =================================================== */
-
-footer {
-  background: var(--preto);
-  color: #888;
-  text-align: center;
-  padding: 3rem 2rem;
-  font-size: 1rem;
-  border-top: 1px solid rgba(242, 183, 5, 0.1);
-}
-
-footer a {
-  color: var(--amarelo);
-  transition: color 0.3s;
-  text-decoration: none;
-}
-
-footer a:hover {
-  color: var(--amarelo-hover);
-}
+/* FOOTER REMOVIDO DAQUI - JA ESTA NO header.css */
 
 /* ===================================================
-   ANIMAÇÕES
+   ANIMACOES
    =================================================== */
 
 .fade-in {
