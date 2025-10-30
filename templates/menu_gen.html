@@ -6,6 +6,23 @@
     <div class="dashboard">
         <h1>Painel do Gerador</h1>
         <p>Olá! Gerencie suas doações e veja o impacto que você gera.</p>
+        
+        <!-- NOVO: Informações Rápidas -->
+        <div class="info-banner">
+            <div class="info-item">
+                <i class="fa-solid fa-lightbulb"></i>
+                <div class="info-text">
+                    <strong>Dica:</strong> Doe nos horários de pico para máximo impacto
+                </div>
+            </div>
+            <div class="info-item">
+                <i class="fa-solid fa-sun"></i>
+                <div class="info-text">
+                    <strong>Status:</strong> Sistema operando normalmente
+                </div>
+            </div>
+        </div>
+
         <div class="dashboard-cards">
             <a href="{{ url_for('auth.make_donation', user_id=user_id) }}" class="card">
                 <div class="card-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
@@ -21,6 +38,42 @@
                 <div class="card-icon"><i class="fa-solid fa-user-gear"></i></div>
                 <h3>Editar Perfil</h3>
                 <p>Mantenha seus dados e informações do sistema atualizados.</p>
+            </a>
+        </div>
+
+        <!-- NOVO: Seção de Impacto Social -->
+        <div class="impact-box">
+            <div class="impact-header">
+                <i class="fa-solid fa-heart-pulse"></i>
+                <h3>Seu Impacto Social</h3>
+            </div>
+            <div class="impact-content">
+                <p>A energia solar que você gera não apenas economiza recursos, mas também transforma vidas. Cada doação ajuda famílias em vulnerabilidade energética a terem acesso à energia limpa e sustentável.</p>
+                <div class="impact-stats">
+                    <div class="impact-stat">
+                        <span class="impact-icon">🌍</span>
+                        <span class="impact-label">Sustentabilidade</span>
+                    </div>
+                    <div class="impact-stat">
+                        <span class="impact-icon">💡</span>
+                        <span class="impact-label">Acesso à Energia</span>
+                    </div>
+                    <div class="impact-stat">
+                        <span class="impact-icon">❤️</span>
+                        <span class="impact-label">Solidariedade</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOVO: Call to Action -->
+        <div class="cta-section">
+            <div class="cta-content">
+                <h3>Pronto para fazer a diferença?</h3>
+                <p>Faça sua primeira doação hoje e comece a transformar vidas!</p>
+            </div>
+            <a href="{{ url_for('auth.make_donation', user_id=user_id) }}" class="cta-button">
+                Doar Agora <i class="fa-solid fa-arrow-right"></i>
             </a>
         </div>
     </div>

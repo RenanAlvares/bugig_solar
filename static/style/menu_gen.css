@@ -266,6 +266,7 @@ main::after {
 /* ===== EFEITO DE PULSO NO ÍCONE ===== */
 @keyframes pulse {
   0%, 100% {
+
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(242, 183, 5, 0.4);
   }
@@ -345,5 +346,339 @@ main::after {
 
   .dashboard-cards .card-icon i {
     font-size: 1.8rem;
+  }
+}
+/* =====================================================
+   ADIÇÕES AO CSS DO MENU GERADOR
+   Cole isso no final do seu menu_gen.css existente
+   ===================================================== */
+
+/* ===== BANNER DE INFORMAÇÕES ===== */
+.info-banner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2.5rem 0 3rem;
+  animation: fadeInBanner 0.6s ease-out 0.2s backwards;
+}
+
+@keyframes fadeInBanner {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.info-item {
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.7), rgba(20, 20, 20, 0.9));
+  border: 1px solid rgba(242, 183, 5, 0.2);
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.info-item:hover {
+  border-color: var(--amarelo);
+  transform: translateX(5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.info-item i {
+  font-size: 1.8rem;
+  color: var(--amarelo);
+  flex-shrink: 0;
+}
+
+.info-text {
+  color: var(--cinza-claro);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.info-text strong {
+  color: var(--branco);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+/* ===== CAIXA DE IMPACTO SOCIAL ===== */
+.impact-box {
+  margin-top: 3.5rem;
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.8), rgba(20, 20, 20, 0.95));
+  border: 2px solid rgba(242, 183, 5, 0.25);
+  border-radius: 20px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInImpact 0.8s ease-out 0.4s backwards;
+}
+
+@keyframes fadeInImpact {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.impact-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #F2B705, transparent);
+  animation: shimmerImpact 3s ease-in-out infinite;
+}
+
+@keyframes shimmerImpact {
+  0%, 100% { left: -100%; opacity: 0.3; }
+  50% { left: 100%; opacity: 1; }
+}
+
+.impact-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.impact-header i {
+  font-size: 2rem;
+  color: var(--amarelo);
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  10%, 30% { transform: scale(1.1); }
+  20%, 40% { transform: scale(1); }
+}
+
+.impact-header h3 {
+  font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+  font-weight: 800;
+  color: var(--amarelo);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.impact-content p {
+  color: var(--cinza-claro);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.impact-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.impact-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background: rgba(242, 183, 5, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(242, 183, 5, 0.15);
+  transition: all 0.3s ease;
+}
+
+.impact-stat:hover {
+  background: rgba(242, 183, 5, 0.1);
+  border-color: var(--amarelo);
+  transform: translateY(-5px);
+}
+
+.impact-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.impact-label {
+  color: var(--branco);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* ===== CALL TO ACTION ===== */
+.cta-section {
+  margin-top: 3rem;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, rgba(242, 183, 5, 0.1), rgba(242, 183, 5, 0.05));
+  border: 2px solid rgba(242, 183, 5, 0.3);
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInCTA 0.8s ease-out 0.6s backwards;
+}
+
+@keyframes fadeInCTA {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cta-section::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(242, 183, 5, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.cta-content h3 {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  font-weight: 800;
+  color: var(--amarelo);
+  margin-bottom: 0.5rem;
+}
+
+.cta-content p {
+  color: var(--cinza-claro);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.cta-button {
+  background: linear-gradient(135deg, var(--amarelo), var(--amarelo-hover));
+  color: var(--preto);
+  padding: 1rem 2.5rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(242, 183, 5, 0.3);
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.cta-button:hover {
+  background: #2a2a2a;
+  color: var(--amarelo);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.cta-button i {
+  transition: transform 0.3s ease;
+}
+
+.cta-button:hover i {
+  transform: translateX(5px);
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .info-banner {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    margin: 2rem 0 2.5rem;
+  }
+
+  .info-item {
+    padding: 1.2rem;
+  }
+
+  .info-item i {
+    font-size: 1.5rem;
+  }
+
+  .impact-box {
+    padding: 2rem 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .impact-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .cta-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .cta-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-banner {
+    margin: 1.5rem 0 2rem;
+  }
+
+  .info-item {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .impact-box {
+    padding: 1.8rem 1.2rem;
+    margin-top: 2rem;
+  }
+
+  .impact-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .impact-stat {
+    padding: 1.2rem 0.8rem;
+  }
+
+  .impact-icon {
+    font-size: 2rem;
+  }
+
+  .cta-section {
+    padding: 1.8rem 1.2rem;
+    margin-top: 2rem;
+  }
+
+  .cta-button {
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
   }
 }
