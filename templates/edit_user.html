@@ -20,7 +20,7 @@
     <div class="form-card">
         <h1>{{ titulo }}</h1>
 
-        <form method="POST" action="{{ url_for('auth.edit_user', user_id=user_id) }}" id="editForm">
+        <form method="POST" action="{{ url_for('auth.edit_user', user_id=user_id) }}" id="editForm" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
 
             <div class="form-grid-layout">
@@ -28,11 +28,27 @@
                     <div class="profile-photo-section">
                         <div class="profile-photo-wrapper">
                             <div class="profile-photo-placeholder">
-                                {% if usuario and usuario.foto_url %}
-                                    <img id="profile-img" src="{{ usuario.foto_url }}" alt="Foto de perfil">
+                                {% if foto_url %}
+                                    <img id="profile-img" src="{{ foto_url }}" alt="Foto de perfil">
                                 {% else %}
                                     <img id="profile-img" src="{{ url_for('static', filename='img/default-avatar.svg') }}" alt="Foto de perfil">
                                 {% endif %}
+                            </div>
+                            <div class="photo-actions">
+                                <!-- INPUT de upload real, vinculado ao FlaskForm -->
+                                <label for="{{ form.foto_perfil.id }}" class="photo-btn upload-btn">
+                                    <input type="file" 
+                                           id="{{ form.foto_perfil.id }}" 
+                                           name="{{ form.foto_perfil.name }}" 
+                                           accept="image/png,image/jpeg,image/jpg" 
+                                           style="display: none;">
+                                    <i class="fa-solid fa-plus"></i>
+                                </label>
+
+                                <!-- Botão de remover -->
+                                <button type="button" class="photo-btn remove-btn">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -42,7 +58,7 @@
                     <!-- Tipo de usuário: render manualmente para garantir checked + disabled -->
                     <div class="form-group span-2">
                         <label class="form-label">Tipo de usuário:</label>
-                        {% set selected_tipo = (form.tipo_usuario.data if form.tipo_usuario.data is not none else (usuario.tipo_usuario if usuario is defined else '')) %}
+                        {% set selected_tipo = (form.tipo_usuario.data if form.tipo_usuario.data is not none else (usuario.id_tipo_user|string if usuario is defined else '')) %}
                         <div class="radio-group">
                             {% for val, label in form.tipo_usuario.choices %}
                                 <label class="custom-radio">
@@ -73,7 +89,7 @@
                     <!-- Tipo de documento: render manual -->
                     <div class="form-group span-2">
                         <label class="form-label">Documento:</label>
-                        {% set selected_doc = (form.tipo_documento.data if form.tipo_documento.data is not none else (usuario.tipo_documento if usuario is defined else '')) %}
+                        {% set selected_doc = (form.tipo_documento.data if form.tipo_documento.data is not none else ('cpf' if usuario.id_tipo_pessoa == 1 else 'cnpj')) %}
                         <div class="radio-group">
                             {% for val, label in form.tipo_documento.choices %}
                                 <label class="custom-radio">
@@ -101,10 +117,12 @@
                         {{ form.cnpj(class='form-control', readonly='readonly') }}
                     </div>
 
+                    {% if usuario and usuario.id_tipo_user == 2 %}
                     <div class="form-group span-2" id="nome_fantasia_group">
                         {{ form.nome_fantasia.label(class='form-label') }}
                         {{ form.nome_fantasia(class='form-control') }}
                     </div>
+                    {% endif %}
 
                     <fieldset class="form-group address-block-full span-2">
                         <legend>Endereço</legend>
@@ -147,27 +165,63 @@
 </div>
 </main>
 
-<!-- script para mostrar o CPF/CNPJ correto sem depender de clique (radios estão disabled) -->
+<!-- Script para preview de foto e mostrar CPF/CNPJ correto -->
 <script>
-document.addEventListener('DOMContentLoaded', function(){
-  // valor vindo do template (try lowercase)
-  const selectedDoc = "{{ (form.tipo_documento.data if form.tipo_documento.data is not none else (usuario.tipo_documento if usuario is defined else '')) | default('') }}".toLowerCase();
-  const cpfGroup = document.getElementById('cpf_group');
-  const cnpjGroup = document.getElementById('cnpj_group');
+document.addEventListener('DOMContentLoaded', function() {
+    // Preview da foto de perfil
+    const fileInput = document.getElementById('{{ form.foto_perfil.id }}');
+    const profileImg = document.getElementById('profile-img');
+    const removeBtn = document.querySelector('.remove-btn');
 
-  // adapta às possíveis formas de valor (ex: 'cpf', 'CPF', '0', etc.)
-  if (selectedDoc.includes('cpf') || selectedDoc === '0') {
-    if (cpfGroup) cpfGroup.style.display = 'block';
-    if (cnpjGroup) cnpjGroup.style.display = 'none';
-  } else {
-    if (cpfGroup) cpfGroup.style.display = 'none';
-    if (cnpjGroup) cnpjGroup.style.display = 'block';
-  }
+    if (fileInput) {
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Formato de imagem inválido. Apenas JPG, JPEG ou PNG são permitidos.');
+                    fileInput.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profileImg.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 
-  // (opcional) checar console para erros JS que possam bloquear submit
-  if (typeof console !== 'undefined') {
-    console.log('edit_user: selectedDoc=', selectedDoc);
-  }
+    // Botão de remover foto
+    if (removeBtn) {
+        removeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Restaura a imagem padrão
+            profileImg.src = "{{ url_for('static', filename='img/default-avatar.svg') }}";
+            
+            // Limpa o input de arquivo
+            if (fileInput) {
+                fileInput.value = '';
+            }
+        });
+    }
+
+    // CPF/CNPJ - Mostra o campo correto
+    const selectedDoc = "{{ selected_doc if selected_doc is defined else (form.tipo_documento.data if form.tipo_documento.data else '') }}".toLowerCase();
+    const cpfGroup = document.getElementById('cpf_group');
+    const cnpjGroup = document.getElementById('cnpj_group');
+
+    if (selectedDoc === 'cpf' || selectedDoc === '1') {
+        if (cpfGroup) cpfGroup.style.display = 'block';
+        if (cnpjGroup) cnpjGroup.style.display = 'none';
+    } else if (selectedDoc === 'cnpj' || selectedDoc === '2') {
+        if (cpfGroup) cpfGroup.style.display = 'none';
+        if (cnpjGroup) cnpjGroup.style.display = 'block';
+    }
+
+    console.log('Documento selecionado:', selectedDoc);
 });
 </script>
 

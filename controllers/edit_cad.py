@@ -1,63 +1,76 @@
 from extensions import db
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, current_app
 from controllers.login import user_owns_resource
 from . import auth_bp
 from forms.form_user import FormUser
 from models_DB.companies import Companies
 from models_DB.users import UsersDb
 from werkzeug.security import check_password_hash as check_password
+import os
+from time import time
+
+import os
+from flask import url_for, current_app
+
+def get_user_photo_url(user_id):
+    """
+    Busca a foto de perfil do usuário no sistema de arquivos.
+    Retorna a URL da foto ou None se não encontrada.
+    """
+    folder = current_app.config.get('UPLOAD_FOLDER', os.path.join('static', 'uploads', 'fotos_perfil'))
+    
+    if not os.path.exists(folder):
+        return None
+    
+    # Busca arquivos que começam com user_{id}_
+    fotos = [f for f in os.listdir(folder) if f.startswith(f'user_{user_id}_')]
+    
+    if fotos:
+        # Retorna a foto mais recente (última modificação)
+        foto_mais_recente = max(fotos, key=lambda f: os.path.getmtime(os.path.join(folder, f)))
+        return url_for('static', filename=f'uploads/fotos_perfil/{foto_mais_recente}')
+    
+    return None
 
 @auth_bp.route('/<int:user_id>/edit-user', methods=['GET', 'POST'])
 @user_owns_resource('user_id')
 def edit_user(user_id):
     usuario = UsersDb.query.get_or_404(user_id)
 
-    # --- definições de choices iguais às do cadastro ---
     tipo_usuario_choices = [('1', 'Beneficiário'), ('2', 'Gerador')]
     tipo_documento_choices = [('cpf', 'CPF'), ('cnpj', 'CNPJ')]
+    foto_url = get_user_photo_url(user_id)
 
-    # distribuidoras (sempre definir)
     distribuidoras = Companies.query.all()
     distrib_choices = [(str(d.id), d.nome_distribuidora) for d in distribuidoras]
 
-    # --- instanciação do form: POST vs GET ---
     if request.method == 'POST':
-        # cria o form a partir dos dados submetidos (para que validate_on_submit leia request.form)
         form = FormUser(request.form)
-        # assegura choices mesmo no POST (necessário para validação/render)
         form.tipo_usuario.choices = tipo_usuario_choices
         form.tipo_documento.choices = tipo_documento_choices
         form.distribuidora.choices = distrib_choices
         
-        # CRÍTICO: Na edição, os campos desabilitados não vêm no request.form
-        # Então precisamos forçar os valores do banco para passar na validação
         form.tipo_usuario.data = str(usuario.id_tipo_user)
         form.tipo_documento.data = 'cpf' if getattr(usuario, 'id_tipo_pessoa', None) == 1 else 'cnpj'
         
     else:
-        # GET: pré-carrega com os dados do usuário
         form = FormUser(obj=usuario)
         form.tipo_usuario.choices = tipo_usuario_choices
         form.tipo_documento.choices = tipo_documento_choices
         form.distribuidora.choices = distrib_choices
 
-        # garante que os dados estejam no formato esperado (strings)
         form.tipo_usuario.data = str(usuario.id_tipo_user) if usuario.id_tipo_user is not None else ''
         form.tipo_documento.data = 'cpf' if getattr(usuario, 'id_tipo_pessoa', None) == 1 else 'cnpj'
         form.distribuidora.data = str(getattr(usuario, 'id_distribuidora', '') or '')
 
-        # preencher campo de documento correto no form (apenas pra exibir)
         if form.tipo_documento.data == 'cpf':
             form.cpf.data = usuario.documento
         else:
             form.cnpj.data = usuario.documento
 
-        # nome fantasia / razao social (se houver)
         form.nome_fantasia.data = getattr(usuario, 'razao_social', '')
 
-    # --- processamento do POST ---
     if form.validate_on_submit():
-        # confirma senha ANTES de processar
         confirm_pwd = form.confirm_senha.data
         if not confirm_pwd:
             flash('Por favor, digite sua senha para confirmar as alterações!', 'danger')
@@ -67,26 +80,55 @@ def edit_user(user_id):
             flash('Senha incorreta para confirmar alterações!', 'danger')
             return render_template('edit_user.html', form=form, titulo="Editar Cadastro", user_id=user_id, usuario=usuario)
 
-        # Atualiza só os campos permitidos (NÃO altera tipo de usuário / tipo documento / documento)
+        # Atualiza campos permitidos
         usuario.nome = form.nome.data
         usuario.email = form.email.data
         usuario.telefone = form.telefone.data
         usuario.cep = form.cep.data
         usuario.numero = form.numero.data
 
-        # distribuidora (se fornecida)
         try:
             if form.distribuidora.data:
                 usuario.id_distribuidora = int(form.distribuidora.data)
         except ValueError:
             pass
 
-        # nome fantasia (apenas se for pessoa jurídica)
         if getattr(usuario, 'id_tipo_pessoa', None) == 2:
             usuario.razao_social = form.nome_fantasia.data
 
-        # NÃO sobrescrever usuario.documento / id_tipo_pessoa / id_tipo_user
-        # Commit
+        # PROCESSAMENTO DA FOTO DE PERFIL
+        arquivo = request.files.get('foto_perfil')
+        if arquivo and arquivo.filename != '':
+            filename = arquivo.filename
+            extensao = filename.rsplit('.', 1)[-1].lower()
+            
+            if extensao not in {'png', 'jpg', 'jpeg'}:
+                flash('Formato de imagem inválido. Envie PNG, JPG ou JPEG.', 'danger')
+                return render_template('edit_user.html', form=form, titulo="Editar Cadastro", user_id=user_id, usuario=usuario)
+
+            # Define a pasta de upload
+            folder = current_app.config.get('UPLOAD_FOLDER', os.path.join('static', 'uploads', 'fotos_perfil'))
+            
+            # Cria a pasta se não existir
+            if not os.path.exists(folder):
+                os.makedirs(folder)
+
+            # Remove foto antiga se existir
+            fotos_antigas = [f for f in os.listdir(folder) if f.startswith(f'user_{user_id}_')]
+            for foto_antiga in fotos_antigas:
+                try:
+                    os.remove(os.path.join(folder, foto_antiga))
+                except:
+                    pass
+
+            # Salva a nova foto
+            momento = int(time())
+            nome_final = f"user_{user_id}_{momento}.{extensao}"
+            caminho_arquivo = os.path.join(folder, nome_final)
+            
+            arquivo.save(caminho_arquivo)
+
+        # Commit no banco
         try:
             db.session.commit()
             flash('Dados atualizados com sucesso!', 'success')
@@ -101,5 +143,11 @@ def edit_user(user_id):
                 for error in errors:
                     flash(f'Erro no campo {field}: {error}', 'danger')
 
-    # render (GET ou validação falhou)
-    return render_template('edit_user.html', form=form, titulo="Editar Cadastro", user_id=user_id, usuario=usuario)
+    return render_template(
+        'edit_user.html', 
+        form=form, 
+        titulo="Editar Cadastro",
+        user_id=user_id,
+        usuario=usuario,
+        foto_url=foto_url
+        )
