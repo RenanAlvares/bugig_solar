@@ -48,8 +48,7 @@
                 {% set public_endpoints = ['public.landing_page', 'public.about', 'auth.login', 'auth.signin'] %}
                 
                 {% if session['user_id'] and request.endpoint not in public_endpoints %}
-                    <a href="{{ url_for('auth.edit_user', user_id=session['user_id']) }}">Editar Perfil</a>
-                    <a href="{{ url_for('auth.login') }}" class="btn-default">Sair</a>
+                    <a href="{{ url_for('auth.logout') }}" class="btn-default">Sair</a>
                 {% else %}
                     <a href="{{ url_for('public.about') }}">Sobre Nós</a>
                     <a href="{{ url_for('auth.login') }}">Login</a>

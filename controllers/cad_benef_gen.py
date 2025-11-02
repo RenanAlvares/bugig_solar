@@ -19,7 +19,9 @@ def signin_benef(user_id):
     form_benef.classe_consumo.choices = [(str(c.id), c.nome_tipo_classe) for c in classe_consumo]
 
     if form_benef.validate_on_submit():
-        arquivos = [form_benef.conta1.data, form_benef.conta2.data, form_benef.conta3.data]
+
+        # essa parte é a funcao que calcula o consumo mensal a partir do arquivo .txt
+        '''arquivos = [form_benef.conta1.data, form_benef.conta2.data, form_benef.conta3.data]
         consumos = []
 
         try:
@@ -34,6 +36,12 @@ def signin_benef(user_id):
             return render_template('benef.html', titulo=titulo, form_benef=form_benef)
 
         consumo_mensal = int(sum(consumos) / len(consumos))
+        classe_consumo_id = int(form_benef.classe_consumo.data)'''
+
+        # essa função vai puxar os valores dos labels para fazer a media
+        arquivos = [form_benef.valor1.data, form_benef.valor2.data, form_benef.valor3.data]
+
+        consumo_mensal = int(sum(arquivos) / len(arquivos))
         classe_consumo_id = int(form_benef.classe_consumo.data)
 
         novo_beneficiario = Beneficiaries(
@@ -51,6 +59,8 @@ def signin_benef(user_id):
         except Exception as e:
             db.session.rollback()
             flash(f"Erro ao salvar beneficiário: {str(e)}", "danger")
+    elif form_benef.errors:
+        flash('Por favor, corrija os erros no formulário.', 'danger')
 
     return render_template('benef.html', titulo=titulo, form_benef=form_benef)
 

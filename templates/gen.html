@@ -7,7 +7,7 @@
 <div class="modal fade" id="modalFornecedor" tabindex="-1" aria-labelledby="modalFornecedorLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form method="POST" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data" action="{{ url_for('auth.signin_gen', user_id=session.get('new_user_id', session.get('user_id'))) }}">
         {{ form_gen.hidden_tag() }}
         <div class="modal-header">
           <h5 class="modal-title" id="modalFornecedorLabel">Dados do Gerador</h5>

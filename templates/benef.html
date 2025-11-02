@@ -8,24 +8,51 @@
   <h1>Envie Suas Contas de Energia</h1>
   <p>Faça upload das suas últimas faturas para calcularmos o melhor benefício para você.</p>
 
-  <form method="POST" enctype="multipart/form-data" action="{{ url_for('auth.signin_benef', user_id=session['new_user_id']) }}">
+  <form method="POST" enctype="multipart/form-data" action="{{ url_for('auth.signin_benef', user_id=session.get('new_user_id', session.get('user_id'))) }}">
       {{ form_benef.hidden_tag() }}
 
-      <div id="upload-section">
+
+        <div id="upload-section">
           <div class="mb-3">
-              {{ form_benef.conta1.label }}<br>
-              {{ form_benef.conta1(class="form-control") }}
+              {{ form_benef.img1.label }}<br>
+              {{ form_benef.img1(class="form-control") }}
           </div>
 
           <div class="mb-3">
-              {{ form_benef.conta2.label }}<br>
-              {{ form_benef.conta2(class="form-control") }}
+              {{ form_benef.img2.label }}<br>
+              {{ form_benef.img2(class="form-control") }}
           </div>
 
           <div class="mb-3">
-              {{ form_benef.conta3.label }}<br>
-              {{ form_benef.conta3(class="form-control") }}
+              {{ form_benef.img3.label }}<br>
+              {{ form_benef.img3(class="form-control") }}
           </div>
+
+          <!-- campos para adicionar valores que serão calculados-->
+          <div>
+            {{ form_benef.valor1.label(class='form-label') }}
+            {{ form_benef.valor1(class='form-control') }}
+            {% for error in form_benef.valor1.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+
+          <div>
+            {{ form_benef.valor2.label(class='form-label') }}
+            {{ form_benef.valor2(class='form-control') }}
+            {% for error in form_benef.valor2.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+
+          <div>
+            {{ form_benef.valor3.label(class='form-label') }}
+            {{ form_benef.valor3(class='form-control') }}
+            {% for error in form_benef.valor3.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+
       </div>
 
       <div class="mb-2">

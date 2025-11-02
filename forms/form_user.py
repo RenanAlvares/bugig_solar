@@ -1,8 +1,10 @@
 from extensions import db
 from flask_wtf import FlaskForm
-from wtforms import SelectField, StringField, validators, SubmitField, PasswordField, IntegerField, RadioField
-
+from wtforms import FileField, SelectField, StringField, validators, SubmitField, PasswordField, IntegerField, RadioField
+from flask_wtf.file import FileAllowed
 class FormUser(FlaskForm):
+
+    foto_perfil = FileField('Foto de Perfil', validators=[FileAllowed(['png','jpg','jpeg'], 'Apenas PNG/JPG/JPEG')])
 
     nome = StringField('Digite o nome:', [validators.DataRequired(), validators.Length(min=2, max=150)])
 
