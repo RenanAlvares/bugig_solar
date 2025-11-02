@@ -15,7 +15,6 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
     usuario = 'root',
     senha = '15072004',
     servidor = 'localhost',
-    database = 'BugigSolar'
+    database = 'projeto_interdisciplinar'
 )
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-'''
+SQLALCHEMY_TRACK_MODIFICATIONS = False'''

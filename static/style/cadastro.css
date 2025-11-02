@@ -1,153 +1,562 @@
 /* ==============================================
-   BUGIGSOLAR - CSS DE CADASTRO
+   BUGIGSOLAR - CSS DE CADASTRO (PREMIUM)
    ============================================== */
 
+:root {
+  --preto: #0a0a0a;
+  --preto-suave: #141414;
+  --amarelo: #F2B705;
+  --amarelo-hover: #ffc800;
+  --branco: #ffffff;
+  --cinza-escuro: #1e1e1e;
+  --cinza-claro: #cccccc;
+}
+
+/* ===== FUNDO DA PÁGINA ===== */
 body {
-    background: linear-gradient(135deg, #111, #1d1d1d, #212121) !important;
-    margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--preto) 0%, var(--preto-suave) 100%) !important;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  position: relative;
+  overflow-x: hidden;
 }
 
+/* Remove fundo de containers Bootstrap */
+.container, #cadastro, #editar {
+  background: transparent !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+}
 
-/* --- ESTILO DO CARD PRINCIPAL --- */
+/* Efeito de brilho de fundo */
+body::before {
+  content: "";
+  position: fixed;
+  top: -30%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(242, 183, 5, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  bottom: -20%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(242, 183, 5, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 25s ease-in-out infinite reverse;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -30px) scale(1.1); }
+}
+
+/* ===== CARD PRINCIPAL ===== */
 .form-card {
-    width: 100%;
-    max-width: 1200px;
-    margin: 30px;
-    padding: 2.5rem 3rem;
-    background: rgba(30, 30, 30, 0.9);
-    border: 1px solid var(--cor-borda-suave, rgba(255, 255, 255, 0.1));
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 1200px;
+  margin: 6rem auto 3rem;
+  padding: 3rem;
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+  border: 2px solid rgba(242, 183, 5, 0.2);
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  position: relative;
+  z-index: 1;
+  animation: slideUp 0.6s ease-out;
 }
 
-.form-card, .form-card label, .form-card .form-label, .form-card p, .form-card legend {
-    color: var(--cor-texto-principal, #f5f5f5) !important;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* Brilho no topo do card */
+.form-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #F2B705, transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.form-card, 
+.form-card label, 
+.form-card .form-label, 
+.form-card p, 
+.form-card legend {
+  color: var(--branco) !important;
+}
+
+/* ===== TÍTULO ===== */
 .form-card h1 {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    font-weight: 700;
-    color: var(--cor-amarelo-solar, #F2B705) !important;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-weight: 900;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  position: relative;
 }
 
-/* --- LAYOUT PRINCIPAL DO FORMULÁRIO --- */
+.form-card h1::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #F2B705, transparent);
+  margin: 1.5rem auto 0;
+  border-radius: 2px;
+}
+
+/* ===== LAYOUT DO FORMULÁRIO ===== */
 .form-grid-layout {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 0 3rem;
-    align-items: flex-start;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 0 3rem;
+  align-items: flex-start;
 }
 
-/* --- COLUNA DOS CAMPOS (EM GRID) --- */
+/* ===== COLUNA DOS CAMPOS ===== */
 .fields-column {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.8rem 1.5rem;
-    align-content: start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem 2rem;
+  align-content: start;
 }
 
 .form-group {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0;
+  animation: fadeIn 0.5s ease-out backwards;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.15s; }
+.form-group:nth-child(3) { animation-delay: 0.2s; }
+.form-group:nth-child(4) { animation-delay: 0.25s; }
+.form-group:nth-child(5) { animation-delay: 0.3s; }
+.form-group:nth-child(6) { animation-delay: 0.35s; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .form-group.span-2 {
-    grid-column: span 2;
+  grid-column: span 2;
 }
 
-/* --- SEÇÃO DA FOTO DE PERFIL (CORRIGIDO) --- */
+/* ===== LABELS ===== */
+.form-label {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--branco) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-size: 0.85rem;
+}
+
+/* ===== FOTO DE PERFIL ===== */
 .profile-column {
-    display: flex;
-    justify-content: center;
-    padding-top: 1rem;
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  animation: fadeIn 0.5s ease-out 0.4s backwards;
 }
 
 .profile-photo-section { 
-    text-align: center; 
-    width: 100%;
+  text-align: center; 
+  width: 100%;
 }
 
 .profile-photo-wrapper {
-    position: relative;
-    width: 160px;
-    height: 160px;
-    margin: 0 auto;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
 }
 
 .profile-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(242, 183, 5, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(242, 183, 5, 0.05), rgba(242, 183, 5, 0.02));
+  transition: all 0.3s ease;
+}
+
+.profile-photo-placeholder:hover {
+  border-color: var(--amarelo);
+  background: linear-gradient(135deg, rgba(242, 183, 5, 0.1), rgba(242, 183, 5, 0.05));
+  box-shadow: 0 8px 20px rgba(242, 183, 5, 0.2);
+}
+
+.profile-photo-placeholder img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+}
+
+.photo-actions { 
+  position: absolute; 
+  bottom: 10px; 
+  right: 10px; 
+  display: flex; 
+  gap: 0.5rem; 
+}
+
+.photo-btn { 
+  width: 40px; 
+  height: 40px; 
+  border-radius: 10px; 
+  border: none; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  color: white; 
+  cursor: pointer; 
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.upload-btn { 
+  background: linear-gradient(135deg, #F2B705, #ffc800);
+  color: #0a0a0a;
+}
+
+.upload-btn:hover { 
+  background: linear-gradient(135deg, #ffc800, #F2B705);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(242, 183, 5, 0.4);
+}
+
+.remove-btn { 
+  background: linear-gradient(135deg, #e53e3e, #c53030);
+}
+
+.remove-btn:hover { 
+  background: linear-gradient(135deg, #c53030, #e53e3e);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(229, 62, 62, 0.4);
+}
+
+/* ===== INPUTS E SELECTS ===== */
+.form-control, 
+.form-select {
+  background: rgba(40, 40, 40, 0.6) !important;
+  border: 2px solid rgba(242, 183, 5, 0.2) !important;
+  color: var(--branco) !important; 
+  padding: 0.9rem 1.2rem;
+  border-radius: 12px;
+  width: 100%;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus, 
+.form-select:focus {
+  background: rgba(40, 40, 40, 0.8) !important;
+  border-color: var(--amarelo) !important;
+  box-shadow: 0 0 0 4px rgba(242, 183, 5, 0.1) !important;
+  outline: none;
+}
+
+.form-control:hover,
+.form-select:hover {
+  border-color: rgba(242, 183, 5, 0.4) !important;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Select customizado */
+.form-select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F2B705' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 1rem center !important;
+  background-size: 12px !important;
+  appearance: none;
+  padding-right: 2.5rem !important;
+}
+
+.form-select option {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 0.8rem;
+}
+
+/* ===== RADIO BUTTONS CUSTOMIZADOS ===== */
+.radio-group { 
+  display: flex; 
+  gap: 2rem; 
+  margin-top: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.custom-radio { 
+  display: block; 
+  position: relative; 
+  padding-left: 35px; 
+  cursor: pointer; 
+  font-size: 1rem; 
+  user-select: none; 
+  line-height: 24px;
+  transition: all 0.3s ease;
+}
+
+.custom-radio:hover {
+  color: var(--amarelo);
+}
+
+.custom-radio input { 
+  position: absolute; 
+  opacity: 0; 
+  cursor: pointer; 
+  height: 0; 
+  width: 0; 
+}
+
+.checkmark { 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  height: 24px; 
+  width: 24px; 
+  background: rgba(40, 40, 40, 0.6);
+  border: 2px solid rgba(242, 183, 5, 0.3);
+  border-radius: 6px; 
+  transition: all 0.3s ease;
+}
+
+.custom-radio:hover input ~ .checkmark { 
+  border-color: var(--amarelo);
+  background: rgba(242, 183, 5, 0.1);
+}
+
+.custom-radio input:checked ~ .checkmark { 
+  background: linear-gradient(135deg, #F2B705, #ffc800);
+  border-color: var(--amarelo);
+  box-shadow: 0 0 10px rgba(242, 183, 5, 0.3);
+}
+
+.checkmark:after { 
+  content: ""; 
+  position: absolute; 
+  display: none; 
+}
+
+.custom-radio input:checked ~ .checkmark:after { 
+  display: block; 
+}
+
+.custom-radio .checkmark:after { 
+  left: 7px; 
+  top: 3px; 
+  width: 6px; 
+  height: 12px; 
+  border: solid #0a0a0a; 
+  border-width: 0 3px 3px 0; 
+  transform: rotate(45deg);
+}
+
+/* ===== SEÇÃO DE ENDEREÇO ===== */
+.address-block-full { 
+  border-top: 2px solid rgba(242, 183, 5, 0.15);
+  padding-top: 1.5rem; 
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  grid-column: span 2;
+}
+
+.address-block-full legend { 
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--amarelo) !important;
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.address-grid { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 1.2rem 2rem;
+}
+
+/* ===== CONTAINER DOS BOTÕES ===== */
+.btn-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  background: transparent;
+  width: 100%;
+}
+
+.btn-container .btn {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: transparent;
+  display: inline-block;
+  text-align: center;
+}
+
+/* ===== MENSAGENS DE ERRO ===== */
+.text-danger {
+  display: block;
+  color: #ff4444;
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+  font-weight: 500;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 1024px) {
+  .form-card {
+    margin: 5rem auto 2rem;
+    padding: 2.5rem;
+  }
+
+  .form-grid-layout {
+    gap: 0 2rem;
+  }
+
+  .fields-column {
+    gap: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-card {
+    margin: 4rem 1rem 2rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .form-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .profile-column {
+    order: -1;
+  }
+
+  .fields-column {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .form-group.span-2 {
+    grid-column: span 1;
+  }
+
+  .address-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .address-block-full {
+    grid-column: span 1;
+  }
+
+  .btn-container {
+    flex-direction: column;
+  }
+
+  .btn-container .btn {
     width: 100%;
-    height: 100%;
-    border: 2px dashed rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0,0,0,0.2);
+  }
 }
 
-.profile-photo-placeholder img { width: 100%; height: 100%; object-fit: cover; }
-.photo-actions { position: absolute; bottom: 10px; right: 10px; display: flex; gap: 0.5rem; }
-.photo-btn { width: 35px; height: 35px; border-radius: 8px; border: none; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; transition: background-color 0.3s ease; }
-.upload-btn { background-color: var(--cor-amarelo-solar, #F2B705); color: #111; }
-.upload-btn:hover { background-color: #ffc800; }
-.remove-btn { background-color: #e53e3e; }
-.remove-btn:hover { background-color: #c53030; }
+@media (max-width: 480px) {
+  .form-card {
+    margin: 3rem 0.5rem 1.5rem;
+    padding: 1.5rem 1rem;
+    border-radius: 20px;
+  }
 
-/* --- ESTILO DOS INPUTS E SELECTS --- */
-.form-control, .form-select {
-    background-color: rgba(0,0,0,0.3) !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
-    color: #fff !important; 
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
+  .form-card h1 {
+    margin-bottom: 2rem;
+  }
+
+  .profile-photo-wrapper {
+    width: 150px;
+    height: 150px;
+  }
+
+  .photo-btn {
+    width: 35px;
+    height: 35px;
+  }
+
+  .form-control,
+  .form-select {
+    padding: 0.8rem 1rem;
+  }
+
+  .btn-container {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .btn-container .btn {
     width: 100%;
-}
+  }
 
-.form-control:focus, .form-select:focus {
-    background-color: rgba(0,0,0,0.4) !important;
-    border-color: var(--cor-amarelo-solar, #F2B705) !important;
-    box-shadow: 0 0 8px rgba(242, 183, 5, 0.3) !important;
-}
-
-/* --- CHECKBOX CUSTOMIZADO --- */
-.radio-group { display: flex; gap: 1.5rem; margin-top: 0.5rem; }
-.custom-radio { display: block; position: relative; padding-left: 30px; cursor: pointer; font-size: 1rem; user-select: none; line-height: 20px; }
-.custom-radio input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
-.checkmark { position: absolute; top: 0; left: 0; height: 20px; width: 20px; background-color: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; transition: all 0.2s ease; }
-.custom-radio:hover input ~ .checkmark { border-color: var(--cor-amarelo-solar, #F2B705); }
-.custom-radio input:checked ~ .checkmark { background-color: var(--cor-amarelo-solar, #F2B705); border-color: var(--cor-amarelo-solar, #F2B705); }
-.checkmark:after { content: ""; position: absolute; display: none; }
-.custom-radio input:checked ~ .checkmark:after { display: block; }
-.custom-radio .checkmark:after { left: 6px; top: 2px; width: 6px; height: 12px; border: solid #111; border-width: 0 3px 3px 0; transform: rotate(45deg); }
-
-/* --- LAYOUT DO ENDEREÇO --- */
-.address-block-full { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1rem; margin-top: 0.5rem; }
-.address-block-full legend { display: none; }
-.address-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 1.5rem; }
-
-/* --- BOTÃO FINAL --- */
-.btn_container { grid-column: span 2; text-align: right; margin-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.5rem; }
-
-/* Seletor mais específico para sobrescrever o Bootstrap */
-.form-card .btn-primary { 
-    background: var(--cor-amarelo-solar);
-    color: var(--cor-fundo-escuro);
-    border: 1px solid #e0a80b;
-    padding: 0.8rem 2.5rem; /* Mantendo o padding maior para um botão de ação principal */
-    font-size: 1.1rem;
-    border-radius: 8px;
-    font-weight: 700;
-    text-decoration: none;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-    transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
-}
-
-.form-card .btn-primary:hover {
-    background-color: var(--cor-fundo-card);
-    color: var(--cor-amarelo-solar);
-    border-color: #333;
-    transform: translateY(-2px); 
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+  .radio-group {
+    gap: 1.2rem;
+  }
 }
