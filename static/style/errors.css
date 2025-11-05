@@ -1,0 +1,375 @@
+/* ===================================================
+   BUGIGSOLAR - PÁGINA DE ERROS PROFISSIONAL
+   =================================================== */
+
+:root {
+  --preto: #0a0a0a;
+  --preto-suave: #141414;
+  --amarelo: #F2B705;
+  --amarelo-hover: #ffc800;
+  --branco: #ffffff;
+  --cinza-escuro: #1e1e1e;
+  --cinza-claro: #cccccc;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--preto);
+  color: var(--branco);
+  overflow-x: hidden;
+}
+
+main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===================================================
+   BACKGROUND ANIMADO
+   =================================================== */
+
+main::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(242, 183, 5, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse-error 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+main::after {
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(242, 183, 5, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse-error 10s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+
+@keyframes pulse-error {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg); 
+    opacity: 0.3; 
+  }
+  50% { 
+    transform: scale(1.2) rotate(180deg); 
+    opacity: 0.6; 
+  }
+}
+
+/* ===================================================
+   CONTAINER PRINCIPAL
+   =================================================== */
+
+.error-page {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 1400px;
+  width: 100%;
+  padding: 2rem 1rem;
+  animation: fadeInUp 0.8s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================================================
+   CONTAINER DO MASCOTE E CÓDIGO
+   =================================================== */
+
+.error-header {
+  position: relative;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: nowrap;
+  max-width: 1400px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+}
+
+/* ===================================================
+   MASCOTE (IMAGEM DO ROBÔ)
+   =================================================== */
+
+.mascote-container {
+  position: relative;
+  width: 450px;
+  height: 450px;
+  flex-shrink: 0;
+  margin-right: 0;
+}
+
+.mascote {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mascote img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+}
+
+/* ===================================================
+   CONTAINER DO CÓDIGO E ÍCONE
+   =================================================== */
+
+.error-code-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-direction: column;
+  flex: 0;
+  justify-content: center;
+  margin-right: 0;
+}
+
+.code-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ===================================================
+   ÍCONE PEQUENO AO LADO DO 404
+   =================================================== */
+
+.error-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(242, 183, 5, 0.5);
+  flex-shrink: 0;
+}
+
+.error-icon i {
+  font-size: 1.8rem;
+  color: var(--preto);
+}
+
+/* ===================================================
+   CÓDIGO DE ERRO
+   =================================================== */
+
+.error-page h1 {
+  font-size: clamp(4rem, 12vw, 8rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+}
+
+/* ===================================================
+   MENSAGEM DE ERRO
+   =================================================== */
+
+.error-page p {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  color: #e0e0e0;
+  margin: 0;
+  max-width: 600px;
+  font-weight: 300;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* ===================================================
+   BOTÃO DE RETORNO
+   =================================================== */
+
+.btn-default {
+  display: inline-block;
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  color: var(--preto);
+  padding: 1rem 2.5rem;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(242, 183, 5, 0.3);
+  position: relative;
+  overflow: hidden;
+  margin-top: 0;
+}
+
+.btn-default::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-default:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-default:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(242, 183, 5, 0.5);
+}
+
+.btn-default i {
+  margin-right: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===================================================
+   RESPONSIVIDADE
+   =================================================== */
+
+@media (max-width: 1024px) {
+  .error-header {
+    gap: 2.5rem;
+    padding: 0;
+  }
+
+  .mascote-container {
+    width: 380px;
+    height: 380px;
+  }
+
+  .error-icon {
+    width: 55px;
+    height: 55px;
+  }
+
+  .error-icon i {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .error-page {
+    padding: 2rem 1.5rem;
+    gap: 1.2rem;
+  }
+
+  .error-header {
+    gap: 2rem;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .mascote-container {
+    width: 300px;
+    height: 300px;
+  }
+
+  .error-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .error-icon i {
+    font-size: 1.5rem;
+  }
+
+  .error-page h1 {
+    font-size: clamp(3.5rem, 18vw, 6rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .error-header {
+    gap: 1.5rem;
+  }
+
+  .error-page {
+    gap: 1.2rem;
+  }
+
+  .mascote-container {
+    width: 220px;
+    height: 220px;
+  }
+
+  .code-with-icon {
+    gap: 1rem;
+  }
+
+  .error-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .error-icon i {
+    font-size: 1.2rem;
+  }
+
+  .error-page h1 {
+    font-size: clamp(3rem, 16vw, 5rem);
+  }
+
+  .btn-default {
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+    width: 100%;
+  }
+}
+
+/* Ocultar elementos não utilizados */
+.lightning-circle {
+  display: none;
+}
