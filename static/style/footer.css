@@ -1,0 +1,135 @@
+footer {
+    background-color: #0f0f0f;            /* tom escuro */
+    color: #d0cfcf;
+    padding: 1.25rem 6%;
+    border-top: 1px solid rgba(255, 215, 0, 0.08); /* linha discreta */
+    box-sizing: border-box;
+}
+
+/* SLOGAN (opcional). Se você incluir um bloco .footer-slogan, ele ficará centralizado */
+.footer-slogan{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto 0.75rem auto;
+    text-align: center;
+    font-style: italic;
+    font-weight: 600;
+    color: #f2b705;                    /* amarelo solar */
+    font-size: 1.05rem;
+    line-height: 1.2;
+}
+
+/* separador entre slogan e row principal */
+.footer-separator {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-bottom: 1px solid rgba(242, 183, 5, 0.08); /* linha fina dourada */
+}
+
+/* CONTAINER PRINCIPAL: texto à esquerda, ícones à direita */
+#itens-footer {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;               /* verticalmente centrados */
+    justify-content: space-between;    /* separa em duas colunas */
+    gap: 1rem;
+    padding: 0.75rem 0;                /* espaçamento vertical interno */
+    box-sizing: border-box;
+}
+
+/* bloco do conteúdo textual (coluna esquerda) */
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;           /* forçar conteúdo na esquerda */
+    text-align: left;
+    gap: 0.2rem;
+    flex: 1 1 auto;
+    color: #d0cfcf;
+}
+
+/* evita que <p> empurrem a linha (margens zeradas) */
+.footer-content p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.9rem;
+    color: #cfcfcf;
+}
+
+/* links (termos, política) em linha e com espaçamento */
+.footer-content .links-row {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    margin-top: 0.35rem;
+    flex-wrap: wrap;
+}
+.footer-content .links-row a {
+    color: #d6c96b;
+    text-decoration: none;
+    font-size: 0.88rem;
+}
+.footer-content .links-row a:hover { text-decoration: underline; }
+
+/* bloco dos ícones (coluna direita) */
+.social-media-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.8rem;
+    flex: 0 0 auto;
+}
+
+/* ícones: tamanho consistente e alinhados no centro da linha */
+.social-media-buttons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    color: #cfcfcf;
+    font-size: 1.2rem;
+    transition: transform .18s ease, color .18s ease, background .18s ease;
+    text-decoration: none;
+}
+
+/* hover suave */
+.social-media-buttons a:hover {
+    color: #111;
+    background: #f2b705;
+    transform: translateY(-3px);
+}
+
+/* --- MOBILE: empilha, centraliza e aumenta espaçamento --- */
+@media (max-width: 768px) {
+    .footer-slogan {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    .footer-separator { display: none; } /* remove a linha fina se quiser mais limpeza */
+
+    #itens-footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.6rem;
+        padding: 1rem 0;
+    }
+
+    .footer-content {
+        align-items: center;
+    }
+
+    .footer-content .links-row {
+        justify-content: center;
+    }
+
+    .social-media-buttons {
+        justify-content: center;
+    }
+}
