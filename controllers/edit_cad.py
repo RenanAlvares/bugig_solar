@@ -80,7 +80,7 @@ def edit_user(user_id):
             flash('Senha incorreta para confirmar alterações!', 'danger')
             return render_template('edit_user.html', form=form, titulo="Editar Cadastro", user_id=user_id, usuario=usuario)
 
-        # Atualiza campos permitidos
+        # atualiza somente os campos permitidos
         usuario.nome = form.nome.data
         usuario.email = form.email.data
         usuario.telefone = form.telefone.data
@@ -96,39 +96,49 @@ def edit_user(user_id):
         if getattr(usuario, 'id_tipo_pessoa', None) == 2:
             usuario.razao_social = form.nome_fantasia.data
 
-        # PROCESSAMENTO DA FOTO DE PERFIL
         arquivo = request.files.get('foto_perfil')
-        if arquivo and arquivo.filename != '':
-            filename = arquivo.filename
-            extensao = filename.rsplit('.', 1)[-1].lower()
-            
-            if extensao not in {'png', 'jpg', 'jpeg'}:
-                flash('Formato de imagem inválido. Envie PNG, JPG ou JPEG.', 'danger')
-                return render_template('edit_user.html', form=form, titulo="Editar Cadastro", user_id=user_id, usuario=usuario)
+        remover_foto = request.form.get('remover_foto') == '1'
 
-            # Define a pasta de upload
-            folder = current_app.config.get('UPLOAD_FOLDER', os.path.join('static', 'uploads', 'fotos_perfil'))
-            
-            # Cria a pasta se não existir
-            if not os.path.exists(folder):
-                os.makedirs(folder)
+        folder = current_app.config.get('UPLOAD_FOLDER', os.path.join('static', 'uploads', 'fotos_perfil'))
+        if not os.path.exists(folder):
+            os.makedirs(folder)
 
-            # Remove foto antiga se existir
+        # valida se o usuário removeu a foto
+        if remover_foto:
             fotos_antigas = [f for f in os.listdir(folder) if f.startswith(f'user_{user_id}_')]
             for foto_antiga in fotos_antigas:
                 try:
                     os.remove(os.path.join(folder, foto_antiga))
-                except:
-                    pass
+                except Exception as e:
+                    print(f"⚠️ Erro ao remover foto antiga: {e}")
 
-            # Salva a nova foto
+        elif arquivo and arquivo.filename != '':
+            filename = arquivo.filename
+            extensao = filename.rsplit('.', 1)[-1].lower()
+
+            if extensao not in {'png', 'jpg', 'jpeg'}:
+                flash('Formato de imagem inválido. Envie PNG, JPG ou JPEG.', 'danger')
+                return render_template('edit_user.html', form=form, titulo="Editar Cadastro", user_id=user_id, usuario=usuario)
+
+            # remove foto antiga antes de salvar nova
+            fotos_antigas = [f for f in os.listdir(folder) if f.startswith(f'user_{user_id}_')]
+            for foto_antiga in fotos_antigas:
+                try:
+                    os.remove(os.path.join(folder, foto_antiga))
+                except Exception as e:
+                    print(f"⚠️ Erro ao remover foto antiga: {e}")
+
+            # salva nova foto
             momento = int(time())
             nome_final = f"user_{user_id}_{momento}.{extensao}"
             caminho_arquivo = os.path.join(folder, nome_final)
-            
-            arquivo.save(caminho_arquivo)
 
-        # Commit no banco
+            try:
+                arquivo.save(caminho_arquivo)
+            except Exception as e:
+                flash(f'Erro ao salvar foto: {str(e)}', 'warning')
+
+        # commit no banco
         try:
             db.session.commit()
             flash('Dados atualizados com sucesso!', 'success')
@@ -137,7 +147,7 @@ def edit_user(user_id):
             db.session.rollback()
             flash(f'Erro ao atualizar usuário: {str(e)}', 'danger')
     else:
-        # DEBUG: Mostrar erros de validação
+        # mostrar erros de validação se houver
         if request.method == 'POST' and form.errors:
             for field, errors in form.errors.items():
                 for error in errors:
@@ -150,4 +160,4 @@ def edit_user(user_id):
         user_id=user_id,
         usuario=usuario,
         foto_url=foto_url
-        )
+    )

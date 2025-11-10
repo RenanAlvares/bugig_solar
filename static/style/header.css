@@ -192,63 +192,6 @@ a.btn-default:hover,
     display: none !important;
 }
 
-/* --- FOOTER PROFISSIONAL (TAMANHO FIXO) --- */
-footer {
-    background: #111 !important;
-    color: var(--cor-texto-secundario) !important;
-    padding: 2.5rem 8% !important;
-    border-top: 1px solid var(--cor-borda-suave) !important;
-    margin-top: auto !important;
-}
-
-#itens-footer {
-    max-width: 1200px !important;
-    margin: auto !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    flex-wrap: wrap !important;
-    gap: 1.5rem !important;
-}
-
-.footer-content {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0.4rem !important;
-}
-
-.footer-content p {
-    margin: 0.2rem 0 !important;
-    font-size: 0.9rem !important;
-    color: var(--cor-texto-secundario) !important;
-}
-
-.footer-content a {
-    color: var(--cor-texto-secundario) !important;
-    text-decoration: none !important;
-    transition: color 0.3s ease !important;
-}
-
-.footer-content a:hover {
-    color: var(--cor-amarelo-solar) !important;
-}
-
-.social-media-buttons {
-    display: flex !important;
-    gap: 1rem !important;
-}
-
-.social-media-buttons a {
-    color: var(--cor-texto-secundario) !important;
-    font-size: 1.5rem !important;
-    transition: color 0.3s ease, transform 0.3s ease !important;
-}
-
-.social-media-buttons a:hover {
-    color: var(--cor-amarelo-solar) !important;
-    transform: translateY(-3px) !important;
-}
-
 /* ==== ALERTAS (POPUPS) ==== */
 .alert-container {
     position: fixed !important;
