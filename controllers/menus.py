@@ -7,6 +7,8 @@ from models_DB.donation_queue import Queue
 from models_DB.benef_gen import Beneficiaries
 from forms.form_payment import Payment as PaymentForm
 from models_DB.types import TipoPagamento
+from sqlalchemy import and_, or_
+
 
 
 @auth_bp.route('/<int:user_id>/menu-benef', methods=['GET', 'POST'])
@@ -24,11 +26,31 @@ def menu_benef(user_id):
     .order_by(Payment.data_emissao.asc()) \
     .first()
 
+    benef = Beneficiaries.query.filter_by(id_user=user_id).first()
+    fila_ativa = Queue.query.filter_by(id_beneficiario=benef.id, status=True).first()
+
+
+
+    posicao_fila = None
+    if fila_ativa:
+        posicao_fila = (
+            Queue.query.filter(and_(
+                    Queue.status == True, or_(
+                        Queue.data_solicitacao < fila_ativa.data_solicitacao, and_(
+                            Queue.data_solicitacao == fila_ativa.data_solicitacao,
+                            Queue.id < fila_ativa.id
+                        )
+                    )
+                )
+            ).count()
+        ) + 1
+
     return render_template(
         'menu_benef.html',
         user_id=user_id,
         pagamento_pendente=pagamento_pendente,
         form_payment=PaymentForm(),
+        posicao_fila=posicao_fila,
         tipo_pagamento=tipo_pagamento
     )
 

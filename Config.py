@@ -1,4 +1,4 @@
-'''SECRET_KEY = 'teste123'
+SECRET_KEY = 'teste123'
 
 SQLALCHEMY_DATABASE_URI = '{SGBD}://{usuario}:{senha}@{servidor}/{database}'.format(
     SGBD = 'mysql+pymysql',
@@ -8,7 +8,7 @@ SQLALCHEMY_DATABASE_URI = '{SGBD}://{usuario}:{senha}@{servidor}/{database}'.for
     database = 'projeto_interdisciplinar'
 )
 
-SQLALCHEMY_TRACK_MODIFICATIONS = False'''
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 '''SQLALCHEMY_DATABASE_URI = '{SGBD}://{usuario}:{senha}@{servidor}/{database}'.format(
     SGBD = 'mysql+pymysql',
@@ -19,7 +19,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False'''
 )
 SQLALCHEMY_TRACK_MODIFICATIONS = False'''
 
-import os
+'''import os
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'teste123')
 
@@ -52,3 +52,4 @@ SQLALCHEMY_ENGINE_OPTIONS = {
     'pool_recycle': 3600,
     'pool_pre_ping': True,
 }
+'''

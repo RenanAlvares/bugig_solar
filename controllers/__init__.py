@@ -11,3 +11,4 @@ from . import make_donation
 from . import reports
 from . import menus
 from . import payment
+from . import transfer

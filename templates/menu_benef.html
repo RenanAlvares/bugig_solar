@@ -27,6 +27,15 @@
         <p>Acompanhe seu histórico de créditos e a economia gerada.</p>
       </a>
 
+      <div>
+        {% if posicao_fila %}
+          <h3>Posição atual na fila: {{ posicao_fila }}</h3>
+        {% else %}
+          <h3>Você não está na fila no momento.</h3>
+          <h3>Entre na fila para consultar sua posição atual.</h3>
+        {% endif %}
+      </div>
+
       <!-- ⚡ Simulador de Economia -->
       <a href="#" class="card simulador-card">
         <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
