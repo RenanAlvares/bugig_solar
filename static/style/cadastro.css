@@ -221,6 +221,34 @@ body::after {
   align-items: center;
   background: linear-gradient(135deg, rgba(242, 183, 5, 0.05), rgba(242, 183, 5, 0.02));
   transition: all 0.3s ease;
+    
+    /* ESSENCIAL: Garante que qualquer coisa que ultrapasse o limite 
+       deste elemento seja cortada. */
+    overflow: hidden; 
+
+    /* Garante que o placeholder tenha as bordas arredondadas */
+    border-radius: 12px; /* Use o mesmo valor do 'form-card' se aplicável, ou o que você desejar */
+}
+
+/* Seleciona o elemento img */
+#profile-img {
+    /* Garante que a imagem preencha o placeholder e respeite as bordas */
+    max-width: 100%;
+    height: auto;
+    display: block;
+
+    /* A SOLUÇÃO: Essas propriedades ajudam a prevenir a renderização 
+       visual do texto 'alt' em navegadores que o tratam como rótulo ou 
+       texto de fallback em conjunto com o SVG/placeholder. */
+    content: normal !important; 
+    font-size: 0; /* Define o tamanho da fonte (do alt) para zero */
+    text-indent: -9999px; /* Move o texto do alt para fora da tela (fallback) */
+    color: transparent; /* Torna a cor do texto invisível */
+}
+
+/* Opcional, mas recomendado para o contêiner: */
+.profile-photo-placeholder {
+    overflow: hidden; /* Garante que qualquer resquício de texto seja cortado */
 }
 
 .profile-photo-placeholder:hover {

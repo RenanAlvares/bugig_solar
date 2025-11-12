@@ -838,3 +838,38 @@ body {
 .frase-impacto {
   text-align: center;
 }
+
+/* 1. Título e Subtítulo (Alinhados à Esquerda) */
+.titulo-principal {
+    color: #ffcc00; /* Cor amarela para destaque */
+    text-align: center; /* Alinhamento à esquerda */
+    font-size: 2.0em; /* Tamanho maior para o título */
+}
+
+/* 2. Frase Centralizada */
+.frase-centralizada {
+    display: flex;
+    text-align: center; /* Alinhamento centralizado */
+    margin: 20px 0; /* Espaço acima e abaixo */
+    margin-left: 20px;
+    font-size: 1.2em;
+}
+
+/* 3. Parágrafo Final (Alinhado à Esquerda) */
+.paragrafo-final {
+    margin-right: 40px;
+    text-align: center; /* Alinhamento à esquerda */
+    font-size: 1.1em;
+}
+
+.metrica-card p{
+  text-align: center;
+}
+
+.btn_saiba{
+  margin-right: 40px;
+}
+
+.card-texto h3{
+  text-align: center;
+}

@@ -7,6 +7,7 @@
   --preto-suave: #141414;
   --amarelo: #F2B705;
   --amarelo-hover: #ffc800;
+  --amarelo-neon: #ffed4e;
   --branco: #ffffff;
   --cinza-escuro: #1e1e1e;
   --cinza-claro: #cccccc;
@@ -65,6 +66,128 @@ main::after {
   pointer-events: none;
 }
 
+/* Partículas flutuantes no background */
+main .floating-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--amarelo);
+  border-radius: 50%;
+  box-shadow: 0 0 15px var(--amarelo-neon);
+  animation: float-background 15s ease-in-out infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+
+main .floating-particle:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 12s;
+}
+
+main .floating-particle:nth-child(2) {
+  left: 20%;
+  animation-delay: 2s;
+  animation-duration: 14s;
+}
+
+main .floating-particle:nth-child(3) {
+  left: 30%;
+  animation-delay: 4s;
+  animation-duration: 13s;
+}
+
+main .floating-particle:nth-child(4) {
+  left: 40%;
+  animation-delay: 1s;
+  animation-duration: 15s;
+}
+
+main .floating-particle:nth-child(5) {
+  left: 50%;
+  animation-delay: 3s;
+  animation-duration: 16s;
+}
+
+main .floating-particle:nth-child(6) {
+  left: 60%;
+  animation-delay: 5s;
+  animation-duration: 14s;
+}
+
+main .floating-particle:nth-child(7) {
+  left: 70%;
+  animation-delay: 2.5s;
+  animation-duration: 13s;
+}
+
+main .floating-particle:nth-child(8) {
+  left: 80%;
+  animation-delay: 4.5s;
+  animation-duration: 15s;
+}
+
+main .floating-particle:nth-child(9) {
+  left: 90%;
+  animation-delay: 1.5s;
+  animation-duration: 14s;
+}
+
+main .floating-particle:nth-child(10) {
+  left: 15%;
+  animation-delay: 6s;
+  animation-duration: 13s;
+}
+
+main .floating-particle:nth-child(11) {
+  left: 25%;
+  animation-delay: 3.5s;
+  animation-duration: 16s;
+}
+
+main .floating-particle:nth-child(12) {
+  left: 35%;
+  animation-delay: 5.5s;
+  animation-duration: 12s;
+}
+
+main .floating-particle:nth-child(13) {
+  left: 45%;
+  animation-delay: 2.2s;
+  animation-duration: 15s;
+}
+
+main .floating-particle:nth-child(14) {
+  left: 55%;
+  animation-delay: 4.2s;
+  animation-duration: 14s;
+}
+
+main .floating-particle:nth-child(15) {
+  left: 65%;
+  animation-delay: 6.2s;
+  animation-duration: 13s;
+}
+
+@keyframes float-background {
+  0% {
+    bottom: -5%;
+    opacity: 0;
+    transform: translateY(0) scale(1);
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    bottom: 105%;
+    opacity: 0;
+    transform: translateY(-100px) scale(0.3);
+  }
+}
+
 @keyframes pulse-error {
   0%, 100% { 
     transform: scale(1) rotate(0deg); 
@@ -111,13 +234,13 @@ main::after {
 
 .error-header {
   position: relative;
-  margin-bottom: 0;
+  margin-bottom: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
+  gap: 4rem;
   flex-wrap: nowrap;
-  max-width: 1400px;
+  max-width: 1200px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -125,31 +248,280 @@ main::after {
 }
 
 /* ===================================================
-   MASCOTE (IMAGEM DO ROBÔ)
+   BATERIA ESTÁTICA
    =================================================== */
 
 .mascote-container {
   position: relative;
-  width: 450px;
-  height: 450px;
+  width: 280px;
+  height: 420px;
   flex-shrink: 0;
-  margin-right: 0;
-}
-
-.mascote {
-  width: 100%;
-  height: 100%;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.mascote img {
+.battery-container {
+  position: relative;
+  width: 200px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.5));
+}
+
+/* Terminal da bateria (topo) */
+.battery-terminal {
+  width: 80px;
+  height: 25px;
+  background: linear-gradient(180deg, #4a4a4a 0%, #2a2a2a 100%);
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Corpo da bateria */
+.battery-body {
+  width: 200px;
+  height: 325px;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  border: 5px solid #3a3a3a;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 0 40px rgba(0, 0, 0, 0.9),
+    0 15px 50px rgba(0, 0, 0, 0.7);
+}
+
+/* Nível da bateria (líquido com animação) */
+.battery-level {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 15%;
+  background: linear-gradient(180deg, 
+    #ff4444 0%, 
+    #cc0000 100%);
+  animation: drain 8s ease-out forwards;
+  box-shadow: 
+    0 0 40px rgba(255, 68, 68, 0.6),
+    inset 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+/* Onda no topo do líquido */
+.battery-level::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -50%;
+  width: 200%;
+  height: 20px;
+  background: radial-gradient(ellipse at center, 
+    rgba(255, 255, 255, 0.4) 0%, 
+    transparent 70%);
+  animation: wave 3s ease-in-out infinite;
+}
+
+/* Brilho interno */
+.battery-level::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    transparent 100%);
+  animation: shine 2s ease-in-out infinite;
+}
+
+@keyframes drain {
+  0% { 
+    height: 90%; 
+    background: linear-gradient(180deg, 
+      var(--amarelo-neon) 0%, 
+      var(--amarelo-hover) 40%,
+      var(--amarelo) 100%);
+    box-shadow: 
+      0 0 40px rgba(255, 237, 78, 0.6),
+      inset 0 0 30px rgba(255, 255, 255, 0.3);
+  }
+  60% {
+    height: 30%;
+    background: linear-gradient(180deg, 
+      var(--amarelo-neon) 0%, 
+      var(--amarelo-hover) 40%,
+      var(--amarelo) 100%);
+    box-shadow: 
+      0 0 40px rgba(255, 237, 78, 0.6),
+      inset 0 0 30px rgba(255, 255, 255, 0.3);
+  }
+  100% { 
+    height: 15%; 
+    background: linear-gradient(180deg, 
+      #ff4444 0%, 
+      #cc0000 100%);
+    box-shadow: 
+      0 0 40px rgba(255, 68, 68, 0.8),
+      inset 0 0 30px rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes wave {
+  0%, 100% { 
+    transform: translateX(0) translateY(0); 
+  }
+  50% { 
+    transform: translateX(-25%) translateY(-3px); 
+  }
+}
+
+@keyframes shine {
+  0%, 100% { 
+    opacity: 0.3; 
+  }
+  50% { 
+    opacity: 0.8; 
+  }
+}
+
+/* Símbolo de alerta com animação */
+.battery-percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--branco);
+  text-shadow: 
+    0 0 20px rgba(255, 85, 85, 0.8),
+    0 0 40px rgba(255, 85, 85, 0.4);
+  z-index: 10;
+  animation: blink-critical 1.5s ease-in-out infinite;
+}
+
+@keyframes blink-critical {
+  0%, 100% { 
+    opacity: 1; 
+    text-shadow: 
+      0 0 20px rgba(255, 68, 68, 0.8),
+      0 0 40px rgba(255, 68, 68, 0.5);
+  }
+  50% { 
+    opacity: 0.6; 
+    text-shadow: 
+      0 0 30px rgba(255, 68, 68, 1),
+      0 0 60px rgba(255, 68, 68, 0.8);
+  }
+}
+
+/* Ícone de alerta no topo com animação */
+.warning-icon {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, var(--amarelo) 0%, var(--amarelo-hover) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 25px rgba(242, 183, 5, 0.5);
+  animation: pulse-warning 1.5s ease-in-out infinite;
+}
+
+.warning-icon i {
+  font-size: 1.3rem;
+  color: var(--preto);
+}
+
+@keyframes pulse-warning {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 5px 25px rgba(242, 183, 5, 0.5);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 8px 35px rgba(242, 183, 5, 0.8);
+  }
+}
+
+/* Remover partículas mas manter energia da bateria */
+.energy-particles {
+  position: absolute;
   width: 100%;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+  height: 100%;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--amarelo-neon);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--amarelo-neon);
+  animation: float-up 3s ease-in infinite;
+  opacity: 0;
+}
+
+.particle:nth-child(1) {
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.particle:nth-child(2) {
+  left: 40%;
+  animation-delay: 0.5s;
+}
+
+.particle:nth-child(3) {
+  left: 60%;
+  animation-delay: 1s;
+}
+
+.particle:nth-child(4) {
+  left: 80%;
+  animation-delay: 1.5s;
+}
+
+.particle:nth-child(5) {
+  left: 30%;
+  animation-delay: 2s;
+}
+
+.particle:nth-child(6) {
+  left: 70%;
+  animation-delay: 2.5s;
+}
+
+@keyframes float-up {
+  0% {
+    bottom: 0;
+    opacity: 0;
+    transform: translateY(0) scale(1);
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    bottom: 100%;
+    opacity: 0;
+    transform: translateY(-50px) scale(0.5);
+  }
 }
 
 /* ===================================================
@@ -177,8 +549,8 @@ main::after {
    =================================================== */
 
 .error-icon {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
   border-radius: 50%;
   display: flex;
@@ -189,7 +561,7 @@ main::after {
 }
 
 .error-icon i {
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: var(--preto);
 }
 
@@ -198,7 +570,7 @@ main::after {
    =================================================== */
 
 .error-page h1 {
-  font-size: clamp(4rem, 12vw, 8rem);
+  font-size: clamp(5rem, 15vw, 10rem);
   font-weight: 900;
   background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
   -webkit-background-clip: text;
@@ -280,13 +652,27 @@ main::after {
 
 @media (max-width: 1024px) {
   .error-header {
-    gap: 2.5rem;
+    gap: 3rem;
     padding: 0;
   }
 
   .mascote-container {
-    width: 380px;
+    width: 260px;
     height: 380px;
+  }
+
+  .battery-container {
+    width: 180px;
+    height: 320px;
+  }
+
+  .battery-body {
+    width: 180px;
+    height: 295px;
+  }
+
+  .battery-percentage {
+    font-size: 3rem;
   }
 
   .error-icon {
@@ -302,19 +688,49 @@ main::after {
 @media (max-width: 768px) {
   .error-page {
     padding: 2rem 1.5rem;
-    gap: 1.2rem;
+    gap: 1.5rem;
   }
 
   .error-header {
-    gap: 2rem;
+    gap: 2.5rem;
     flex-direction: column;
     justify-content: center;
     padding: 0;
+    margin-bottom: 1rem;
   }
 
   .mascote-container {
-    width: 300px;
-    height: 300px;
+    width: 240px;
+    height: 320px;
+  }
+
+  .battery-container {
+    width: 150px;
+    height: 260px;
+  }
+
+  .battery-body {
+    width: 150px;
+    height: 240px;
+  }
+
+  .battery-terminal {
+    width: 60px;
+    height: 20px;
+  }
+
+  .battery-percentage {
+    font-size: 2.5rem;
+  }
+
+  .warning-icon {
+    width: 35px;
+    height: 35px;
+    top: -40px;
+  }
+
+  .warning-icon i {
+    font-size: 1rem;
   }
 
   .error-icon {
@@ -333,7 +749,8 @@ main::after {
 
 @media (max-width: 480px) {
   .error-header {
-    gap: 1.5rem;
+    gap: 2rem;
+    margin-bottom: 0.5rem;
   }
 
   .error-page {
@@ -341,8 +758,37 @@ main::after {
   }
 
   .mascote-container {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 280px;
+  }
+
+  .battery-container {
+    width: 120px;
+    height: 210px;
+  }
+
+  .battery-body {
+    width: 120px;
+    height: 190px;
+  }
+
+  .battery-terminal {
+    width: 50px;
+    height: 18px;
+  }
+
+  .battery-percentage {
+    font-size: 2rem;
+  }
+
+  .warning-icon {
+    width: 30px;
+    height: 30px;
+    top: -35px;
+  }
+
+  .warning-icon i {
+    font-size: 0.9rem;
   }
 
   .code-with-icon {
