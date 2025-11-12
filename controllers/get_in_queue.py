@@ -1,6 +1,7 @@
 from datetime import datetime
+from sqlalchemy import and_, or_
 from . import auth_bp
-from flask import render_template, redirect, url_for
+from flask import flash, render_template, redirect, url_for
 from controllers.login import user_owns_resource
 from forms.form_queue import FormQueue
 from models_DB.donation_queue import Queue
@@ -54,6 +55,23 @@ def get_in_queue(user_id):
         transfer() # <- função que faz a consulta se há pendencias para gerar transferencia.
 
         db.session.commit()
+
+        posicao = (
+            Queue.query.filter(
+                and_(
+                    Queue.status == True,
+                    or_(
+                        Queue.data_solicitacao < entrar_fila.data_solicitacao,
+                        and_(
+                            Queue.data_solicitacao == entrar_fila.data_solicitacao,
+                            Queue.id < entrar_fila.id
+                        )
+                    )
+                )
+            ).count()
+        ) + 1 
+
+        flash(f'Parabéns, você entrou na fila com sucesso!', 'success')
 
         return redirect(url_for('auth.menu_benef', user_id=user_id)) # após entrar na fila retorna para a tela de menu principal
     return render_template('queue.html', form_queue=form_queue, user_id=user_id, titulo=titulo)
