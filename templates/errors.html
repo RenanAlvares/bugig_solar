@@ -1,27 +1,57 @@
 {% extends "base.html" %}
 
-
 {% block head_extra %}
 <link rel="stylesheet" href="{{ url_for('static', filename='style/errors.css') }}">
 {% endblock %}
 
-
 {% block content %}
 <main>
+    <!-- Partículas flutuantes no background -->
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+    <span class="floating-particle"></span>
+
     <div class="error-page">
         <div class="error-header">
+            <!-- Bateria Animada -->
             <div class="mascote-container">
-                <div class="mascote">
-                    <img src="{{ url_for('static', filename='Imagens/robo-quebrado.png') }}" alt="Robô com erro">
+                <div class="battery-container">
+                    <div class="warning-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="battery-terminal"></div>
+                    <div class="battery-body">
+                        <div class="battery-level"></div>
+                        <div class="battery-percentage">!</div>
+                        <div class="energy-particles">
+                            <span class="particle"></span>
+                            <span class="particle"></span>
+                            <span class="particle"></span>
+                            <span class="particle"></span>
+                            <span class="particle"></span>
+                            <span class="particle"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
             
+            <!-- Código do Erro -->
             <div class="error-code-container">
                 <div class="code-with-icon">
-                    <div class="error-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h1>{{ code }}</h1>
+
+                    <h1 data-text="{{ code }}">{{ code }}</h1>
                 </div>
             </div>
         </div>
