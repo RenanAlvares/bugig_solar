@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads', 'fotos_perfil')
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-app.config.from_pyfile('config.py')
+app.config.from_pyfile('Config.py')
 
 db.init_app(app)
 csrf.init_app(app)
