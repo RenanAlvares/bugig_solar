@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
+# Script de build para o Render
 set -o errexit
 
-# Instala dependências
+echo "📦 Instalando dependências..."
 pip install -r requirements.txt
 
-# Inicializa banco (só na primeira vez)
+echo "🗄️  Inicializando banco de dados..."
 python init_db.py
 
-# Dar permissão Linux / Mac
-chmod +x build.sh
+echo "✅ Build concluído!"
