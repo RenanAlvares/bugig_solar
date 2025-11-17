@@ -35,9 +35,9 @@ USO:
     python init_db.py --reset      # apaga e recria tudo (CUIDADO!)
 """
 
-import sys
+'''import sys
 import os
-from Main import app
+from main import app
 from extensions import db
 from models_DB.users import UsersDb
 from models_DB.companies import Companies
@@ -247,3 +247,4 @@ if __name__ == '__main__':
         import traceback
         traceback.print_exc()
         sys.exit(1)
+'''

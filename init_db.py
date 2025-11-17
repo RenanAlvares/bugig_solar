@@ -12,7 +12,7 @@ USO:
 
 import sys
 import os
-from Main import app
+from main import app
 from extensions import db
 from models_DB.users import UsersDb
 from models_DB.companies import Companies
