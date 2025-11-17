@@ -1,0 +1,1 @@
+#arquivo para o render entender que pode puxar o main direto, sem utilizar '.'
