@@ -94,20 +94,3 @@ def transfer():
         create_payment_per_transfer(transferencia)
 
     # NÃO FAZ COMMIT AQUI - o commit será feito em get_in_queue
-
-
-def valida_mes_fila_doacao():
-    mes_atual, ano_atual = datetime.now().month, datetime.now().year
-    doacoes = Donation.query.filter_by(status=True).all()
-
-    for doacao in doacoes:
-        if (doacao.data_doacao.year, doacao.data_doacao.month) != (ano_atual, mes_atual):
-            doacao.status = False
-
-    filas = Queue.query.filter_by(status=True).all()
-
-    for fila in filas:
-        if (fila.data_solicitacao.year, fila.data_solicitacao.month) != (ano_atual, mes_atual):
-            fila.status = False
-
-    # NÃO FAZ COMMIT AQUI
