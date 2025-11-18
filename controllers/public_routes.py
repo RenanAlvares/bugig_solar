@@ -32,7 +32,7 @@ def landing_page():
 
 
     return render_template(
-        'LandingPage.html', 
+        'landing_page.html', 
         qtd_users=usuarios, 
         qtd_creditos=qtd_creditos,
         qtd_recebidos=qtd_recebidos
