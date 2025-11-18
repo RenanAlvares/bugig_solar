@@ -9,17 +9,17 @@ from models_DB.users import UsersDb as Usuarios  # alterei para usuarios pq fiz 
 def valida_mes_fila_doacao():
 
     mes_atual, ano_atual = datetime.now().month, datetime.now().year
-    doacoes = Donation.query.filter_by(status=1).all()
+    doacoes = Donation.query.filter_by(status=True).all()
 
     for doacao in doacoes:
         if (doacao.data_doacao.year, doacao.data_doacao.month) != (ano_atual, mes_atual):
-            doacao.status = 0 # expirou a dooacao daquele mes
+            doacao.status = False # expirou a dooacao daquele mes
 
-    filas = Queue.query.filter_by(status=1).all()
+    filas = Queue.query.filter_by(status=True).all()
 
     for fila in filas:
         if (fila.data_solicitacao.year, fila.data_solicitacao.month) != (ano_atual, mes_atual):
-            fila.status = 0 # expirou a fila daquele mes
+            fila.status = False # expirou a fila daquele mes
 
     db.session.flush()
 
@@ -42,7 +42,7 @@ def create_payment_per_transfer(transfer: Transfer):
 
 def transfer():
     valida_mes_fila_doacao()
-    doacoes = Donation.query.filter_by(status=1).order_by(Donation.data_doacao.asc()).all()
+    doacoes = Donation.query.filter_by(status=True).order_by(Donation.data_doacao.asc()).all()
 
     if not doacoes:
         return
@@ -55,7 +55,7 @@ def transfer():
             .join(Beneficiaries, Beneficiaries.id == Queue.id_beneficiario)
             .join(Usuarios, Usuarios.id == Beneficiaries.id_user)
             .filter(
-                Queue.status == 1,
+                Queue.status == True,
                 Usuarios.id_distribuidora == gen_distribuidora
             )
             .order_by(Queue.data_solicitacao.asc())
@@ -73,12 +73,12 @@ def transfer():
         # Atualiza a doação
         doacao.quantidade_disponivel -= qtd_transferencia
         if doacao.quantidade_disponivel <= 0:
-            doacao.status = 0
+            doacao.status = False
 
         # Atualiza a fila
         fila.quantidade_recebida += qtd_transferencia
         if fila.quantidade_recebida >= fila.quantidade_solicitada:
-            fila.status = 0
+            fila.status = False
 
         # Cria a transferência
         transferencia = Transfer(
@@ -98,16 +98,16 @@ def transfer():
 
 def valida_mes_fila_doacao():
     mes_atual, ano_atual = datetime.now().month, datetime.now().year
-    doacoes = Donation.query.filter_by(status=1).all()
+    doacoes = Donation.query.filter_by(status=True).all()
 
     for doacao in doacoes:
         if (doacao.data_doacao.year, doacao.data_doacao.month) != (ano_atual, mes_atual):
-            doacao.status = 0
+            doacao.status = False
 
-    filas = Queue.query.filter_by(status=1).all()
+    filas = Queue.query.filter_by(status=True).all()
 
     for fila in filas:
         if (fila.data_solicitacao.year, fila.data_solicitacao.month) != (ano_atual, mes_atual):
-            fila.status = 0
+            fila.status = False
 
     # NÃO FAZ COMMIT AQUI
