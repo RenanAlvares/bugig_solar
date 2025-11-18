@@ -48,9 +48,12 @@ def make_donation(user_id):
         )
 
         db.session.add(nova_doacao)
-        db.session.commit()
 
+        db.session.flush()
+        
         transfer() # <- função que faz a consulta se há pendencias para gerar transferencia.
+
+        db.session.commit()
 
         return redirect(url_for('auth.menu_gen', user_id=user_id)) # após doar retorna para a tela de menu principal
 
