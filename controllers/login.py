@@ -63,7 +63,7 @@ def signin():
         if erros:
             for campo, msg in erros.items():
                 getattr(form, campo).errors.append(msg)
-            return render_template('Cadastro.html', titulo=titulo, form=form)
+            return render_template('cadastro.html', titulo=titulo, form=form)
 
         # Preparando dados para salvar
         nome = form.nome.data
@@ -88,7 +88,7 @@ def signin():
         # Verifica se o e-mail já existe
         if UsersDb.query.filter_by(email=email).first():
             flash('O e-mail informado já está em uso. Por favor, utilize outro e-mail.', 'danger')
-            return render_template('Cadastro.html', titulo=titulo, form=form)
+            return render_template('cadastro.html', titulo=titulo, form=form)
 
         # cria o novo usuário
         novo_usuario = UsersDb(
@@ -115,7 +115,7 @@ def signin():
             
             if extensao not in {'png', 'jpg', 'jpeg'}:
                 flash('Formato de imagem inválido. Envie PNG, JPG ou JPEG.', 'danger')
-                return render_template('Cadastro.html', titulo=titulo, form=form)
+                return render_template('cadastro.html', titulo=titulo, form=form)
 
             # Define a pasta de upload
             folder = current_app.config.get('UPLOAD_FOLDER', os.path.join('static', 'uploads', 'fotos_perfil'))
@@ -147,7 +147,7 @@ def signin():
         else:  # Gerador
             return redirect(url_for('auth.signin_gen', user_id=novo_usuario.id))
 
-    return render_template('Cadastro.html', titulo=titulo, form=form)
+    return render_template('cadastro.html', titulo=titulo, form=form)
 
 # rota de login 
 @auth_bp.route('/login', methods=['POST', 'GET'])
@@ -158,7 +158,7 @@ def login():
     if os.path.exists(current_app.template_folder):
         print("🔍 DEBUG LOGIN - Arquivos:", os.listdir(current_app.template_folder))
     # ====== FIM DEBUG ======
-    
+
     form = FormLogin()
     titulo = 'Login'
 
