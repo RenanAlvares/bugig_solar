@@ -152,6 +152,13 @@ def signin():
 # rota de login 
 @auth_bp.route('/login', methods=['POST', 'GET'])
 def login():
+        # ====== DEBUG TEMPORÁRIO ======
+    print("\n🔍 DEBUG LOGIN - Template folder:", current_app.template_folder)
+    print("🔍 DEBUG LOGIN - Templates existem?", os.path.exists(current_app.template_folder))
+    if os.path.exists(current_app.template_folder):
+        print("🔍 DEBUG LOGIN - Arquivos:", os.listdir(current_app.template_folder))
+    # ====== FIM DEBUG ======
+    
     form = FormLogin()
     titulo = 'Login'
 
