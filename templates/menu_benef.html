@@ -15,69 +15,71 @@
     <!-- 💳 Cards Principais -->
     <div class="dashboard-cards">
       
-      <a href="{{ url_for('auth.get_in_queue', user_id=user_id)}}" class="card">
-        <div class="card-icon"><i class="fa-solid fa-users-line"></i></div>
-        <h3>Entrar na Fila</h3>
-        <p>Garanta seu lugar para receber os próximos créditos de energia.</p>
-      </a>
+      <!-- CARD DA FILA - DESTAQUE NO TOPO -->
+      <div class="queue-status-card">
+        {% if posicao_fila %}
+          <div class="queue-content">
+            <div class="queue-icon-section">
+              <div class="queue-main-icon">
+                <i class="fa-solid fa-users-line"></i>
+              </div>
+              <div class="queue-text">
+                <h3>Você está na fila!</h3>
+                <p>Aguardando para receber os próximos créditos de energia. Fique atento à sua posição.</p>
+              </div>
+            </div>
+            <div class="queue-position">
+              <div class="queue-position-label">Posição Atual</div>
+              <div class="queue-position-number">{{ posicao_fila }}</div>
+            </div>
+          </div>
+        {% else %}
+          <div class="queue-empty-state">
+            <div class="queue-main-icon" style="margin: 0 auto 1.5rem;">
+              <i class="fa-solid fa-users-line"></i>
+            </div>
+            <h3>Você não está na fila no momento</h3>
+            <p>Entre na fila agora para garantir seu lugar e receber os próximos créditos de energia disponíveis.</p>
+            <a href="{{ url_for('auth.get_in_queue', user_id=user_id) }}" class="lp-button">
+              <i class="fa-solid fa-plus-circle" style="margin-right: 8px;"></i>Entrar na Fila
+            </a>
+          </div>
+        {% endif %}
+      </div>
 
+      <!-- CARD: ENTRAR NA FILA (se já estiver na fila) -->
+      {% if posicao_fila %}
+      <a href="{{ url_for('auth.get_in_queue', user_id=user_id) }}" class="card">
+        <div class="card-icon"><i class="fa-solid fa-users-line"></i></div>
+        <h3>Gerenciar Fila</h3>
+        <p>Atualize sua posição ou saia da fila de créditos.</p>
+      </a>
+      {% endif %}
+
+      <!-- CARD: RELATÓRIOS -->
       <a href="{{ url_for('auth.report_benef', user_id=user_id) }}" class="card">
         <div class="card-icon"><i class="fa-solid fa-chart-pie"></i></div>
         <h3>Meus Relatórios</h3>
         <p>Acompanhe seu histórico de créditos e a economia gerada.</p>
       </a>
 
-      <div>
-        {% if posicao_fila %}
-          <h3>Posição atual na fila: {{ posicao_fila }}</h3>
-        {% else %}
-          <h3>Você não está na fila no momento.</h3>
-          <h3>Entre na fila para consultar sua posição atual.</h3>
-        {% endif %}
-      </div>
-
-      <!-- ⚡ Simulador de Economia -->
-      <a href="#" class="card simulador-card">
-        <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
-        <h3>Simulador de Economia</h3>
-        <p>Calcule o quanto você pode economizar na sua conta de luz.</p>
-
-        <div class="simulador">
-          <label for="valorConta">💰 Valor da Conta (R$)</label>
-          <input type="number" id="valorConta" placeholder="Ex: 350" min="0">
-
-          <!-- 🔘 Botões -->
-          <div class="simulador-btns">
-            <button id="calcularBtn">Calcular</button>
-          </div>
-
-          <!-- 📊 Resultados -->
-          <div id="resultadoSimulador" class="resultado">
-            <h4>Resultados Estimados:</h4>
-            <p><strong>Economia Mensal:</strong> <span id="economiaValor">—</span></p>
-            <p><strong>kWh Economizados:</strong> <span id="kwhEconomia">—</span></p>
-            <p><strong>CO₂ Evitado:</strong> <span id="co2Evitado">—</span></p>
-            <p><strong>Economia Anual:</strong> <span id="economiaAnual">—</span></p>
-          </div>
-        </div>
-      </a>
-      
+      <!-- CARD: EDITAR PERFIL -->
       <a href="{{ url_for('auth.edit_user', user_id=user_id) }}" class="card">
         <div class="card-icon"><i class="fa-solid fa-user-pen"></i></div>
         <h3>Editar Perfil</h3>
         <p>Mantenha seus dados cadastrais sempre atualizados.</p>
       </a>
 
+      <!-- CARD: PAGAMENTO -->
       <a href="#" class="card" id="card-pagamento">
-          <div class="card-icon">
-              <i class="fa-solid fa-users-line"></i>
-              {% if pagamento_pendente %}
-                  <!-- Badge de notificação -->
-                  <span class="badge">!</span>
-              {% endif %}
-          </div>
-          <h3>Pagamento</h3>
-          <p>Realize o pagamento da transferência para que possa receber os créditos solicitados.</p>
+        <div class="card-icon">
+          <i class="fa-solid fa-credit-card"></i>
+          {% if pagamento_pendente %}
+            <span class="badge">!</span>
+          {% endif %}
+        </div>
+        <h3>Pagamento</h3>
+        <p>Realize o pagamento da transferência para receber os créditos solicitados.</p>
       </a>
       
     </div>
@@ -87,13 +89,13 @@
   <div id="modal-pagamento" class="modal">
     <div class="modal-content">
       <span class="close" id="fechar-modal">&times;</span>
-      <h2>Pagamento</h2>
+      <h2>💳 Pagamento</h2>
 
       {% if pagamento_pendente %}
         <p><strong>Valor:</strong> R$ {{ pagamento_pendente.valor }}</p>
         <p><strong>Vencimento:</strong> {{ pagamento_pendente.data_vencimento.strftime('%d/%m/%Y') }}</p>
       {% else %}
-        <p>Não há pagamentos pendentes.</p>
+        <p>Não há pagamentos pendentes no momento.</p>
       {% endif %}
 
       {% if pagamento_pendente %}

@@ -112,7 +112,8 @@
                         {{ form.cnpj(class='form-control', readonly='readonly') }}
                     </div>
 
-                    {% if usuario and usuario.id_tipo_user == 2 %}
+                    <!-- Nome Fantasia - APENAS para CNPJ (Gerador - tipo_user 2 E tipo_pessoa 2) -->
+                    {% if usuario and usuario.id_tipo_user == 2 and usuario.id_tipo_pessoa == 2 %}
                     <div class="form-group span-2" id="nome_fantasia_group">
                         {{ form.nome_fantasia.label(class='form-label') }}
                         {{ form.nome_fantasia(class='form-control') }}

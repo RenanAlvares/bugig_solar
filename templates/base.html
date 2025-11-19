@@ -19,13 +19,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
     {% block head_extra %}{% endblock %}
     
     <title>{{ titulo|default('BugigSolar') }}</title>
-
-    
 </head>
 
 <body>
@@ -38,12 +36,39 @@
                     <span>Voltar</span>
                 </button>
 
-                <!-- Logo original -->
-                <a href="{{ url_for('public.landing_page') }}" class="logo">
-                    <i class="fa-solid fa-solar-panel icon"></i>
-                    <span>BUGIGSOLAR</span>
+                <!-- Logo HÍBRIDO (Opção 1 + 3) -->
+                <a href="{{ url_for('public.landing_page') }}" class="logo-option-1">
+                    <div class="logo-icon-svg">
+                        <svg class="solar-panel-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Painel solar com células -->
+                            <rect class="panel-frame" x="10" y="25" width="80" height="50" rx="4"/>
+                            
+                            <!-- Grade de células solares 3x2 -->
+                            <rect class="panel-cell" x="15" y="30" width="18" height="18"/>
+                            <rect class="panel-cell" x="37" y="30" width="18" height="18"/>
+                            <rect class="panel-cell" x="59" y="30" width="18" height="18"/>
+                            <rect class="panel-cell" x="15" y="52" width="18" height="18"/>
+                            <rect class="panel-cell" x="37" y="52" width="18" height="18"/>
+                            <rect class="panel-cell" x="59" y="52" width="18" height="18"/>
+                            
+                            <!-- Sol acima do painel -->
+                            <circle cx="50" cy="15" r="3" fill="#0a0a0a"/>
+                            <line x1="50" y1="5" x2="50" y2="12" stroke="#0a0a0a" stroke-width="2"/>
+                            <line x1="65" y1="10" x2="58" y2="15" stroke="#0a0a0a" stroke-width="2"/>
+                            <line x1="35" y1="10" x2="42" y2="15" stroke="#0a0a0a" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text-1">
+                        <span class="brand-name">BUGIGSOLAR</span>
+                        <span class="brand-tagline">Energia Limpa</span>
+                    </div>
                 </a>
             </div>
+
+            <!-- BOTÃO HAMBÚRGUER (MOBILE) -->
+            <button id="mobile_btn" aria-label="Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
 
             <div id="itens_nav">
                 {% set public_endpoints = ['public.landing_page', 'public.about', 'auth.login', 'auth.signin'] %}
@@ -73,18 +98,19 @@
 
     <footer>
         <div id="itens-footer">
+            <!-- Copyright e Links -->
             <div class="footer-content">
                 <p>&copy; 2025 BugigSolar. Todos os direitos reservados.</p>
-                <p><a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
-            </div>
-            <div class="social-media-buttons">
-                <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <div class="links-row">
+                    <a href="#">Termos de Uso</a>
+                    <span class="separator">|</span>
+                    <a href="#">Política de Privacidade</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- Script de alertas -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const alerts = document.querySelectorAll(".alert");
@@ -97,6 +123,74 @@
                     setTimeout(() => alert.remove(), 800);
                 }, 8000);
             });
+        });
+    </script>
+
+    <!-- Script do Menu Mobile -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const mobileBtn = document.getElementById('mobile_btn');
+            const itensNav = document.getElementById('itens_nav');
+            const body = document.body;
+            
+            if (mobileBtn && itensNav) {
+                // Toggle menu
+                mobileBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const icon = mobileBtn.querySelector('i');
+                    
+                    itensNav.classList.toggle('active');
+                    
+                    if (itensNav.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                        body.style.overflow = 'hidden';
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                        body.style.overflow = '';
+                    }
+                });
+                
+                // Fecha ao clicar nos links
+                const links = itensNav.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            itensNav.classList.remove('active');
+                            const icon = mobileBtn.querySelector('i');
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                            body.style.overflow = '';
+                        }
+                    });
+                });
+                
+                // Fecha ao clicar fora
+                document.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768 && 
+                        itensNav.classList.contains('active') &&
+                        !itensNav.contains(e.target) && 
+                        !mobileBtn.contains(e.target)) {
+                        itensNav.classList.remove('active');
+                        const icon = mobileBtn.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                        body.style.overflow = '';
+                    }
+                });
+                
+                // Fecha ao redimensionar
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 768) {
+                        itensNav.classList.remove('active');
+                        const icon = mobileBtn.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                        body.style.overflow = '';
+                    }
+                });
+            }
         });
     </script>
 
