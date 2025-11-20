@@ -153,6 +153,7 @@
 
             <div class="btn-container mt-3">
                 <a href="{{ url_for('auth.menu_benef', user_id=user_id) if usuario.id_tipo_user == 1 else url_for('auth.menu_gen', user_id=user_id) }}" class="btn btn-default">Voltar ao Menu</a>
+                <a href="{{ url_for('auth.delete_account', user_id=user_id)}}" class="btn btn-default">Excluir Conta</a>                
                 <button type="submit" class="btn btn-default">Salvar Alterações</button>
             </div>
 

@@ -37,13 +37,10 @@ def report_gen(user_id):
 @auth_bp.route('/<int:user_id>/download-report')
 @user_owns_resource('user_id')
 def download_report(user_id):
-    from flask import abort
+    from flask import abort, send_file
     import io
+    import csv
     from datetime import datetime
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib import colors
-    from reportlab.lib.pagesizes import A4
 
     benef = Beneficiaries.query.filter_by(id_user=user_id).first()
     gen = Generators.query.filter_by(id_user=user_id).first()
@@ -55,153 +52,90 @@ def download_report(user_id):
     else:
         abort(404)
 
-    buffer = io.BytesIO()
-    doc = SimpleDocTemplate(
-        buffer,
-        pagesize=A4,
-        leftMargin=2 * cm,
-        rightMargin=2 * cm,
-        topMargin=2 * cm,
-        bottomMargin=2 * cm
-    )
-    styles = getSampleStyleSheet()
+    # Criar buffer de texto para o CSV
+    output = io.StringIO()
+    writer = csv.writer(output, delimiter=';', quoting=csv.QUOTE_MINIMAL)
 
-    titulo_style = ParagraphStyle(
-        'Titulo',
-        parent=styles['Heading1'],
-        textColor="#F2B705",
-        alignment=1,
-        fontSize=20,
-        spaceAfter=20,
-    )
-
-    normal_style = ParagraphStyle(
-        'NormalCustom',
-        parent=styles['Normal'],
-        textColor="#111",
-        fontSize=12,
-        leading=18,
-    )
-
+    # Cabeçalho do relatório
     titulo = "Relatório do Beneficiário" if tipo_usuario == 1 else "Relatório do Gerador"
-
-    elements = [
-        Paragraph(f"<b>{titulo}</b>", titulo_style),
-        Spacer(1, 0.5 * cm),
-        Paragraph(f"Data de geração: {datetime.now().strftime('%d/%m/%Y %H:%M')}", normal_style),
-        Spacer(1, 1.0 * cm),
-    ]
+    writer.writerow([titulo])
+    writer.writerow([f"Data de geração: {datetime.now().strftime('%d/%m/%Y %H:%M')}"])
+    writer.writerow([])  # Linha em branco
 
     # ========== RELATÓRIO DO BENEFICIÁRIO ==========
     if tipo_usuario == 1:
         fila = Queue.query.filter_by(id_beneficiario=benef.id).order_by(Queue.data_solicitacao.desc()).all()
 
         if not fila:
-            elements.append(Paragraph("Nenhum registro encontrado na sua fila.", normal_style))
+            writer.writerow(["Nenhum registro encontrado na sua fila."])
         else:
-            # ✅ Nova coluna "Quantidade Solicitada"
-            data = [
-                ["Data", 
-                "Quantidade Solicitada", 
-                "Créditos Recebidos", 
-                "Valor Economizado", 
-                "Status"]
-            ]
+            # Cabeçalho da tabela
+            writer.writerow([
+                "Data",
+                "Quantidade Solicitada (KWh)",
+                "Créditos Recebidos (KWh)",
+                "Valor Economizado (R$)",
+                "Status"
+            ])
 
+            # Dados
             for pos in fila:
                 data_solic = pos.data_solicitacao.strftime("%d/%m/%Y") if pos.data_solicitacao else "—"
                 qtd_solicitada = pos.quantidade_solicitada or 0
                 qtd_recebida = pos.quantidade_recebida or 0
                 valor = f"{qtd_recebida * 0.90:.2f}" if qtd_recebida else "—"
                 status_text = "Concluído" if not pos.status else "Pendente"
-                data.append([
+                
+                writer.writerow([
                     data_solic,
-                    f"{qtd_solicitada} KWh",
-                    f"{qtd_recebida} KWh",
-                    f"{valor} R$",
+                    qtd_solicitada,
+                    qtd_recebida,
+                    valor,
                     status_text
                 ])
-
-            # ✅ Aumentando o espaçamento entre colunas
-            tabela = Table(
-                data,
-                colWidths=[3.2 * cm, 5 * cm, 5 * cm, 4 * cm, 3 * cm],
-                repeatRows=1  # repete cabeçalho se o relatório for grande
-            )
-            tabela.hAlign = 'CENTER'
-
-            estilo_tabela = TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), colors.Color(0.95, 0.72, 0.02)),
-                ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
-                ('FONTSIZE', (0, 0), (-1, -1), 11),
-                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                ('TOPPADDING', (0, 1), (-1, -1), 10),
-                ('BOTTOMPADDING', (0, 1), (-1, -1), 10),
-                ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
-                ('BOX', (0, 0), (-1, -1), 1.2, colors.gray),
-                ('GRID', (0, 0), (-1, -1), 0.7, colors.gray),
-            ])
-
-            for i, pos in enumerate(fila, start=1):
-                cor = colors.green if not pos.status else colors.red
-                estilo_tabela.add('TEXTCOLOR', (-1, i), (-1, i), cor)
-
-            tabela.setStyle(estilo_tabela)
-            elements.append(Spacer(1, 0.7 * cm))
-            elements.append(tabela)
-            elements.append(Spacer(1, 1.0 * cm))
-
 
     # ========== RELATÓRIO DO GERADOR ==========
     else:
         doacoes = Donation.query.filter_by(id_gerador=gen.id).order_by(Donation.data_doacao.desc()).all()
 
         if not doacoes:
-            elements.append(Paragraph("Nenhuma doação encontrada para este gerador.", normal_style))
+            writer.writerow(["Nenhuma doação encontrada para este gerador."])
         else:
-            data = [["Data", "Quantidade Doada", "Quantidade Disponível", "Status"]]
+            # Cabeçalho da tabela
+            writer.writerow([
+                "Data",
+                "Quantidade Doada (KWh)",
+                "Quantidade Disponível (KWh)",
+                "Status"
+            ])
 
+            # Dados
             for d in doacoes:
                 data_doacao = d.data_doacao.strftime("%d/%m/%Y") if d.data_doacao else "—"
                 qtd_doada = d.quantidade_doacao or 0
                 qtd_disp = d.quantidade_disponivel or 0
                 status_text = "Concluído" if not d.status else "Pendente"
-                data.append([f'{data_doacao}', f'{qtd_doada} KWh', f'{qtd_disp} KWh', status_text])
+                
+                writer.writerow([
+                    data_doacao,
+                    qtd_doada,
+                    qtd_disp,
+                    status_text
+                ])
 
-            tabela = Table(data, colWidths=[4 * cm, 5.5 * cm, 5.5 * cm, 4 * cm])
-
-            estilo_tabela = TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), colors.Color(0.95, 0.72, 0.02)),
-                ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
-                ('FONTSIZE', (0, 0), (-1, -1), 11),
-                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                ('TOPPADDING', (0, 1), (-1, -1), 10),
-                ('BOTTOMPADDING', (0, 1), (-1, -1), 10),
-                ('BACKGROUND', (0, 1), (-1, -1), colors.whitesmoke),
-                ('BOX', (0, 0), (-1, -1), 1.2, colors.gray),
-                ('GRID', (0, 0), (-1, -1), 0.7, colors.gray),
-            ])
-
-            for i, d in enumerate(doacoes, start=1):
-                cor = colors.green if not d.status else colors.red
-                estilo_tabela.add('TEXTCOLOR', (-1, i), (-1, i), cor)
-
-            tabela.setStyle(estilo_tabela)
-            elements.append(Spacer(1, 0.7 * cm))
-            elements.append(tabela)
-            elements.append(Spacer(1, 1.0 * cm))
-
-    doc.build(elements)
-    buffer.seek(0)
+    # Preparar o arquivo para download
+    output.seek(0)
+    
+    # Converter StringIO para BytesIO com encoding UTF-8 + BOM (para Excel)
+    csv_bytes = io.BytesIO()
+    csv_bytes.write('\ufeff'.encode('utf-8'))  # BOM para UTF-8
+    csv_bytes.write(output.getvalue().encode('utf-8'))
+    csv_bytes.seek(0)
 
     nome = "beneficiario" if tipo_usuario == 1 else "gerador"
     return send_file(
-        buffer,
+        csv_bytes,
         as_attachment=True,
-        download_name=f"relatorio_{nome}_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
-        mimetype='application/pdf'
+        download_name=f"relatorio_{nome}_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
+        mimetype='text/csv'
     )
