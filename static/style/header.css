@@ -1,5 +1,5 @@
 /* ==============================================
-   BUGIGSOLAR - CSS HEADER UNIFICADO (MAIOR PRIORIDADE)
+   BUGIGSOLAR - CSS HEADER RESPONSIVO COM MENU HAMBÚRGUER
    ============================================== */
 
 /* --- CORRECAO CRITICA DO SCROLL DUPLICADO --- */
@@ -65,39 +65,6 @@ header {
     height: 100% !important;
 }
 
-/* Logo e estruturas relacionadas */
-#navbar .logo,
-#nav_logo {
-    font-size: 1.5rem !important;
-    font-weight: 800 !important;
-    color: var(--cor-texto-principal) !important;
-    text-decoration: none !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 0.5rem !important;
-}
-
-#navbar .logo .icon,
-#navbar .logo i {
-    color: var(--cor-amarelo-solar) !important;
-    font-size: 1.5rem !important;
-}
-
-#nav_logo h1 {
-    font-size: 1.5rem !important;
-    color: var(--cor-amarelo-solar) !important;
-    font-weight: 800 !important;
-    margin: 0 !important;
-    line-height: 1 !important;
-}
-
-#nav_logo p {
-    font-size: 0.85rem !important;
-    color: var(--cor-texto-secundario) !important;
-    margin: 0 !important;
-    line-height: 1 !important;
-}
-
 /* --- ESTILO DO BOTAO VOLTAR --- */
 #btn-voltar {
     display: flex !important;
@@ -128,6 +95,106 @@ header {
     display: flex !important;
     align-items: center !important;
     gap: 1.2rem !important;
+}
+
+/* ============================================
+   LOGO BUGIGSOLAR - HÍBRIDO (Opção 1 + 3)
+   ============================================ */
+
+.logo-option-1 {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    text-decoration: none !important;
+    padding: 0.5rem !important;
+    transition: transform 0.3s ease !important;
+}
+
+.logo-option-1:hover {
+    transform: translateX(5px) !important;
+}
+
+/* Ícone Hexagonal com SVG */
+.logo-icon-svg {
+    width: 50px !important;
+    height: 50px !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+/* Hexágono com gradiente */
+.logo-icon-svg {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%) !important;
+    background: linear-gradient(135deg, #F2B705, #ffc800) !important;
+    box-shadow: 0 4px 15px rgba(242, 183, 5, 0.3) !important;
+    transition: all 0.5s ease !important;
+}
+
+/* Animação de rotação no hover (da Opção 3) */
+.logo-option-1:hover .logo-icon-svg {
+    transform: rotate(180deg) !important;
+    box-shadow: 0 0 30px rgba(242, 183, 5, 0.6) !important;
+}
+
+/* SVG do painel solar dentro do hexágono */
+.solar-panel-svg {
+    width: 70% !important;
+    height: 70% !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) !important;
+}
+
+.panel-cell {
+    fill: #0a0a0a !important;
+    transition: fill 0.3s ease !important;
+}
+
+.logo-option-1:hover .panel-cell {
+    fill: #1a1a1a !important;
+}
+
+.panel-frame {
+    fill: none !important;
+    stroke: #0a0a0a !important;
+    stroke-width: 2 !important;
+}
+
+/* Texto do logo (da Opção 1) */
+.logo-text-1 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+}
+
+.brand-name {
+    font-size: 1.8rem !important;
+    font-weight: 900 !important;
+    color: #ffffff !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+    transition: color 0.3s ease !important;
+}
+
+.logo-option-1:hover .brand-name {
+    color: #F2B705 !important;
+}
+
+.brand-tagline {
+    font-size: 0.75rem !important;
+    color: #F2B705 !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.1em !important;
+    margin-top: 0.25rem !important;
+    text-transform: uppercase !important;
+    opacity: 0.9 !important;
+    transition: opacity 0.3s ease !important;
+}
+
+.logo-option-1:hover .brand-tagline {
+    opacity: 1 !important;
 }
 
 /* --- ITENS DE NAVEGACAO --- */
@@ -188,8 +255,24 @@ a.btn-default:hover,
     color: inherit !important;
 }
 
-#mobile_btn, #mobile_menu {
+/* --- BOTAO HAMBURGUER (ESCONDIDO POR PADRÃO) --- */
+#mobile_btn {
     display: none !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0.5rem !important;
+    z-index: 1001 !important;
+}
+
+#mobile_btn i {
+    color: var(--cor-amarelo-solar) !important;
+    font-size: 1.8rem !important;
+    transition: transform 0.3s ease !important;
+}
+
+#mobile_btn:hover i {
+    transform: scale(1.1) !important;
 }
 
 /* ==== ALERTAS (POPUPS) ==== */
@@ -245,7 +328,86 @@ a.btn-default:hover,
     to { opacity: 0; transform: translateX(50px); }
 }
 
-/* --- RESPONSIVIDADE DO HEADER --- */
+/* Caixa de seleção */
+.form-control, 
+.form-select {
+  background: rgba(40, 40, 40, 0.6) !important;
+  border: 2px solid rgba(242, 183, 5, 0.2) !important;
+  color: var(--branco) !important; 
+  padding: 0.9rem 1.2rem;
+  border-radius: 12px;
+  width: 100%;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus, 
+.form-select:focus {
+  background: rgba(40, 40, 40, 0.8) !important;
+  border-color: var(--amarelo) !important;
+  box-shadow: 0 0 0 4px rgba(242, 183, 5, 0.1) !important;
+  outline: none;
+}
+
+.form-control:hover,
+.form-select:hover {
+  border-color: rgba(242, 183, 5, 0.4) !important;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Select customizado */
+.form-select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F2B705' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 1rem center !important;
+  background-size: 12px !important;
+  appearance: none;
+  padding-right: 2.5rem !important;
+}
+
+.form-select option {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 0.8rem;
+}
+
+/* ============================================
+   RESPONSIVIDADE DO HEADER E LOGO
+   ============================================ */
+
+/* Tablet - 992px */
+@media (max-width: 992px) {
+    header {
+        padding: 1rem 5% !important;
+    }
+    
+    .logo-icon-svg {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    
+    .brand-name {
+        font-size: 1.6rem !important;
+    }
+    
+    .brand-tagline {
+        font-size: 0.7rem !important;
+    }
+    
+    #itens_nav {
+        gap: 1.2rem !important;
+    }
+    
+    #itens_nav a {
+        font-size: 0.95rem !important;
+    }
+}
+
+/* Mobile - 768px */
 @media (max-width: 768px) {
     header {
         min-height: 70px !important;
@@ -253,18 +415,134 @@ a.btn-default:hover,
         padding: 1rem 5% !important;
     }
     
-    #navbar .logo,
-    #nav_logo h1 {
-        font-size: 1.3rem !important;
+    .logo-option-1 {
+        gap: 0.8rem !important;
     }
     
+    .logo-icon-svg {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .brand-name {
+        font-size: 1.4rem !important;
+    }
+    
+    .brand-tagline {
+        font-size: 0.65rem !important;
+    }
+    
+    /* Mostra o botão hambúrguer */
+    #mobile_btn {
+        display: block !important;
+    }
+    
+    /* Esconde o menu desktop e transforma em menu mobile */
     #itens_nav {
-        gap: 1rem !important;
+        position: fixed !important;
+        top: 70px !important;
+        right: -100% !important;
+        width: 280px !important;
+        height: calc(100vh - 70px) !important;
+        background: rgba(17, 17, 17, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        padding: 2rem 1.5rem !important;
+        gap: 1.5rem !important;
+        border-left: 2px solid rgba(242, 183, 5, 0.2) !important;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5) !important;
+        transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+        overflow-y: auto !important;
+    }
+    
+    /* Menu aberto */
+    #itens_nav.active {
+        right: 0 !important;
+    }
+    
+    #itens_nav a {
+        width: 100% !important;
+        padding: 0.8rem 1rem !important;
+        font-size: 1.05rem !important;
+        border-radius: 8px !important;
+        transition: background 0.3s ease, padding-left 0.3s ease !important;
+    }
+    
+    #itens_nav a:hover {
+        background: rgba(242, 183, 5, 0.1) !important;
+        padding-left: 1.5rem !important;
     }
     
     .btn-default,
-    a.btn-default {
-        padding: 0.55rem 1rem !important;
+    a.btn-default,
+    #itens_nav .btn-default {
+        width: 100% !important;
+        padding: 0.9rem 1rem !important;
+        font-size: 1rem !important;
+        text-align: center !important;
+    }
+    
+    /* Botão voltar em mobile */
+    #btn-voltar {
         font-size: 0.9rem !important;
+    }
+    
+    #btn-voltar span {
+        display: none !important;
+    }
+    
+    .logo-area {
+        gap: 0.8rem !important;
+    }
+    
+    /* Alertas em mobile */
+    .alert-container {
+        top: 80px !important;
+        right: 10px !important;
+        left: 10px !important;
+    }
+    
+    .alert {
+        min-width: auto !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Mobile pequeno - 480px */
+@media (max-width: 480px) {
+    header {
+        min-height: 65px !important;
+        max-height: 65px !important;
+        padding: 0.8rem 4% !important;
+    }
+    
+    .logo-icon-svg {
+        width: 35px !important;
+        height: 35px !important;
+    }
+    
+    .brand-name {
+        font-size: 1.2rem !important;
+    }
+    
+    .brand-tagline {
+        font-size: 0.6rem !important;
+    }
+    
+    #mobile_btn i {
+        font-size: 1.6rem !important;
+    }
+    
+    #itens_nav {
+        top: 65px !important;
+        height: calc(100vh - 65px) !important;
+        width: 250px !important;
+        padding: 1.5rem 1rem !important;
+    }
+    
+    #btn-voltar i {
+        font-size: 1rem !important;
     }
 }

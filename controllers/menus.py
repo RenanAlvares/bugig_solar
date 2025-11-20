@@ -46,7 +46,7 @@ def menu_benef(user_id):
             ).count()
         ) + 1
 
-    if fila_ativa and (fila_ativa.quantidade_recebida > 0):
+    if fila_ativa and (fila_ativa.quantidade_recebida == 0):
         del_fila = fila_ativa.id
     else:
         del_fila = None
@@ -58,7 +58,7 @@ def menu_benef(user_id):
         form_payment=PaymentForm(),
         posicao_fila=posicao_fila,
         tipo_pagamento=tipo_pagamento,
-        del_fila=del_fila
+        del_fila=del_fila,
     )
 
 
@@ -71,12 +71,16 @@ def menu_gen(user_id):
     id_gen = Generators.query.filter_by(id_user=user_id).first().id
     doacao_ativa = Donation.query.filter_by(id_gerador=id_gen, status=True).first()
 
-    if doacao_ativa.quantidade_doacao - doacao_ativa.quantidade_disponivel == 0:
+    if doacao_ativa and (doacao_ativa.quantidade_doacao - doacao_ativa.quantidade_disponivel == 0):
         del_doacao = doacao_ativa.id
     else:
         del_doacao = None
 
-    return render_template('menu_gen.html', user_id=user_id, del_doacao=del_doacao)
+    return render_template(
+        'menu_gen.html', 
+        user_id=user_id, 
+        del_doacao=del_doacao, 
+        doacao_ativa=doacao_ativa)
 
 
 @auth_bp.route('/<int:user_id>/del_queue/<int:queue_id>', methods=['GET', 'POST'])

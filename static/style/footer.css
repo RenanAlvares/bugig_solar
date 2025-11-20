@@ -1,135 +1,230 @@
+/* ==============================================
+   BUGIGSOLAR - FOOTER 100% RESPONSIVO
+   ============================================== */
+
 footer {
-    background-color: #0f0f0f;            /* tom escuro */
+    background-color: #0f0f0f;
     color: #d0cfcf;
-    padding: 1.25rem 6%;
-    border-top: 1px solid rgba(255, 215, 0, 0.08); /* linha discreta */
+    padding: 2rem 6%;
+    border-top: 1px solid rgba(255, 215, 0, 0.08);
     box-sizing: border-box;
-}
-
-/* SLOGAN (opcional). Se você incluir um bloco .footer-slogan, ele ficará centralizado */
-.footer-slogan{
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto 0.75rem auto;
-    text-align: center;
-    font-style: italic;
-    font-weight: 600;
-    color: #f2b705;                    /* amarelo solar */
-    font-size: 1.05rem;
-    line-height: 1.2;
 }
 
-/* separador entre slogan e row principal */
-.footer-separator {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    border-bottom: 1px solid rgba(242, 183, 5, 0.08); /* linha fina dourada */
-}
-
-/* CONTAINER PRINCIPAL: texto à esquerda, ícones à direita */
+/* Container principal */
 #itens-footer {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    align-items: center;               /* verticalmente centrados */
-    justify-content: space-between;    /* separa em duas colunas */
-    gap: 1rem;
-    padding: 0.75rem 0;                /* espaçamento vertical interno */
-    box-sizing: border-box;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.2rem;
 }
 
-/* bloco do conteúdo textual (coluna esquerda) */
+/* Slogan/frase motivacional */
+.footer-slogan {
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+    font-weight: 600;
+    color: #f2b705;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    padding: 0 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.footer-slogan i {
+    margin-right: 0.5rem;
+}
+
+/* Copyright e links */
 .footer-content {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;           /* forçar conteúdo na esquerda */
-    text-align: left;
-    gap: 0.2rem;
-    flex: 1 1 auto;
-    color: #d0cfcf;
+    align-items: center;
+    text-align: center;
+    gap: 0.6rem;
+    width: 100%;
 }
 
-/* evita que <p> empurrem a linha (margens zeradas) */
 .footer-content p {
     margin: 0;
     padding: 0;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #cfcfcf;
+    line-height: 1.6;
 }
 
-/* links (termos, política) em linha e com espaçamento */
+/* Links em linha com separador */
 .footer-content .links-row {
     display: flex;
     gap: 0.8rem;
     align-items: center;
-    margin-top: 0.35rem;
+    justify-content: center;
     flex-wrap: wrap;
 }
+
 .footer-content .links-row a {
-    color: #d6c96b;
+    color: #f2b705;
     text-decoration: none;
-    font-size: 0.88rem;
-}
-.footer-content .links-row a:hover { text-decoration: underline; }
-
-/* bloco dos ícones (coluna direita) */
-.social-media-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0.8rem;
-    flex: 0 0 auto;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+    white-space: nowrap;
 }
 
-/* ícones: tamanho consistente e alinhados no centro da linha */
-.social-media-buttons a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 6px;
-    color: #cfcfcf;
-    font-size: 1.2rem;
-    transition: transform .18s ease, color .18s ease, background .18s ease;
-    text-decoration: none;
+.footer-content .links-row a:hover { 
+    color: #ffc800;
 }
 
-/* hover suave */
-.social-media-buttons a:hover {
-    color: #111;
-    background: #f2b705;
-    transform: translateY(-3px);
+.footer-content .links-row .separator {
+    color: #666;
+    font-size: 0.9rem;
+    user-select: none;
 }
 
-/* --- MOBILE: empilha, centraliza e aumenta espaçamento --- */
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+
+/* Desktop grande - mantém o mesmo */
+@media (min-width: 1200px) {
+    footer {
+        padding: 2.5rem 8%;
+    }
+}
+
+/* Tablet - 992px */
+@media (max-width: 992px) {
+    footer {
+        padding: 1.8rem 5%;
+    }
+    
+    .footer-slogan {
+        font-size: 1.05rem;
+    }
+    
+    .footer-content p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile - 768px */
 @media (max-width: 768px) {
+    footer {
+        padding: 1.6rem 5%;
+    }
+    
+    #itens-footer {
+        gap: 1rem;
+    }
+    
     .footer-slogan {
         font-size: 1rem;
-        padding: 0 1rem;
+        line-height: 1.4;
     }
-
-    .footer-separator { display: none; } /* remove a linha fina se quiser mais limpeza */
-
-    #itens-footer {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 0.6rem;
-        padding: 1rem 0;
-    }
-
+    
     .footer-content {
-        align-items: center;
+        gap: 0.5rem;
     }
-
+    
+    .footer-content p {
+        font-size: 0.88rem;
+        max-width: 90%;
+    }
+    
     .footer-content .links-row {
-        justify-content: center;
+        gap: 0.7rem;
     }
+    
+    .footer-content .links-row a {
+        font-size: 0.88rem;
+    }
+    
+    .footer-content .links-row .separator {
+        font-size: 0.88rem;
+    }
+}
 
+/* Mobile pequeno - 480px */
+@media (max-width: 480px) {
+    footer {
+        padding: 1.5rem 4% 1.5rem 4%;
+    }
+    
+    #itens-footer {
+        gap: 1.2rem;
+    }
+    
+    .footer-slogan {
+        font-size: 0.95rem;
+        padding: 0 0.5rem;
+    }
+    
+    .footer-content p {
+        font-size: 0.85rem;
+        max-width: 95%;
+    }
+    
+    .footer-content .links-row {
+        gap: 0.6rem;
+    }
+    
+    .footer-content .links-row a {
+        font-size: 0.85rem;
+    }
+    
+    .footer-content .links-row .separator {
+        font-size: 0.85rem;
+    }
+    
     .social-media-buttons {
-        justify-content: center;
+        gap: 1.2rem;
+    }
+    
+    .social-media-buttons a {
+        width: 44px;
+        height: 44px;
+        font-size: 1.4rem;
+    }
+}
+
+/* Mobile muito pequeno - 360px */
+@media (max-width: 360px) {
+    footer {
+        padding: 1.3rem 3% 1.3rem 3%;
+    }
+    
+    .footer-slogan {
+        font-size: 0.9rem;
+        line-height: 1.3;
+    }
+    
+    .footer-content p {
+        font-size: 0.8rem;
+    }
+    
+    .footer-content .links-row {
+        gap: 0.5rem;
+    }
+    
+    .footer-content .links-row a {
+        font-size: 0.8rem;
+    }
+    
+    .footer-content .links-row .separator {
+        font-size: 0.8rem;
+    }
+    
+    .social-media-buttons {
+        gap: 1rem;
+    }
+    
+    .social-media-buttons a {
+        width: 42px;
+        height: 42px;
+        font-size: 1.35rem;
     }
 }
