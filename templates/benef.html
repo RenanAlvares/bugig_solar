@@ -2,6 +2,8 @@
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='style/benef.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style/header.css') }}">
+
 
 
 <div id="benef-container">
@@ -24,7 +26,7 @@
           </div>
 
           <div class="mb-3">
-              {{ form_benef.img3.label }}<br>
+              {{ form_benef.img3.label}}<br>
               {{ form_benef.img3(class="form-control") }}
           </div>
 

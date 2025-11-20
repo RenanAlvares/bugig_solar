@@ -43,31 +43,41 @@
   </div>
 
   <!-- ENERGIA LIMPA -->
-  <section class="section-imagem fade-in">
-    <div class="conteudo-energia">
-      <div class="texto fade-in">
-        <h2 class="titulo-principal">Energia limpa, impacto real ⚡</h2>
-        <p class="frase-centralizada">O que é Energia Limpa e como ela transforma o futuro.</p>
-        <p class="paragrafo-final">
-          Pequenas ações de hoje constroem o futuro sustentável de amanhã. 
-          A energia solar é mais do que economia — é solidariedade em movimento.
-        </p>
-        <div class="btn-area">
-          <div class="btn_saiba">
+ <!-- ENERGIA LIMPA - SEÇÃO CORRIGIDA -->
+<section class="section-imagem fade-in">
+  <div class="conteudo-energia">
+    
+    <!-- COLUNA DE TEXTO -->
+    <div class="texto">
+      <h2>Energia limpa, impacto real ⚡</h2>
+      
+      <p class="frase-centralizada">
+        O que é Energia Limpa e como ela transforma o futuro.
+      </p>
+      
+      <p class="paragrafo-final">
+        Pequenas ações de hoje constroem o futuro sustentável de amanhã. 
+        A energia solar é mais do que economia — é solidariedade em movimento.
+      </p>
+      
+      <div class="btn-area">
+        <div class="btn_saiba">
           <button class="btn-default">
-            <a href="https://clicklivre.com.br/blog/o-que-e-energia-limpa-e-como-ela-transforma-o-futuro" target="_blank" rel="noopener">
+            <a href="https://clicklivre.com.br/blog/o-que-e-energia-limpa-e-como-ela-transforma-o-futuro" target="_blank" rel="noopener noreferrer">
               Saiba mais
             </a>
           </button>
-          </div>
         </div>
       </div>
-
-      <div class="imagem">
-        <img src="/static/Imagens/energia-eletrica.png" alt="Energia solar transformando o futuro" loading="lazy">
-      </div>
     </div>
-  </section>
+
+    <!-- COLUNA DE IMAGEM -->
+    <div class="imagem">
+      <img src="/static/Imagens/energia-eletrica.png" alt="Energia solar transformando o futuro" loading="lazy">
+    </div>
+    
+  </div>
+</section>
 
   <!-- IMPACTO REAL -->
   <section class="painel-creditos fade-in">
@@ -89,6 +99,108 @@
           <i class="fa-solid fa-users"></i>
           <h3>{{ qtd_users }}</h3>
           <p>Pessoas Impactadas</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⚡ SIMULADOR DE ECONOMIA - NOVA SEÇÃO DESTACADA -->
+  <section class="simulador-section fade-in">
+    <div class="simulador-container">
+      <div class="simulador-header">
+        <div class="simulador-icon-header">
+          <i class="fa-solid fa-calculator"></i>
+        </div>
+        <h2>Simule sua Economia</h2>
+        <p class="simulador-subtitle">Descubra quanto você pode economizar com energia solar compartilhada</p>
+      </div>
+
+      <div class="simulador-content">
+        <div class="simulador-left">
+          <div class="simulador-info-box">
+            <h3>💡 Como funciona?</h3>
+            <ul>
+              <li><i class="fa-solid fa-check-circle"></i> Informe o valor atual da sua conta de luz</li>
+              <li><i class="fa-solid fa-check-circle"></i> Veja instantaneamente sua economia potencial</li>
+              <li><i class="fa-solid fa-check-circle"></i> Descubra o impacto ambiental positivo</li>
+              <li><i class="fa-solid fa-check-circle"></i> Planeje suas economias anuais</li>
+            </ul>
+          </div>
+
+          <div class="simulador-benefits">
+            <h4>🌟 Vantagens</h4>
+            <div class="benefit-item">
+              <i class="fa-solid fa-piggy-bank"></i>
+              <span>Economia média de <strong>15% a 25%</strong></span>
+            </div>
+            <div class="benefit-item">
+              <i class="fa-solid fa-leaf"></i>
+              <span>Energia 100% limpa e renovável</span>
+            </div>
+            <div class="benefit-item">
+              <i class="fa-solid fa-handshake"></i>
+              <span>Contribua com a solidariedade energética</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="simulador-right">
+          <div class="simulador-card">
+            <div class="simulador-form">
+              <label for="valorConta">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                Valor da sua Conta de Luz (R$)
+              </label>
+              <input 
+                type="number" 
+                id="valorConta" 
+                placeholder="Ex: 350,00" 
+                min="0"
+                step="0.01"
+              >
+              
+              <button id="calcularBtn" class="btn-calcular">
+                <i class="fa-solid fa-calculator"></i>
+                Calcular Economia
+              </button>
+            </div>
+
+            <div id="resultadoSimulador" class="resultado">
+              <h4><i class="fa-solid fa-chart-line"></i> Seus Resultados:</h4>
+              
+              <div class="resultado-item">
+                <div class="resultado-label">
+                  <i class="fa-solid fa-piggy-bank"></i>
+                  <span>Economia Mensal</span>
+                </div>
+                <div class="resultado-valor" id="economiaValor">—</div>
+              </div>
+
+              <div class="resultado-item">
+                <div class="resultado-label">
+                  <i class="fa-solid fa-bolt"></i>
+                  <span>kWh Economizados</span>
+                </div>
+                <div class="resultado-valor" id="kwhEconomia">—</div>
+              </div>
+
+              <div class="resultado-item">
+                <div class="resultado-label">
+                  <i class="fa-solid fa-leaf"></i>
+                  <span>CO₂ Evitado</span>
+                </div>
+                <div class="resultado-valor" id="co2Evitado">—</div>
+              </div>
+
+              <div class="resultado-item destaque">
+                <div class="resultado-label">
+                  <i class="fa-solid fa-calendar-check"></i>
+                  <span>Economia Anual</span>
+                </div>
+                <div class="resultado-valor" id="economiaAnual">—</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
