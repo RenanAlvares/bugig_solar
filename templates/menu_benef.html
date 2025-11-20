@@ -56,6 +56,16 @@
       </a>
       {% endif %}
 
+      {% if session.get('ultimo_pagamento_id') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Pagamento realizado!</strong> 
+            <a href="{{ url_for('auth.download_payment_csv', user_id=user_id, pagamento_id=session.pop('ultimo_pagamento_id')) }}" class="alert-link">
+                Clique aqui para baixar o comprovante
+            </a>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endif %}
+
       <!-- CARD: RELATÓRIOS -->
       <a href="{{ url_for('auth.report_benef', user_id=user_id) }}" class="card">
         <div class="card-icon"><i class="fa-solid fa-chart-pie"></i></div>

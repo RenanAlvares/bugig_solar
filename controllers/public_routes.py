@@ -20,7 +20,6 @@ def landing_page():
     qtd_creditos = (
         Donation.query
         .with_entities(func.sum(Donation.quantidade_doacao))
-        .filter(Donation.status == False)
         .scalar() or 0
     )
 
@@ -29,7 +28,6 @@ def landing_page():
         .with_entities(func.sum(Queue.quantidade_recebida))
         .scalar() or 0
     )
-
 
     return render_template(
         'landing_page.html', 

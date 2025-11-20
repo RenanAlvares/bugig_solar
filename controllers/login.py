@@ -6,7 +6,9 @@ from flask import current_app, request, session, render_template, redirect, sess
 from controllers.validations import validar_documento
 from forms.form_user import FormUser
 from forms.form_login import FormLogin
+from models_DB.benef_gen import Beneficiaries, Generators
 from models_DB.companies import Companies
+from models_DB.donation_queue import Donation, Queue
 from models_DB.users import UsersDb
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -212,3 +214,30 @@ def no_cache(response):
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '0'
     return response
+
+@auth_bp.route('/delete_account/<int:user_id>', methods=['GET', 'POST'])
+def delete_account(user_id):
+
+    tipo = UsersDb.query.get(user_id).id_tipo_user
+    if tipo == 1:
+        benef = Beneficiaries.query.filter_by(id_user=user_id).first()
+        fila_ativa = Queue.query.filter_by(id_beneficiario=benef.id, status=True).first()
+        if fila_ativa and (fila_ativa.quantidade_recebida > 0):
+            flash('Não é possível excluir a conta agora. Existem créditos já recebidos na solicitação atual.', 'danger')
+            return redirect(url_for('auth.menu_benef', user_id=user_id))
+        else:
+            db.session.delete(benef)
+    else:
+        gen = Generators.query.filter_by(id_user=user_id).first()
+        doacao_ativa = Donation.query.filter_by(id_gerador=gen.id, status=True).first()
+        if doacao_ativa and (doacao_ativa.quantidade_doacao - doacao_ativa.quantidade_disponivel) > 0:
+            flash('Não é possível excluir a conta agora. Existem doações ativas com créditos já utilizados.', 'danger')
+            return redirect(url_for('auth.menu_gen', user_id=user_id))
+        else:
+            db.session.delete(gen)
+
+    db.session.delete(UsersDb.query.get(user_id))
+    flash('Usuário excluído com sucesso.', 'success')
+    db.session.commit()
+
+    return redirect(url_for('public.landing_page'))
