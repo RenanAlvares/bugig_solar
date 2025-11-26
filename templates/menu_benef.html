@@ -40,10 +40,20 @@
             </div>
             <h3>Você não está na fila no momento</h3>
             <p>Entre na fila agora para garantir seu lugar e receber os próximos créditos de energia disponíveis.</p>
-            <a href="{{ url_for('auth.get_in_queue', user_id=user_id) }}" class="lp-button">
+            <a href="{{ url_for('auth.get_in_queue', user_id=user_id) }}" class="btn-default">
               <i class="fa-solid fa-plus-circle" style="margin-right: 8px;"></i>Entrar na Fila
             </a>
           </div>
+
+          <style>
+
+            .btn-default{
+              margin-top: 10px;
+              padding: 100%;
+            }
+
+          </style>
+
         {% endif %}
       </div>
 
@@ -55,6 +65,71 @@
         <p>Atualize sua posição ou saia da fila de créditos.</p>
       </a>
       {% endif %}
+{% if session.get('ultimo_pagamento_id') %}
+<div class="payment-alert-overlay" id="paymentAlertOverlay">
+  <div class="payment-alert-container" id="paymentAlert">
+    <div class="payment-alert-icon">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <div class="payment-alert-content">
+      <h3>Pagamento Realizado com Sucesso!</h3>
+      <p>Seu comprovante está pronto para download</p>
+      <a href="{{ url_for('auth.download_payment_csv', user_id=user_id, pagamento_id=session.pop('ultimo_pagamento_id')) }}" 
+         class="btn-default" 
+         id="downloadLink">
+        <i class="fa-solid fa-download"></i>
+        Baixar Comprovante
+      </a>
+    </div>
+    <button class="payment-alert-close" id="closeAlertBtn" style="display: none;">
+      <i class="fa-solid fa-times"></i>
+    </button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const downloadLink = document.getElementById('downloadLink');
+  const overlay = document.getElementById('paymentAlertOverlay');
+  const alertContainer = document.getElementById('paymentAlert');
+  const closeBtn = document.getElementById('closeAlertBtn');
+  
+  if (downloadLink && overlay) {
+    // Quando clicar no link de download
+    downloadLink.addEventListener('click', function(e) {
+      // Aguarda o download iniciar
+      setTimeout(function() {
+        // Mostra o botão de fechar
+        closeBtn.style.display = 'flex';
+        
+        // Adiciona animação de saída após 1 segundo
+        setTimeout(function() {
+          alertContainer.style.animation = 'slideOutUp 0.5s ease-out forwards';
+          
+          setTimeout(function() {
+            overlay.style.opacity = '0';
+            setTimeout(function() {
+              overlay.remove();
+            }, 300);
+          }, 400);
+        }, 1000);
+      }, 500);
+    });
+    
+    // Botão de fechar manual (caso o usuário queira fechar depois)
+    closeBtn.addEventListener('click', function() {
+      alertContainer.style.animation = 'slideOutUp 0.5s ease-out forwards';
+      setTimeout(function() {
+        overlay.style.opacity = '0';
+        setTimeout(function() {
+          overlay.remove();
+        }, 300);
+      }, 400);
+    });
+  }
+});
+</script>
+{% endif %}
 
       <!-- CARD: RELATÓRIOS -->
       <a href="{{ url_for('auth.report_benef', user_id=user_id) }}" class="card">
@@ -101,16 +176,17 @@
       {% if pagamento_pendente %}
         <form method="POST" action="{{ url_for('auth.payment', user_id=user_id) }}">
           <label for="tipo_pagamento">Tipo de pagamento:</label>
-          <select name="tipo_pagamento" id="tipo_pagamento" required>
+          <select class="form-select" name="tipo_pagamento" id="tipo_pagamento" required>
             {% for tp in tipo_pagamento %}
-              <option value="{{ tp.id }}">{{ tp.nome_tipo }}</option>
+              <option class="form-select" value="{{ tp.id }}">{{ tp.nome_tipo}}</option>
             {% endfor %}
           </select>
+
           <div>
-            {{ form_payment.senha.label }}<br>
+            {{ form_payment.senha.label}}<br>
             {{ form_payment.senha }}
           </div>
-          {{ form_payment.pagar(class="lp-button") }}
+          {{ form_payment.pagar(class="btn-default") }}
           {{ form_payment.hidden_tag() }}
         </form>
       {% endif %}
