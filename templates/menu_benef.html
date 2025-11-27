@@ -12,51 +12,139 @@
       <p>Gerencie sua conta de energia e aproveite todos os benefícios disponíveis.</p>
     </div>
 
-    <!-- 💳 Cards Principais -->
-    <div class="dashboard-cards">
-      
-      <!-- CARD DA FILA - DESTAQUE NO TOPO -->
-      <div class="queue-status-card">
-        {% if posicao_fila %}
-          <div class="queue-content">
-            <div class="queue-icon-section">
-              <div class="queue-main-icon">
-                <i class="fa-solid fa-users-line"></i>
-              </div>
-              <div class="queue-text">
-                <h3>Você está na fila!</h3>
-                <p>Aguardando para receber os próximos créditos de energia. Fique atento à sua posição.</p>
-              </div>
-            </div>
-            <div class="queue-position">
-              <div class="queue-position-label">Posição Atual</div>
-              <div class="queue-position-number">{{ posicao_fila }}</div>
-            </div>
-          </div>
-        {% else %}
-          <div class="queue-empty-state">
-            <div class="queue-main-icon" style="margin: 0 auto 1.5rem;">
+    <!-- CARD DA FILA - DESTAQUE NO TOPO (FORA DO GRID) -->
+    <div class="queue-status-card card-payment">
+      {% if posicao_fila %}
+        <div class="queue-content">
+          <div class="queue-icon-section">
+            <div class="queue-main-icon">
               <i class="fa-solid fa-users-line"></i>
             </div>
-            <h3>Você não está na fila no momento</h3>
-            <p>Entre na fila agora para garantir seu lugar e receber os próximos créditos de energia disponíveis.</p>
-            <a href="{{ url_for('auth.get_in_queue', user_id=user_id) }}" class="btn-default">
-              <i class="fa-solid fa-plus-circle" style="margin-right: 8px;"></i>Entrar na Fila
+            <div class="queue-text">
+              <h3>Você está na fila!</h3>
+              <p>Aguardando para receber os próximos créditos de energia. Fique atento à sua posição.</p>
+            </div>
+          </div>
+          <div class="queue-position">
+            <div class="queue-position-label">Posição Atual</div>
+            <div class="queue-position-number">{{ posicao_fila }}</div>
+          </div>
+        </div>
+      {% else %}
+        <div class="queue-empty-state">
+          <div class="queue-main-icon" style="margin: 0 auto 1.5rem;">
+            <i class="fa-solid fa-users-line"></i>
+          </div>
+          <h3>Você não está na fila no momento</h3>
+          <p>Entre na fila agora para garantir seu lugar e receber os próximos créditos de energia disponíveis.</p>
+        </div>         
+
+        <style>
+          .btn-default{
+            margin-top: 10px;
+            padding: 100%;
+          }
+        </style>
+      {% endif %}
+    </div>
+
+    {% if session.get('ultimo_pagamento_id') %}
+    <!-- CARD DE ALERTA DE PAGAMENTO (TAMBÉM FORA DO GRID) -->
+    <div class="queue-status-card">
+      <div class="payment-alert-overlay" id="paymentAlertOverlay">
+        <div class="payment-alert-container" id="paymentAlert">
+          <div class="payment-alert-icon">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div class="payment-alert-content">
+            <h3>Pagamento Realizado com Sucesso!</h3>
+            <p>Seu comprovante está pronto para download</p>
+            <a href="{{ url_for('auth.download_payment_csv', user_id=user_id, pagamento_id=session.pop('ultimo_pagamento_id')) }}" 
+               class="btn-default" 
+               id="downloadLink">
+              <i class="fa-solid fa-download" id="download-payment"></i>
+              Baixar Comprovante
             </a>
           </div>
 
-          <style>
+          <script>
+            //js fechar card.
+            document.addEventListener('DOMContentLoaded', function() {
+              const overlay = document.getElementById('paymentAlertOverlay');
+              const cardElement = overlay ? overlay.parentElement : null; 
+              const closeBtn = document.getElementById('closeAlertBtn');
+              const downloadLink = document.getElementById('downloadLink');
 
-            .btn-default{
-              margin-top: 10px;
-              padding: 100%;
-            }
+              function hideCard() {
+                  if (cardElement) {
+                      cardElement.classList.add('is-hidden'); 
+                  }
+              }
 
-          </style>
+              if (closeBtn) {
+                  closeBtn.addEventListener('click', hideCard);
+              }
 
-        {% endif %}
+              if (downloadLink) {
+                  downloadLink.addEventListener('click', hideCard);
+              }
+            });
+          </script>
+
+        </div>
+        <button class="payment-alert-close" id="closeAlertBtn" style="display: none;">
+          <i class="fa-solid fa-times"></i>
+        </button>
       </div>
+    </div>
 
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const downloadLink = document.getElementById('downloadLink');
+      const overlay = document.getElementById('paymentAlertOverlay');
+      const alertContainer = document.getElementById('paymentAlert');
+      const closeBtn = document.getElementById('closeAlertBtn');
+      
+      if (downloadLink && overlay) {
+        // Quando clicar no link de download
+        downloadLink.addEventListener('click', function(e) {
+          // Aguarda o download iniciar
+          setTimeout(function() {
+            // Mostra o botão de fechar
+            closeBtn.style.display = 'flex';
+            
+            // Adiciona animação de saída após 1 segundo
+            setTimeout(function() {
+              alertContainer.style.animation = 'slideOutUp 0.5s ease-out forwards';
+              
+              setTimeout(function() {
+                overlay.style.opacity = '0';
+                setTimeout(function() {
+                  overlay.remove();
+                }, 300);
+              }, 400);
+            }, 1000);
+          }, 500);
+        });
+        
+        // Botão de fechar manual (caso o usuário queira fechar depois)
+        closeBtn.addEventListener('click', function() {
+          alertContainer.style.animation = 'slideOutUp 0.5s ease-out forwards';
+          setTimeout(function() {
+            overlay.style.opacity = '0';
+            setTimeout(function() {
+              overlay.remove();
+            }, 300);
+          }, 400);
+        });
+      }
+    });
+    </script>
+    {% endif %}
+
+    <!-- 💳 Cards Principais (GRID COMEÇA AQUI) -->
+    <div class="dashboard-cards">
+      
       <!-- CARD: ENTRAR NA FILA (se já estiver na fila) -->
       {% if posicao_fila %}
       <a href="{{ url_for('auth.get_in_queue', user_id=user_id) }}" class="card">
@@ -64,72 +152,19 @@
         <h3>Gerenciar Fila</h3>
         <p>Atualize sua posição ou saia da fila de créditos.</p>
       </a>
-      {% endif %}
-{% if session.get('ultimo_pagamento_id') %}
-<div class="payment-alert-overlay" id="paymentAlertOverlay">
-  <div class="payment-alert-container" id="paymentAlert">
-    <div class="payment-alert-icon">
-      <i class="fa-solid fa-circle-check"></i>
-    </div>
-    <div class="payment-alert-content">
-      <h3>Pagamento Realizado com Sucesso!</h3>
-      <p>Seu comprovante está pronto para download</p>
-      <a href="{{ url_for('auth.download_payment_csv', user_id=user_id, pagamento_id=session.pop('ultimo_pagamento_id')) }}" 
-         class="btn-default" 
-         id="downloadLink">
-        <i class="fa-solid fa-download"></i>
-        Baixar Comprovante
-      </a>
-    </div>
-    <button class="payment-alert-close" id="closeAlertBtn" style="display: none;">
-      <i class="fa-solid fa-times"></i>
-    </button>
-  </div>
-</div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const downloadLink = document.getElementById('downloadLink');
-  const overlay = document.getElementById('paymentAlertOverlay');
-  const alertContainer = document.getElementById('paymentAlert');
-  const closeBtn = document.getElementById('closeAlertBtn');
-  
-  if (downloadLink && overlay) {
-    // Quando clicar no link de download
-    downloadLink.addEventListener('click', function(e) {
-      // Aguarda o download iniciar
-      setTimeout(function() {
-        // Mostra o botão de fechar
-        closeBtn.style.display = 'flex';
-        
-        // Adiciona animação de saída após 1 segundo
-        setTimeout(function() {
-          alertContainer.style.animation = 'slideOutUp 0.5s ease-out forwards';
-          
-          setTimeout(function() {
-            overlay.style.opacity = '0';
-            setTimeout(function() {
-              overlay.remove();
-            }, 300);
-          }, 400);
-        }, 1000);
-      }, 500);
-    });
-    
-    // Botão de fechar manual (caso o usuário queira fechar depois)
-    closeBtn.addEventListener('click', function() {
-      alertContainer.style.animation = 'slideOutUp 0.5s ease-out forwards';
-      setTimeout(function() {
-        overlay.style.opacity = '0';
-        setTimeout(function() {
-          overlay.remove();
-        }, 300);
-      }, 400);
-    });
-  }
-});
-</script>
-{% endif %}
+      {% else %}
+
+      <div class="card">
+        <div class="card-icon"><i class="fa-solid fa-users-line"></i></div>
+            <h3>Entre na Fila</h3>
+            <p>Clique e garanta o quanto antes seus próximos créditos de energia.</p>
+            <a href="{{ url_for('auth.get_in_queue', user_id=user_id) }}" class="btn-default">
+              <i class="fa-solid fa-plus-circle" style="margin-right: 8px;"></i>Entrar na Fila
+            </a>
+      </div>
+
+      {% endif %}
 
       <!-- CARD: RELATÓRIOS -->
       <a href="{{ url_for('auth.report_benef', user_id=user_id) }}" class="card">
@@ -159,39 +194,74 @@ document.addEventListener('DOMContentLoaded', function() {
       
     </div>
   </div>
+<!-- ======= Modal de Pagamento ======= -->
+<div id="modal-pagamento" class="modal">
+  <div class="modal-content">
+    <span class="close" id="fechar-modal">&times;</span>
+    <h2>💳 Pagamento</h2>
 
-  <!-- ======= Modal de Pagamento ======= -->
-  <div id="modal-pagamento" class="modal">
-    <div class="modal-content">
-      <span class="close" id="fechar-modal">&times;</span>
-      <h2>💳 Pagamento</h2>
+    {% if pagamento_pendente %}
+      <p><strong>Valor:</strong> R$ {{ pagamento_pendente.valor }}</p>
+      <p><strong>Vencimento:</strong> {{ pagamento_pendente.data_vencimento.strftime('%d/%m/%Y') }}</p>
+    {% else %}
+      <p>Não há pagamentos pendentes no momento.</p>
+    {% endif %}
 
-      {% if pagamento_pendente %}
-        <p><strong>Valor:</strong> R$ {{ pagamento_pendente.valor }}</p>
-        <p><strong>Vencimento:</strong> {{ pagamento_pendente.data_vencimento.strftime('%d/%m/%Y') }}</p>
-      {% else %}
-        <p>Não há pagamentos pendentes no momento.</p>
-      {% endif %}
+{% if pagamento_pendente %}
+<form method="POST" action="{{ url_for('auth.payment', user_id=user_id) }}">
+  <label for="tipo_pagamento">Tipo de pagamento:</label>
+  <select class="form-select" name="tipo_pagamento" id="tipo_pagamento" required>
+    {% for tp in tipo_pagamento %}
+      <option class="form-select" value="{{ tp.id }}">{{ tp.nome_tipo}}</option>
+    {% endfor %}
+  </select>
 
-      {% if pagamento_pendente %}
-        <form method="POST" action="{{ url_for('auth.payment', user_id=user_id) }}">
-          <label for="tipo_pagamento">Tipo de pagamento:</label>
-          <select class="form-select" name="tipo_pagamento" id="tipo_pagamento" required>
-            {% for tp in tipo_pagamento %}
-              <option class="form-select" value="{{ tp.id }}">{{ tp.nome_tipo}}</option>
-            {% endfor %}
-          </select>
-
-          <div>
-            {{ form_payment.senha.label}}<br>
-            {{ form_payment.senha }}
-          </div>
-          {{ form_payment.pagar(class="btn-default") }}
-          {{ form_payment.hidden_tag() }}
-        </form>
-      {% endif %}
+  <div class="password-field-container">
+    {{ form_payment.senha.label}}
+    <div class="password-input-wrapper">
+      {{ form_payment.senha(class="password-input", type="password") }}
+      <button type="button" class="toggle-password" id="togglePassword">
+        <i class="fa-solid fa-eye-slash" id="eyeIcon"></i>
+      </button>
     </div>
   </div>
+  
+  {{ form_payment.pagar(class="btn-default") }}
+  {{ form_payment.hidden_tag() }}
+</form>
+{% endif %}
+
+<script>
+// Toggle de mostrar/ocultar senha
+document.addEventListener('DOMContentLoaded', function() {
+  const togglePassword = document.getElementById('togglePassword');
+  const senhaInput = document.querySelector('input[name="senha"]');
+  const eyeIcon = document.getElementById('eyeIcon');
+  
+  if (togglePassword && senhaInput) {
+    togglePassword.addEventListener('click', function(e) {
+      e.preventDefault(); // Previne qualquer comportamento padrão
+      
+      // Alterna entre password e text
+      const tipoAtual = senhaInput.getAttribute('type');
+      
+      if (tipoAtual === 'password') {
+        // MOSTRA a senha
+        senhaInput.setAttribute('type', 'text');
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+      } else {
+        // OCULTA a senha
+        senhaInput.setAttribute('type', 'password');
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+      }
+    });
+  }
+});
+</script>
+  </div>
+</div>
 
   <!-- Scripts -->
   <script src="{{ url_for('static', filename='js/menu_benef.js') }}"></script>

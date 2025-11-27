@@ -921,3 +921,126 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* sumir o card */
+
+.is-hidden {
+    /* Esta regra remove o card do fluxo do documento, fazendo-o sumir */
+    display: none !important;
+}
+
+/* mascara */
+
+/* ===== CAMPO DE SENHA COM TOGGLE ===== */
+.password-field-container {
+  margin-bottom: 1rem;
+}
+
+.password-field-container label {
+  display: block;
+  font-weight: 600;
+  color: #f2b705;
+  margin-bottom: 0.5rem;
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-input {
+  width: 100%;
+  padding: 0.9rem;
+  padding-right: 3.5rem; /* Mais espaço para o botão */
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.password-input:focus {
+  border-color: #F2B705;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(242, 183, 5, 0.1);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #F2B705;
+  cursor: pointer;
+  padding: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  z-index: 10;
+}
+
+.toggle-password:hover {
+  background: rgba(242, 183, 5, 0.15);
+  color: #ffc800;
+}
+
+.toggle-password:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.toggle-password i {
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+#eyeIcon{
+  margin-top: -15px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .password-input {
+    padding: 0.8rem;
+    padding-right: 3.2rem;
+    font-size: 0.95rem;
+  }
+
+  .toggle-password {
+    width: 36px;
+    height: 36px;
+    padding: 0.5rem;
+  }
+
+  .toggle-password i {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .password-input {
+    padding: 0.75rem;
+    padding-right: 3rem;
+    font-size: 0.9rem;
+  }
+
+  .toggle-password {
+    width: 32px;
+    height: 32px;
+    padding: 0.4rem;
+    right: 6px;
+  }
+
+  .toggle-password i {
+    font-size: 0.95rem;
+  }
+}
