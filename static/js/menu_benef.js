@@ -157,3 +157,18 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
   document.head.appendChild(style);
 });
+
+      // Fechar o alert quando o usuário clicar no link de download
+      document.addEventListener('DOMContentLoaded', function() {
+        var downloadLink = document.getElementById('downloadLink');
+        var alertElement = document.getElementById('paymentAlert');
+        
+        if (downloadLink && alertElement) {
+          downloadLink.addEventListener('click', function() {
+            setTimeout(function() {
+              var bsAlert = new bootstrap.Alert(alertElement);
+              bsAlert.close();
+            }, 500);
+          });
+        }
+      });

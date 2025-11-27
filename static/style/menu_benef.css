@@ -693,3 +693,354 @@ body {
     padding: 1.5rem 1rem;
   }
 }
+
+/* =====================================================
+   ALERTA DE PAGAMENTO - Adicione ao menu_benef.css
+   ===================================================== */
+
+/* ===== NOTIFICAÇÃO DE PAGAMENTO (CANTO DIREITO) ===== */
+.payment-alert-notification {
+  position: fixed;
+  top: 100px;
+  right: 2rem;
+  width: 380px;
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.98) 0%, rgba(20, 20, 20, 0.98) 100%);
+  border-radius: 16px;
+  padding: 1.8rem;
+  border: 2px solid rgba(242, 183, 5, 0.4);
+  box-shadow: 
+    0 15px 50px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(242, 183, 5, 0.2);
+  z-index: 9999;
+  animation: slideInRight 0.5s ease-out;
+  backdrop-filter: blur(10px);
+}
+
+/* Brilho animado no topo */
+.payment-alert-notification::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #F2B705, #ffc800, #F2B705);
+  background-size: 200% 100%;
+  animation: shimmerLine 3s ease-in-out infinite;
+  border-radius: 16px 16px 0 0;
+}
+
+.payment-alert-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  background: rgba(242, 183, 5, 0.1);
+  border: 1px solid rgba(242, 183, 5, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #F2B705;
+  font-size: 1rem;
+  z-index: 10;
+}
+
+.payment-alert-close-btn:hover {
+  background: rgba(242, 183, 5, 0.25);
+  border-color: #F2B705;
+  transform: rotate(90deg);
+  color: #ffc800;
+}
+
+.payment-alert-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.05));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+  border: 2px solid rgba(76, 175, 80, 0.4);
+  animation: pulse-success 2s ease-in-out infinite;
+}
+
+.payment-alert-icon i {
+  font-size: 2rem;
+  color: #4CAF50;
+}
+
+@keyframes pulse-success {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+  }
+}
+
+.payment-alert-content {
+  text-align: center;
+}
+
+.payment-alert-content h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--branco);
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.payment-alert-content p {
+  color: var(--cinza-claro);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.payment-alert-download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, #F2B705 0%, #ffc800 100%);
+  color: #0a0a0a;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.8rem 1.8rem;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(242, 183, 5, 0.3);
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.payment-alert-download-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+
+.payment-alert-download-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.payment-alert-download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(242, 183, 5, 0.5);
+  background: linear-gradient(135deg, #ffc800 0%, #F2B705 100%);
+}
+
+.payment-alert-download-btn i {
+  font-size: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== ANIMAÇÕES DO ALERTA ===== */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+
+/* ===== RESPONSIVIDADE DO ALERTA ===== */
+@media (max-width: 768px) {
+  .payment-alert-notification {
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+    top: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-alert-notification {
+    top: 70px;
+    padding: 1.5rem;
+  }
+
+  .payment-alert-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .payment-alert-icon i {
+    font-size: 1.6rem;
+  }
+
+  .payment-alert-content h3 {
+    font-size: 1.1rem;
+  }
+
+  .payment-alert-content p {
+    font-size: 0.9rem;
+  }
+
+  .payment-alert-download-btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* sumir o card */
+
+.is-hidden {
+    /* Esta regra remove o card do fluxo do documento, fazendo-o sumir */
+    display: none !important;
+}
+
+/* mascara */
+
+/* ===== CAMPO DE SENHA COM TOGGLE ===== */
+.password-field-container {
+  margin-bottom: 1rem;
+}
+
+.password-field-container label {
+  display: block;
+  font-weight: 600;
+  color: #f2b705;
+  margin-bottom: 0.5rem;
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-input {
+  width: 100%;
+  padding: 0.9rem;
+  padding-right: 3.5rem; /* Mais espaço para o botão */
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.password-input:focus {
+  border-color: #F2B705;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(242, 183, 5, 0.1);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #F2B705;
+  cursor: pointer;
+  padding: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  z-index: 10;
+}
+
+.toggle-password:hover {
+  background: rgba(242, 183, 5, 0.15);
+  color: #ffc800;
+}
+
+.toggle-password:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.toggle-password i {
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+#eyeIcon{
+  margin-top: -15px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .password-input {
+    padding: 0.8rem;
+    padding-right: 3.2rem;
+    font-size: 0.95rem;
+  }
+
+  .toggle-password {
+    width: 36px;
+    height: 36px;
+    padding: 0.5rem;
+  }
+
+  .toggle-password i {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .password-input {
+    padding: 0.75rem;
+    padding-right: 3rem;
+    font-size: 0.9rem;
+  }
+
+  .toggle-password {
+    width: 32px;
+    height: 32px;
+    padding: 0.4rem;
+    right: 6px;
+  }
+
+  .toggle-password i {
+    font-size: 0.95rem;
+  }
+}

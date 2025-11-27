@@ -4,32 +4,18 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style/menu_gen.css') }}">
 <main>
     <div class="dashboard">
-        <h1>Painel do Gerador</h1>
+        <h1>Painel do Doador</h1>
         <p>Olá! Gerencie suas doações e veja o impacto que você gera.</p>
-        
-        <!-- NOVO: Informações Rápidas -->
-        <div class="info-banner">
-            <div class="info-item">
-                <i class="fa-solid fa-lightbulb"></i>
-                <div class="info-text">
-                    <strong>Dica:</strong> Doe nos horários de pico para máximo impacto
-                </div>
-            </div>
-            <div class="info-item">
-                <i class="fa-solid fa-sun"></i>
-                <div class="info-text">
-                    <strong>Status:</strong> Sistema operando normalmente
-                </div>
-            </div>
-        </div>
 
         <!-- card que dará a opção de excluir a ultima doação-->
 
         {% if del_doacao %}
+        <div class="queue-status-card">
         <div class="dashboard-cards">
             <h3>Você tem uma doação ativa no valor de {{doacao_ativa.quantidade_doacao}} kWh.</h3>
             <p>Para excluir essa doação, clique aqui</p>
-            <a href="{{ url_for('auth.del_donation', user_id=user_id, donation_id=del_doacao) }}" class="btn btn-danger btn-sm">Excluir Doação</a>
+            <a href="{{ url_for('auth.del_donation', user_id=user_id, donation_id=del_doacao) }}" class="btn btn-danger btn-default btn-sm">Excluir Doação</a>
+        </div>
         </div>
         {% endif %}
 
@@ -41,7 +27,7 @@
             </a>
             <a href="{{ url_for('auth.report_gen', user_id=user_id) }}" class="card">
                 <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
-                <h3>Relatórios de Geração</h3>
+                <h3>Relatórios de Doação</h3>
                 <p>Acompanhe sua produção de energia e doações realizadas.</p>
             </a>
              <a href="{{ url_for('auth.edit_user', user_id=user_id) }}" class="card">
