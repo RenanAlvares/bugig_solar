@@ -12,6 +12,16 @@
       <p>Gerencie sua conta de energia e aproveite todos os benefícios disponíveis.</p>
     </div>
 
+    {% if del_doacao %}
+    <div class="queue-status-card">
+    <div class="dashboard-cards">
+        <h3>Você tem uma solicitação e ainda não foi contemplado.</h3>
+        <p>Para sair da fila, clique aqui</p>
+        <a href="{{ url_for('auth.del_queue', user_id=user_id, queue_id=del_queue) }}" class="btn btn-danger btn-default btn-sm">Sair da fila</a>
+    </div>
+    </div>
+    {% endif %}
+
     <!-- CARD DA FILA - DESTAQUE NO TOPO (FORA DO GRID) -->
     <div class="queue-status-card card-payment">
       {% if posicao_fila %}
