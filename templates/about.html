@@ -2,61 +2,138 @@
 
 {% block content %}
 
-<main>
-    <section class="about">
-        <div class="section-wrapper">
-            <div class="image">
-                <img src="/static/Imagens/como-escrever-o-texto-quem-somos-sobre-nos-do-seu-site.webp" alt="Energia Solar">
-            </div>
-            <div class="container">
-                <h2><i class="fa-solid fa-users"></i> Quem Somos</h2>
-                <p>
-                    Com o crescimento da geração distribuída de energia elétrica, especialmente por meio de fontes
-                    renováveis, surge a necessidade de facilitar o acesso dos beneficiários aos créditos de energia excedentes
-                    gerados por pessoas físicas e jurídicas.
-                </p>
-                <p>
-                    Nosso projeto propõe o desenvolvimento de um sistema digital que atua como intermediário na gestão e
-                    distribuição de créditos de energia elétrica provenientes de geração distribuída. A plataforma permitirá
-                    que geradores cadastrem suas unidades geradoras e disponibilizem créditos excedentes, enquanto consumidores
-                    se registram para adquirir esses créditos.
-                </p>
+<main id="sobre-main">
+    <!-- Partículas de fundo decorativas -->
+    <div class="background-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Header da Página -->
+    <div class="page-header">
+        <h1>Sobre Nós</h1>
+        <p>Conectando energia renovável com quem precisa</p>
+    </div>
+
+    <!-- Seção Quem Somos -->
+    <section class="about-section">
+        <div class="section-container">
+            <div class="content-grid">
+                <div class="image-wrapper">
+                    <div class="image-decoration"></div>
+                    <img src="/static/Imagens/como-escrever-o-texto-quem-somos-sobre-nos-do-seu-site.webp" alt="Energia Solar">
+                </div>
+                
+                <div class="text-content" data-aos="fade-left">
+                    <div class="section-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h2>Quem Somos</h2>
+                    <div class="decorative-line"></div>
+                    <p>
+                        Com o crescimento da geração distribuída de energia elétrica, especialmente por meio de fontes
+                        renováveis, surge a necessidade de facilitar o acesso dos beneficiários aos créditos de energia excedentes
+                        gerados por pessoas físicas e jurídicas.
+                    </p>
+                    <p>
+                        Nosso projeto propõe o desenvolvimento de um sistema digital que atua como intermediário na gestão e
+                        distribuição de créditos de energia elétrica provenientes de geração distribuída. A plataforma permitirá
+                        que geradores cadastrem suas unidades geradoras e disponibilizem créditos excedentes, enquanto consumidores
+                        se registram para adquirir esses créditos.
+                    </p>
+                    <div class="stats-mini">
+                        <div class="stat-item">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>Energia Limpa</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fa-solid fa-leaf"></i>
+                            <span>Sustentável</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fa-solid fa-handshake"></i>
+                            <span>Transparente</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="mission">
-        <div class="section-wrapper">
-            <div class="image">
-                <img src="/static/Imagens/images.jpg" alt="Nossa Missão">
-            </div>
-            <div class="container">
-                <h2><i class="fa-solid fa-bullseye"></i> Nossa Missão</h2>
-                <p>
-                    Garantir transparência, segurança e automação no processo de intermediação, promovendo maior eficiência no uso
-                    da energia solar e democratizando o acesso a energias renováveis.
-                </p>
+    <!-- Seção Nossa Missão -->
+    <section class="mission-section">
+        <div class="section-container">
+            <div class="content-grid reverse">
+                <div class="text-content" data-aos="fade-right">
+                    <div class="section-icon">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h2>Nossa Missão</h2>
+                    <div class="decorative-line"></div>
+                    <p>
+                        Garantir transparência, segurança e automação no processo de intermediação, promovendo maior eficiência no uso
+                        da energia solar e democratizando o acesso a energias renováveis.
+                    </p>
+                    <div class="mission-points">
+                        <div class="point">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Transparência Total</span>
+                        </div>
+                        <div class="point">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Segurança Garantida</span>
+                        </div>
+                        <div class="point">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Automação Inteligente</span>
+                        </div>
+                        <div class="point">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Acesso Democrático</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="image-wrapper">
+                    <div class="image-decoration"></div>
+                    <img src="/static/Imagens/images.jpg" alt="Nossa Missão">
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="vision">
-        <div class="section-wrapper">
-            <div class="image">
-                <img src="/static/Imagens/visao_sobre_nos.jpg" alt="Nossa Visão">
-            </div>
-            <div class="container">
-                <h2><i class="fa-solid fa-lightbulb"></i> Visão</h2>
-                <p>
-                   Ser referência na intermediação de créditos de energia, promovendo soluções inovadoras e tecnológicas que facilitem o 
-                   acesso à energia renovável de forma segura e transparente. Buscamos contribuir ativamente para o cumprimento do ODS 7 – 
-                   energia acessível e limpa – incentivando a geração distribuída sustentável e o consumo consciente. Nosso objetivo é impactar 
-                   positivamente a sociedade, promovendo inclusão social, equidade e educação energética, enquanto fortalecemos práticas ambientais 
-                   responsáveis e incentivamos o uso eficiente de recursos energéticos, construindo um futuro mais sustentável para todos.
-                </p>
+    <!-- Seção Visão -->
+    <section class="vision-section">
+        <div class="section-container">
+            <div class="content-grid">
+                <div class="image-wrapper">
+                    <div class="image-decoration"></div>
+                    <img src="/static/Imagens/visao_sobre_nos.jpg" alt="Nossa Visão">
+                </div>
+                
+                <div class="text-content" data-aos="fade-left">
+                    <div class="section-icon">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h2>Nossa Visão</h2>
+                    <div class="decorative-line"></div>
+                    <p>
+                        Ser referência na intermediação de créditos de energia, promovendo soluções inovadoras e tecnológicas que facilitem o 
+                        acesso à energia renovável de forma segura e transparente.
+                    </p>
+                    <p>
+                        Buscamos contribuir ativamente para o cumprimento do <strong>ODS 7 – Energia Acessível e Limpa</strong>, incentivando 
+                        a geração distribuída sustentável e o consumo consciente.
+                    </p>
+                    <p>
+                        Nosso objetivo é impactar positivamente a sociedade, promovendo inclusão social, equidade e educação energética, 
+                        enquanto fortalecemos práticas ambientais responsáveis e incentivamos o uso eficiente de recursos energéticos, 
+                        construindo um futuro mais sustentável para todos.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
-</main>
 
 {% endblock %}
