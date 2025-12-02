@@ -2,9 +2,26 @@
    BUGIGSOLAR - CSS PÁGINA DE LOGIN (FINAL)
    ============================================== */
 
+:root {
+  --preto: #0a0a0a;
+  --preto-suave: #141414;
+  --amarelo: #F2B705;
+  --amarelo-hover: #ffc800;
+  --branco: #ffffff;
+  --cinza-escuro: #1e1e1e;
+  --cinza-claro: #cccccc;
+}
+
 /* 1. CORREÇÃO DO FUNDO BRANCO E ALINHAMENTO */
 body {
-    background: linear-gradient(135deg, #111, #1d1d1d, #212121) !important;
+  background: linear-gradient(135deg, var(--preto) 0%, var(--preto-suave) 100%) !important;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  position: relative;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 main {

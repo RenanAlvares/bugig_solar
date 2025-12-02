@@ -11,9 +11,12 @@
 
         {% if del_doacao %}
         <div class="queue-status-card">
-        <div class="dashboard-cards">
+        <div class="dashboard-cards doacao">
+            <div class="payment-alert-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
             <h3>Você tem uma doação ativa no valor de {{doacao_ativa.quantidade_doacao}} kWh.</h3>
-            <p>Para excluir essa doação, clique aqui</p>
+            <p>Clique no botão para excluir a doação.</p>
             <a href="{{ url_for('auth.del_donation', user_id=user_id, donation_id=del_doacao) }}" class="btn btn-danger btn-default btn-sm">Excluir Doação</a>
         </div>
         </div>
