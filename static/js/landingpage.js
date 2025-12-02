@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Cálculos
     const precoKwh = 0.95;
     const kwh = valor / precoKwh;
-    const economiaPercentual = 0.20; // 20% de economia média
+    const economiaPercentual = 0.90; // 20% de economia média
     const economiaMensal = valor * economiaPercentual;
     const economiaAnual = economiaMensal * 12;
     const co2PorKwh = 0.084;

@@ -156,25 +156,11 @@
     <div class="dashboard-cards">
       
       <!-- CARD: ENTRAR NA FILA (se já estiver na fila) -->
-      {% if posicao_fila %}
       <a href="{{ url_for('auth.get_in_queue', user_id=user_id) }}" class="card">
         <div class="card-icon"><i class="fa-solid fa-users-line"></i></div>
-        <h3>Gerenciar Fila</h3>
-        <p>Atualize sua posição ou saia da fila de créditos.</p>
+        <h3>Entrar na Fila</h3>
+        <p>Clique e garanta o quanto antes seus próximos créditos de energia.</p>
       </a>
-
-      {% else %}
-
-      <div class="card">
-        <div class="card-icon"><i class="fa-solid fa-users-line"></i></div>
-            <h3>Entre na Fila</h3>
-            <p>Clique e garanta o quanto antes seus próximos créditos de energia.</p>
-            <a href="{{ url_for('auth.get_in_queue', user_id=user_id) }}" class="btn-default">
-              <i class="fa-solid fa-plus-circle" style="margin-right: 8px;"></i>Entrar na Fila
-            </a>
-      </div>
-
-      {% endif %}
 
       <!-- CARD: RELATÓRIOS -->
       <a href="{{ url_for('auth.report_benef', user_id=user_id) }}" class="card">
