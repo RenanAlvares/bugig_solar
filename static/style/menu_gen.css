@@ -682,3 +682,26 @@ main::after {
     font-size: 1rem;
   }
 }
+
+.dashboard-cards h3{
+  text-align: center;
+}
+
+.doacao {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.doacao h3{
+  margin: -20px;
+}
+
+.doacao a{
+  margin: -15px;
+}
+
+.payment-alert-icon{
+  margin-top: -50px;
+}

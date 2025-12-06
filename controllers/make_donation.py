@@ -1,7 +1,7 @@
 from models_DB.donation_queue import Donation
 from datetime import datetime
 from . import auth_bp
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from controllers.login import user_owns_resource
 from forms.form_donation import FormDonation
 from models_DB.benef_gen import Generators
@@ -54,6 +54,8 @@ def make_donation(user_id):
         transfer() # <- função que faz a consulta se há pendencias para gerar transferencia.
 
         db.session.commit()
+
+        flash('Doação realizada com sucesso!', 'success')
 
         return redirect(url_for('auth.menu_gen', user_id=user_id)) # após doar retorna para a tela de menu principal
 
