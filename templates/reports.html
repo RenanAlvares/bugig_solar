@@ -33,7 +33,7 @@
                         <td>{{ posicao.quantidade_recebida or 0 }}</td>
                         <td>
                             {% if posicao.quantidade_recebida %}
-                                R$ {{ (posicao.quantidade_recebida * 0.95) | round(2) }}
+                                R$ {{ (posicao.quantidade_recebida * 0.90) | round(2) }}
                             {% else %}
                                 —
                             {% endif %}
