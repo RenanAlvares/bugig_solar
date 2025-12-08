@@ -37,7 +37,7 @@ def gerar_csv_pagamento(user_id, pagamento_id):
     writer.writerow([f'Data de Emissão: {datetime.now().strftime("%d/%m/%Y %H:%M:%S")}'])
     writer.writerow([])  # Linha em branco
 
-    # Dados do Beneficiário
+    # dados do Beneficiário
     usuario = UsersDb.query.get(user_id)
     writer.writerow(['DADOS DO BENEFICIÁRIO'])
     writer.writerow(['Nome', usuario.nome])
